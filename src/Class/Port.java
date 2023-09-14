@@ -1,7 +1,7 @@
 package Class;
 
 public class Port {
-    private String id;
+    private int id;
     private String name;
     private double latitude;
     private double longitude;
@@ -10,7 +10,7 @@ public class Port {
 
     // constructor, getters, setters
 
-    public Port(String id, String name, double latitude, double longitude, int capacity, boolean landingAbility) {
+    public Port(int id, String name, double latitude, double longitude, int capacity, boolean landingAbility) {
         this.id = id;
         this.name = name;
         this.latitude = latitude;
@@ -19,11 +19,11 @@ public class Port {
         this.landingAbility = landingAbility;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -7,8 +7,10 @@ import java.util.*;
 import Enum.ContainerType;
 
 public class Ship implements Vehicle {
+    private int id;
     private String name;
     private double fuel;
+    private double maxFuel;
     private int capacity;
     private double maxLoad;
     private ArrayList<Container> containers;
@@ -22,9 +24,11 @@ public class Ship implements Vehicle {
 //    constructor, getter, setter
 
 
-    public Ship(String name, double fuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
+    public Ship(int id, String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
+        this.id = id;
         this.name = name;
         this.fuel = fuel;
+        this.maxFuel = maxFuel;
         this.capacity = capacity;
         this.maxLoad = maxLoad;
         this.containers = containers;
@@ -37,6 +41,10 @@ public class Ship implements Vehicle {
         fuelConsumptionRates.put(ContainerType.LIQUID, 4.8);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -47,6 +55,10 @@ public class Ship implements Vehicle {
 
     public double getFuel() {
         return fuel;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setFuel(double fuel) {
@@ -69,19 +81,36 @@ public class Ship implements Vehicle {
         this.maxLoad = maxLoad;
     }
 
+    public double getMaxFuel() {
+        return maxFuel;
+    }
+
+    public void setMaxFuel(double maxFuel) {
+        this.maxFuel = maxFuel;
+    }
+
+    @Override
+    public Port getCurrentPort() {
+        return currentPort;
+    }
+
+    @Override
+    public void setCurrentPort(Port port) {
+        this.currentPort = port;
+    }
 
     //    method
     @Override
     public void loadContainer(Container c) {
         // Check capacity and load
-        if(this.getNumContainers() == this.getCapacity()) {
+        if (this.getNumContainers() == this.getCapacity()) {
             System.out.println("Ship is at full capacity!");
             return;
         }
 
         // Check container weight
         double totalWeight = this.getTotalContainerWeight();
-        if(totalWeight + c.getWeight() > this.getMaxLoad()) {
+        if (totalWeight + c.getWeight() > this.getMaxLoad()) {
             System.out.println("Container will exceed max load limit!");
             return;
         }
@@ -98,7 +127,7 @@ public class Ship implements Vehicle {
     public void unloadContainer(Container c) {
         // Unload container
         // Check if container is loaded
-        if(!this.containers.contains(c)) {
+        if (!this.containers.contains(c)) {
             System.out.println("This container is not on the ship!");
             return;
         }
@@ -119,15 +148,16 @@ public class Ship implements Vehicle {
     }
 
     @Override
-    public double getTotalContainerWeight(){
+    public double getTotalContainerWeight() {
         // Calculate and return total weight
         return totalWeight;
     }
+
     private double calculateFuelNeeded(double distance) {
 
         double totalConsumption = 0;
 
-        for(Container c : this.containers) {
+        for (Container c : this.containers) {
             double rate = fuelConsumptionRates.get(c.getType());
             totalConsumption += rate * c.getWeight();
         }
@@ -135,12 +165,13 @@ public class Ship implements Vehicle {
         return totalConsumption * distance;
 
     }
+
     @Override
     public void moveToPort(Port destinationPort) {
         // Set current port
         // Consume fuel based on distance
         // Check if valid move
-        if(!canMoveToPort(destinationPort)) {
+        if (!canMoveToPort(destinationPort)) {
             System.out.println("Cannot move ship to port!");
             return;
         }
@@ -149,7 +180,7 @@ public class Ship implements Vehicle {
         double fuelNeeded = calculateFuelNeeded(this.getCurrentPort().distanceTo(destinationPort));
 
         // Check fuel available
-        if(fuelNeeded > this.getFuelLevel()) {
+        if (fuelNeeded > this.getFuel()) {
             System.out.println("Not enough fuel!");
             return;
         }
@@ -167,31 +198,36 @@ public class Ship implements Vehicle {
     }
 
     @Override
-    public Port getCurrentPort() {
-        return currentPort;
-    }
-
-    @Override
-    public void setCurrentPort(Port port) {
-        this.currentPort = port;
-    }
-
-    @Override
     public boolean canMoveToPort(Port targetPort) {
 
         // Check fuel level
-        if(this.getFuelLevel() < MIN_REQUIRED_FUEL) {
+        if (this.getFuel() < MIN_REQUIRED_FUEL) {
             return false;
         }
 
         // Check capacity
-        if(this.getNumContainers() == this.getCapacity()) {
+        if (this.getNumContainers() == this.getCapacity()) {
             return false;
         }
-
         // Check weather conditions
-
         // Any other checks
-
         return true;
+    }
+
+    @Override
+    public void refuel(double fuel) {
+        if (this.getCurrentPort() == null) {
+            System.out.println("Error! Ship must be docked to refuel.");
+        }
+
+        double neededFuel = this.maxFuel - this.getFuel();
+        this.fuel = this.maxFuel;
+        System.out.println("Refueled ship with " + neededFuel + " gallons.");
+    }
 }
+
+
+
+
+
+

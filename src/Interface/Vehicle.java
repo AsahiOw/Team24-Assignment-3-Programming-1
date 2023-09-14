@@ -5,7 +5,7 @@ import Class.Port;
 public interface Vehicle {
     // Get vehicle info
     public String getName();
-    public double getFuelLevel();
+    public double getFuel();
     public int getCapacity();
 
     // Fuel vehicle

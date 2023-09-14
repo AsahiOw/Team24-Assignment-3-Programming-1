@@ -6,6 +6,7 @@ import java.util.Date;
 
 import Enum.TripStatus;
 public class Trip {
+    private int id;
     private Vehicle vehicle;
     private Date departureDate;
     private Port departurePort;
@@ -15,7 +16,8 @@ public class Trip {
 
     // constructor, getters, setters
 
-    public Trip(Vehicle vehicle, Date departureDate, Port departurePort, Date arrivalDate, Port arrivalPort, TripStatus status) {
+    public Trip(int id, Vehicle vehicle, Date departureDate, Port departurePort, Date arrivalDate, Port arrivalPort, TripStatus status) {
+        this.id = id;
         this.vehicle = vehicle;
         this.departureDate = departureDate;
         this.departurePort = departurePort;
@@ -23,6 +25,8 @@ public class Trip {
         this.arrivalPort = arrivalPort;
         this.status = status;
     }
+
+    public int getId() { return id; }
 
     public Vehicle getVehicle() {
         return vehicle;
@@ -43,6 +47,7 @@ public class Trip {
     public Port getDeparturePort() {
         return departurePort;
     }
+    public void setId(int id) { this.id = id; }
 
     public void setDeparturePort(Port departurePort) {
         this.departurePort = departurePort;
