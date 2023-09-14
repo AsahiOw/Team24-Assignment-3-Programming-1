@@ -128,7 +128,7 @@ public class Truck implements Vehicle{
 
         // Check capacity and load
         if (this.getNumContainers() == this.getCapacity()) {
-            System.out.println("Ship is at full capacity!");
+            System.out.println("Truck is at full capacity!");
             return;
         }
 
@@ -144,7 +144,7 @@ public class Truck implements Vehicle{
         // Load container
         this.containers.add(c); // Store in some list
 
-        System.out.println("Loaded container " + c.getId() + " on ship " + this.getName());
+        System.out.println("Loaded container " + c.getId() + " on truck " + this.getName());
     }
 
     @Override
@@ -152,7 +152,7 @@ public class Truck implements Vehicle{
         // Unload container
         // Check if container is loaded
         if (!this.containers.contains(c)) {
-            System.out.println("This container is not on the ship!");
+            System.out.println("This container is not on the truck!");
             return;
         }
 
@@ -162,7 +162,7 @@ public class Truck implements Vehicle{
         // Update total weight
         this.totalWeight -= c.getWeight();
 
-        System.out.println("Unloaded container " + c.getId() + " from ship " + this.getName());
+        System.out.println("Unloaded container " + c.getId() + " from truck " + this.getName());
     }
 
     @Override
@@ -196,7 +196,7 @@ public class Truck implements Vehicle{
         // Consume fuel based on distance
         // Check if valid move
         if (!canMoveToPort(destinationPort)) {
-            System.out.println("Cannot move ship to port!");
+            System.out.println("Cannot move Truck to port!");
             return;
         }
 
@@ -244,7 +244,7 @@ public class Truck implements Vehicle{
     @Override
     public void refuel(double fuel) {
         if (this.getCurrentPort() == null) {
-            System.out.println("Error! Ship must be docked to refuel.");
+            System.out.println("Error! Truck must be docked to refuel.");
         }
 
         double neededFuel = this.maxFuel - this.getFuel();
