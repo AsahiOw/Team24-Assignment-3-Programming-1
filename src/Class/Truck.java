@@ -249,7 +249,7 @@ public class Truck implements Vehicle{
 
         double neededFuel = this.maxFuel - this.getFuel();
         this.fuel = this.maxFuel;
-        System.out.println("Refueled ship with " + neededFuel + " gallons.");
+        System.out.println("Refueled truck with " + neededFuel + " gallons.");
     }
 }
 
