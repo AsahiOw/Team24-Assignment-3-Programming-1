@@ -2,8 +2,9 @@ package Class;
 
 import Interface.Vehicle;
 
-import java.util.ArrayList;
+import java.util.*;
 
+import Enum.ContainerType;
 
 public class Ship implements Vehicle {
     private String name;
@@ -14,6 +15,9 @@ public class Ship implements Vehicle {
     private Port currentPort;
     private static final double MIN_REQUIRED_FUEL = 1000;
     private double totalWeight = 0;
+    private Map<ContainerType, Double> fuelConsumptionRates;
+
+    private List<TripLogEntry> tripLog;
 
 //    constructor, getter, setter
 
@@ -25,6 +29,12 @@ public class Ship implements Vehicle {
         this.maxLoad = maxLoad;
         this.containers = containers;
         this.currentPort = currentPort;
+        fuelConsumptionRates = new HashMap<>();
+        fuelConsumptionRates.put(ContainerType.DRY, 3.5);
+        fuelConsumptionRates.put(ContainerType.OPEN_TOP, 2.8);
+        fuelConsumptionRates.put(ContainerType.OPEN_SIDE, 2.7);
+        fuelConsumptionRates.put(ContainerType.REFRIGERATED, 4.5);
+        fuelConsumptionRates.put(ContainerType.LIQUID, 4.8);
     }
 
     public String getName() {
@@ -113,7 +123,18 @@ public class Ship implements Vehicle {
         // Calculate and return total weight
         return totalWeight;
     }
+    private double calculateFuelNeeded(double distance) {
 
+        double totalConsumption = 0;
+
+        for(Container c : this.containers) {
+            double rate = fuelConsumptionRates.get(c.getType());
+            totalConsumption += rate * c.getWeight();
+        }
+
+        return totalConsumption * distance;
+
+    }
     @Override
     public void moveToPort(Port destinationPort) {
         // Set current port
@@ -137,12 +158,11 @@ public class Ship implements Vehicle {
         this.setCurrentPort(destinationPort);
 
         // Reduce fuel
-        this.setFuelLevel(this.getFuelLevel() - fuelNeeded);
+        this.fuel -= fuelNeeded;
 
         // Update log
-        this.tripLog.add(new TripLogEntry(this, destinationPort));
-
-        System.out.println("Moved ship to port!");
+        TripLogEntry entry = new TripLogEntry(destinationPort, new Date());
+        tripLog.add(entry);
 
     }
 
