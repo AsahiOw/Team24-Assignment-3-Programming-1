@@ -5,11 +5,11 @@ import Enum.*;
 public class Main {
     public static void main(String[] args) {
         ArrayList<User> users = new ArrayList<User>();
-        Port p1 = new Port(1,"port1",12.3,456,1000,true);
-        Port p2 = new Port(2,"port2",12.3,456,1000,true);
+        Port p1 = new Port("port1",12.3,456,1000,true);
+        Port p2 = new Port("port2",12.3,456,1000,true);
 
         Truck t1 = new Truck("Truck1", 200, 500, 10, 1000, null, p1, TruckType.REEFER);
-        Ship s1 = new Ship(1, "Ship 1", 1000, 2000, 50, 10000, null, p2);
+        Ship s1 = new Ship("Ship 1", 1000, 2000, 50, 10000, null, p2);
 
         User u1 = new Admin("a1","123");
         User u2 = new Manager("m1","123", p1);

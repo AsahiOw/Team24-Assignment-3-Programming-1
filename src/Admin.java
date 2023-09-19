@@ -12,6 +12,8 @@ public class Admin extends User {
 
     @Override
     public void showMenuOptions() {
+        int sub_option = 0;
+
         System.out.println("Welcome Admin! Select an option: \n");
         System.out.println("1. Listing Option");
         System.out.println("2. Entity Management (Add)");
@@ -37,7 +39,7 @@ public class Admin extends User {
 
 //              Select Option
                 System.out.print("\nSelect Option: ");
-                int sub_option = scanner.nextInt();
+                sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1:
                         Port.getPorts();
@@ -66,12 +68,42 @@ public class Admin extends User {
                 System.out.println("3. Add new container");
 
 //              Select Option
+                System.out.print("\nSelect Option: ");
+                sub_option = scanner.nextInt();
+                switch (sub_option) {
+                    case 1:
+                        Port p1 = new Port("port1",12.3,456,1000,true);
+                        System.out.println("\t Enter Port information: ");
+                        System.out.print("\t\t Enter port's name: ");
+                        String port_name = scanner.next();
 
+                        System.out.print("\t\t Enter port's latitude and longtitude: ");
+                        double port_latitude = scanner.nextDouble();
+                        double port_longtitude = scanner.nextDouble();
+                        scanner.nextLine();
 
-                default:
-                    System.out.println("Unexpected value: " + option + ", please select again!");
-                    showMenuOptions();
-                    break;
+                        System.out.print("\t\t Enter port's capacity: ");
+                        double port_capacity = scanner.nextDouble();
+
+                        System.out.print("\t\t Enter port's landing Ability: ");
+                        boolean port_landingAbility = scanner.nextBoolean();
+
+                        System.out.println("New port has been added: " + "\n" + new Port(port_name,port_latitude,port_longtitude,port_capacity,port_landingAbility).toString());
+                        continueToOption();
+                        break;
+                    case 2:
+
+                        continueToOption();
+                        break;
+                    case 3:
+
+                        continueToOption();
+                        break;
+                    default:
+                        System.out.println("Unexpected value: " + option + ", please select again!");
+                        showMenuOptions();
+                        break;
+                }
                 break;
             case 3:
                 System.out.println("1. Remove port");

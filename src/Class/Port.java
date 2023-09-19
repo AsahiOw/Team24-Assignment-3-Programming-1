@@ -14,7 +14,7 @@ public class Port {
 
     // constructor, getters, setters
 
-    public Port(String id, String name, double latitude, double longitude, double capacity, boolean landingAbility) {
+    public Port(String name, double latitude, double longitude, double capacity, boolean landingAbility) {
         this.id = "port"+nextId++;
         this.name = name;
         this.latitude = latitude;
