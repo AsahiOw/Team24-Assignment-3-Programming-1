@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import Class.*;
 
-
 public class Manager extends User {
     private Port managedPort;
     public Manager(String username, String password, Port managedPort) {
@@ -24,8 +23,6 @@ public class Manager extends User {
         System.out.println("3. Remove Container in port");
         System.out.println("4. Statistic Operation");
         System.out.println("5. Exit");
-
-
 
         System.out.print("\nSelect Option: ");
         int option = scanner.nextInt();

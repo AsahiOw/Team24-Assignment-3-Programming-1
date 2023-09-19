@@ -31,9 +31,6 @@ public class Truck implements Vehicle{
     private List<TripLogEntry> tripLog;
     private static ArrayList<Truck> trucks = new ArrayList<Truck>();
 
-//    constructor, getter, setter
-
-
     public Truck(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type) {
         this.id = "truck" + nextId++;
         this.name = name;
@@ -72,7 +69,6 @@ public class Truck implements Vehicle{
                 ", type=" + type +
                 '}';
     }
-
 
     public String getId() {
         return id;

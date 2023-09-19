@@ -29,8 +29,9 @@ public class Admin extends User {
         System.out.print("\nSelect Option: ");
         int option = scanner.nextInt();
         switch (option) {
-            case 1:
 
+
+            case 1:
 //              List of Options
                 System.out.println("\n----------------------");
                 System.out.println("1. List all ports");
@@ -62,6 +63,7 @@ public class Admin extends User {
                         break;
                 }
                 break;
+
 
             case 2:
 //              List of Options
@@ -142,34 +144,64 @@ public class Admin extends User {
                         break;
                 }
                 break;
+
+
             case 3:
                 System.out.println("1. Remove port");
                 System.out.println("2. Remove vehicle");
                 System.out.println("3. Remove container");
+
+//              Select Option
+                System.out.println("\n----------------------");
+                System.out.print("\nSelect Option: ");
+                sub_option = scanner.nextInt();
+                switch (sub_option) {
+                    case 1: // Remove Port
+
+                    case 2: // Remove vehicle
+
+                    case 3: // Remove container
+                        Container.getContainers();
+
+                        System.out.println("\n----------------------");
+                        System.out.print("Enter id of the container want to remove: ");
+                        String containerIdToRemove = scanner.next();
+                        Container.removeContainer(containerIdToRemove);
+
+                        continueToOption();
+                        break;
+                }
+
+
             case 4:
                 System.out.println("1. Vehicle load container");
                 System.out.println("2. Vehicle unload container");
                 System.out.println("3. Vehicle move to port");
                 System.out.println("4. Fuel up vehicle");
+
+
             case 5:
                 System.out.println("1. Add user");
                 System.out.println("2. Remove user");
+
+
             case 6:
                 System.out.println("1. Total fuel used today");
                 System.out.println("2. Total weight of each type of container ");
                 System.out.println("3. List all ships in a port ");
                 System.out.println("4. List all trips in a day ");
                 System.out.println("5. List all trips from day A to day B");
+
+
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
                 showMenuOptions();
                 break;
         }
     }
-
     public void continueToOption() {
         System.out.print("\nContinue? (Y/N) ");
-        String option = scanner.nextLine();
+        String option = scanner.next();
 
         if(option.equalsIgnoreCase("Y")) {
             showMenuOptions();

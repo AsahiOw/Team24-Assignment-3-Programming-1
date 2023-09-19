@@ -14,6 +14,8 @@ public class Main {
         User u1 = new Admin("a1","123");
         User u2 = new Manager("m1","123", p1);
 
+        Container c1 = new Container(12.4, ContainerType.DRY, p1);
+        Container c2 = new Container(42.1,ContainerType.OPEN_TOP, p2);
 
 
         Scanner scanner = new Scanner(System.in);

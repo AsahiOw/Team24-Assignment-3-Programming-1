@@ -2,15 +2,14 @@ package Class;
 
 import Enum.ContainerType;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Container {
-    private String id;
+    private final String id;
     private static int nextId = 1;
     private double weight;
-    private ContainerType type;
+    private final ContainerType type;
     private Port currentPort;
     private static ArrayList<Container> containers = new ArrayList<Container>();
 
@@ -19,6 +18,7 @@ public class Container {
             if (c.getId().equalsIgnoreCase(idToRemove)  ) {
                 containers.remove(c);
                 c.currentPort.removeContainer(c);
+                // Update to remove container in file
                 System.out.println("Container " + idToRemove + " removed successfully!");
                 c = null;
             }
@@ -100,6 +100,5 @@ public class Container {
 
         Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), p);
         System.out.println("New Container has been added: " + "\n" + newContainer.toString());
-        return;
     }
 }
