@@ -8,6 +8,8 @@ public class Manager extends User {
         super(username, password);
         this.managedPort = managedPort;
     }
+    // Get input choice and execute relevant method
+    Scanner scanner = new Scanner(System.in);
     @Override
     public boolean validateCredential(String username, String password) {
         return super.getPassword().equals(password);
@@ -23,8 +25,7 @@ public class Manager extends User {
         System.out.println("4. Statistic Operation");
         System.out.println("5. Exit");
 
-        // Get input choice and execute relevant method
-        Scanner scanner = new Scanner(System.in);
+
 
         System.out.print("\nSelect Option: ");
         int option = scanner.nextInt();
@@ -51,8 +52,6 @@ public class Manager extends User {
         }
     }
     public void continueToOption() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.print("\nContinue? (Y/N) ");
         String option = scanner.nextLine();
 
@@ -60,7 +59,6 @@ public class Manager extends User {
             showMenuOptions();
         } else if(option.equalsIgnoreCase("N")) {
             System.out.println("Session end.");
-            return;
         }
     }
 }

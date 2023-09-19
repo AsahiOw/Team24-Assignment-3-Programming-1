@@ -11,6 +11,8 @@ public class Admin extends User {
         return super.getPassword().equals(password);
     }
 
+    // Get input choice and execute relevant method
+    Scanner scanner = new Scanner(System.in);
     @Override
     public void showMenuOptions() {
         int sub_option = 0;
@@ -23,9 +25,6 @@ public class Admin extends User {
         System.out.println("5. User Management");
         System.out.println("6. Statistic Operation");
         System.out.println("7. Exit");
-
-        // Get input choice and execute relevant method
-        Scanner scanner = new Scanner(System.in);
 
         System.out.print("\nSelect Option: ");
         int option = scanner.nextInt();
@@ -165,8 +164,6 @@ public class Admin extends User {
     }
 
     public void continueToOption() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.print("\nContinue? (Y/N) ");
         String option = scanner.nextLine();
 
