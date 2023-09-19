@@ -129,7 +129,11 @@ public class Admin extends User {
                         break;
 
                     case 3: // Add new container
-                        Container.addContainer();
+                        System.out.println("\n\t Enter port you want to load this container on: ");
+                        String con_portid = scanner.next();
+
+
+                        Container.addContainer(Port.matchPortID(con_portid));
                         continueToOption();
                         break;
                     default:

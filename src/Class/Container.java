@@ -19,6 +19,7 @@ public class Container {
             if (c.getId().equalsIgnoreCase(idToRemove)  ) {
                 containers.remove(c);
                 c.currentPort.removeContainer(c);
+                System.out.println("Container " + idToRemove + " removed successfully!");
                 c = null;
             }
             else {
@@ -27,10 +28,12 @@ public class Container {
         }
     }
     // constructor, getters, setters
-    public Container(double weight, ContainerType type) {
+    public Container(double weight, ContainerType type, Port currentPort) {
         this.id = "container" +nextId++;
         this.weight = weight;
         this.type = type;
+        this.currentPort = currentPort;
+        currentPort.addContainer(this);
         containers.add(this);
     }
 
@@ -67,6 +70,7 @@ public class Container {
     public ContainerType getType() {
         return type;
     }
+
     public static ContainerType matchContainerType(String containerType) {
         ContainerType type;
         if ("DRY".equalsIgnoreCase(containerType)) {
@@ -86,7 +90,7 @@ public class Container {
         return type;
     }
 
-    public static void addContainer() {
+    public static void addContainer(Port p) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t Enter Container information: ");
         System.out.print("\t\t Enter container's weight: ");
@@ -94,7 +98,7 @@ public class Container {
         System.out.print("\t\t Enter container's type: ");
         String con_type = scanner.next();
 
-        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type));
+        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), p);
         System.out.println("New Container has been added: " + "\n" + newContainer.toString());
         return;
     }

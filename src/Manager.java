@@ -31,29 +31,27 @@ public class Manager extends User {
         int option = scanner.nextInt();
         switch (option) {
             case 1:
-                managedPort.getOnPortContainers();
+                managedPort.listOnPortContainers();
                 continueToOption();
                 break;
-
             case 2:
-                System.out.print("Enter container weight: ");
-                double Weight = scanner.nextDouble();
-
-                System.out.print("Enter container type: ");
+                Container.addContainer(managedPort);
+                continueToOption();
                 break;
             case 3:
-                managedPort.getOnPortContainers();
+                managedPort.listOnPortContainers();
 
-                System.out.print("Enter id of the container want to remove:");
-                String idToRemove = scanner.nextLine();
+                System.out.print("Enter id of the container want to remove: ");
+                String idToRemove = scanner.next();
 
                 Container.removeContainer(idToRemove);
+                continueToOption();
                 break;
         }
     }
     public void continueToOption() {
         System.out.print("\nContinue? (Y/N) ");
-        String option = scanner.nextLine();
+        String option = scanner.next();
 
         if(option.equalsIgnoreCase("Y")) {
             showMenuOptions();

@@ -13,6 +13,16 @@ public class Port {
     private static ArrayList<Port> ports = new ArrayList<Port>();
     private ArrayList<Container> onPortContainers = new ArrayList<Container>();
 
+    public static Port matchPortID(String portId) {
+        for (Port p: ports) {
+            if (p.id.equalsIgnoreCase(portId)) {
+                return p;
+            }
+        }
+        System.out.println("No matching port!");
+        return null;
+    }
+
     public void addContainerToPort(Container container) {
         onPortContainers.add(container);
         container.setPort(this);
@@ -20,6 +30,13 @@ public class Port {
 
     public ArrayList<Container> getOnPortContainers() {
         return onPortContainers;
+    }
+
+    public void listOnPortContainers() {
+        System.out.println("List of containers on " + this.name + ": ");
+        for (Container c: onPortContainers) {
+            System.out.println("\t" + c.toString());
+        }
     }
 
     public void removeContainer(Container c) {
