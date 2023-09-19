@@ -15,12 +15,12 @@ import static Enum.TruckType.REEFER;
 import static Enum.TruckType.TANKER;
 
 public class Truck implements Vehicle{
-    private int id;
+    private String id;
     private static int nextId = 1;
     private String name;
     private double fuel;
     private double maxFuel;
-    private int capacity;
+    private double capacity;
     private double maxLoad;
     private ArrayList<Container> containers;
     private Port currentPort;
@@ -34,8 +34,8 @@ public class Truck implements Vehicle{
 //    constructor, getter, setter
 
 
-    public Truck(String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type) {
-        this.id = nextId++;
+    public Truck(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type) {
+        this.id = "truck" + nextId++;
         this.name = name;
         this.fuel = fuel;
         this.maxFuel = maxFuel;
@@ -73,7 +73,7 @@ public class Truck implements Vehicle{
                 '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -93,11 +93,11 @@ public class Truck implements Vehicle{
         this.fuel = fuel;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(double capacity) {
         this.capacity = capacity;
     }
 

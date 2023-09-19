@@ -3,18 +3,19 @@ package Class;
 import java.util.ArrayList;
 
 public class Port {
-    private int id;
+    private String id;
+    private static int nextId = 1;
     private String name;
     private double latitude;
     private double longitude;
-    private int capacity;
+    private double capacity;
     private boolean landingAbility;
     private static ArrayList<Port> ports = new ArrayList<Port>();
 
     // constructor, getters, setters
 
-    public Port(int id, String name, double latitude, double longitude, int capacity, boolean landingAbility) {
-        this.id = id;
+    public Port(String id, String name, double latitude, double longitude, double capacity, boolean landingAbility) {
+        this.id = "port"+nextId++;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -23,7 +24,7 @@ public class Port {
         ports.add(this);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
     public static void getPorts() {
@@ -44,9 +45,6 @@ public class Port {
                 '}';
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -72,7 +70,7 @@ public class Port {
         this.longitude = longitude;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 

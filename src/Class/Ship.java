@@ -8,11 +8,12 @@ import java.util.*;
 import Enum.ContainerType;
 
 public class Ship implements Vehicle {
-    private int id;
+    private String id;
+    private static int nextId = 1;
     private String name;
     private double fuel;
     private double maxFuel;
-    private int capacity;
+    private double capacity;
     private double maxLoad;
     private ArrayList<Container> containers;
     private Port currentPort;
@@ -26,7 +27,7 @@ public class Ship implements Vehicle {
 
 
     public Ship(int id, String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
-        this.id = id;
+        this.id = "ship"+nextId++;
         this.name = name;
         this.fuel = fuel;
         this.maxFuel = maxFuel;
@@ -65,7 +66,7 @@ public class Ship implements Vehicle {
                 '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -81,21 +82,15 @@ public class Ship implements Vehicle {
         return fuel;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setFuel(double fuel) {
         this.fuel = fuel;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
 
     public double getMaxLoad() {
         return maxLoad;

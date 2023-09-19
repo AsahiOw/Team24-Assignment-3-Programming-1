@@ -6,7 +6,7 @@ public interface Vehicle {
     // Get vehicle info
     public String getName();
     public double getFuel();
-    public int getCapacity();
+    public double getCapacity();
 
     // Fuel vehicle
     public void refuel(double fuel);

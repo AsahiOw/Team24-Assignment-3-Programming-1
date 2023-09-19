@@ -6,15 +6,16 @@ import java.sql.Array;
 import java.util.ArrayList;
 
 public class Container {
-    private int id;
+    private String id;
+    private static int nextId = 1;
     private double weight;
     private ContainerType type;
     private static ArrayList<Container> containers = new ArrayList<Container>();
 
     // constructor, getters, setters
 
-    public Container(int id, double weight, ContainerType type) {
-        this.id = id;
+    public Container(String id, double weight, ContainerType type) {
+        this.id = "container" +nextId++;
         this.weight = weight;
         this.type = type;
         containers.add(this);
@@ -35,12 +36,8 @@ public class Container {
                 '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public double getWeight() {
