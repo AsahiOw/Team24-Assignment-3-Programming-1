@@ -18,10 +18,9 @@ public class Truck extends Vehicle{
     private Map<ContainerType, Double> fuelConsumptionRates;
     private TruckType type;
     private List<TripLogEntry> tripLog;
-    private static ArrayList<Truck> trucks = new ArrayList<Truck>();
 
-    public Truck(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type) {
-        super(name, fuel,maxFuel, capacity,maxLoad,containers,currentPort);
+    public Truck(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort, TruckType type) {
+        super(name, fuel,maxFuel, capacity,maxLoad,currentPort);
         fuelConsumptionRates = new HashMap<>();
         fuelConsumptionRates.put(ContainerType.DRY, 4.6);
         fuelConsumptionRates.put(ContainerType.OPEN_TOP, 3.2);
@@ -29,13 +28,6 @@ public class Truck extends Vehicle{
         fuelConsumptionRates.put(ContainerType.REFRIGERATED, 5.4);
         fuelConsumptionRates.put(ContainerType.LIQUID, 5.3);
         this.type = type;
-        trucks.add(this);
-    }
-    public static void getTrucks() {
-        System.out.println("List of Trucks: ");
-        for (Truck t: trucks) {
-            System.out.println("\t" + t.toString());
-        }
     }
     @Override
     public String toString() {
@@ -54,10 +46,6 @@ public class Truck extends Vehicle{
 
     public TruckType getType() {
         return type;
-    }
-    @Override
-    public double getTotalWeight() {
-        return totalWeight;
     }
 
     //    method
@@ -80,7 +68,7 @@ public class Truck extends Vehicle{
         }
 
         // Check container weight
-        double totalWeight = this.getTotalContainerWeight();
+        double totalWeight = this.totalWeight;
         if (totalWeight + c.getWeight() > this.getMaxLoad()) {
             System.out.println("Container will exceed max load limit!");
             return false;
@@ -90,18 +78,17 @@ public class Truck extends Vehicle{
 
         // Load container
         super.addContainer(c); // Store in some list
-        super.getCurrentPort().removeContainer(c);
+        if (super.getCurrentPort() != null) {super.getCurrentPort().removeContainer(c);};
 
         return true;
     }
 
     @Override
-    public void unloadContainer(Container c) {
+    public boolean unloadContainer(Container c) {
         // Unload container
         // Check if container is loaded
         if (!super.listOfContainers().contains(c)) {
-            System.out.println("This container is not on the truck!");
-            return;
+            return false;
         }
 
         // Unload container
@@ -110,8 +97,7 @@ public class Truck extends Vehicle{
 
         // Update total weight
         this.totalWeight -= c.getWeight();
-
-        System.out.println("Unloaded container " + c.getId() + " from truck " + this.getName());
+        return true;
     }
 
     @Override
@@ -121,7 +107,7 @@ public class Truck extends Vehicle{
     }
 
     @Override
-    public double getTotalContainerWeight() {
+    public double getTotalWeight() {
         // Calculate and return total weight
         return totalWeight;
     }

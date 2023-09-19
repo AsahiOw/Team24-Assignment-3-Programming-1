@@ -1,6 +1,7 @@
 package Class;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Port {
     private String id;
@@ -11,7 +12,9 @@ public class Port {
     private double capacity;
     private boolean landingAbility;
     private static ArrayList<Port> ports = new ArrayList<Port>();
-    private ArrayList<Container> onPortContainers = new ArrayList<Container>();
+    private ArrayList<Vehicle> onPortVehicles;
+    private ArrayList<Container> onPortContainers;
+
 
     public static Port matchPortID(String portId) {
         for (Port p: ports) {
@@ -23,6 +26,9 @@ public class Port {
         return null;
     }
 
+    public void addVehicle(Vehicle vehicle) {
+        onPortVehicles.add(vehicle);
+    }
     public void addContainerToPort(Container container) {
         onPortContainers.add(container);
         container.setPort(this);
@@ -31,12 +37,14 @@ public class Port {
     public ArrayList<Container> getOnPortContainers() {
         return onPortContainers;
     }
-
-    public void listOnPortContainers() {
+    public void printOnPortContainers() {
         System.out.println("List of containers on " + this.name + ": ");
         for (Container c: onPortContainers) {
             System.out.println("\t" + c.toString());
         }
+    }
+    private ArrayList<Vehicle> getOnPortVehicles() {
+        return onPortVehicles;
     }
 
     public void removeContainer(Container c) {
@@ -53,23 +61,38 @@ public class Port {
         this.capacity = capacity;
         this.landingAbility = landingAbility;
         ports.add(this);
+        onPortVehicles = new ArrayList<Vehicle>();
+        onPortContainers = new ArrayList<Container>();
     }
     public void addContainer(Container c) {
         onPortContainers.add(c);
-    }
-    public static Port getPortBasedOnID(String id) {
-        for (Port p: ports) {
-            if (id == p.getId()) return p;
-        }
-        return null;
     }
 
     public String getId() {
         return id;
     }
-    public static void getPorts() {
+    public static void printListOfPorts() {
         for (Port p: ports) {
             System.out.println(p.toString());
+        }
+    }
+
+    public static void removePort(String idToRemove) {
+            Port port = Port.matchPortID(idToRemove);
+
+            port.removeAllVehicle();
+
+            // Update to remove container in file
+            ports.remove(port);
+            port = null;
+            System.out.println("Port " + idToRemove + " removed successfully!");
+    }
+    public void removeVehicle(Vehicle vehicle) {
+        onPortVehicles.remove(vehicle);
+    }
+    public void removeAllVehicle() {
+        while (onPortVehicles.size() > 0) {
+            Vehicle.removeVehicle(onPortVehicles.get(onPortVehicles.size()-1).getId());
         }
     }
 

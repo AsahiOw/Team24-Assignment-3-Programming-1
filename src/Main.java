@@ -8,14 +8,23 @@ public class Main {
         Port p1 = new Port("port1",12.3,456,1000,true);
         Port p2 = new Port("port2",12.3,456,1000,true);
 
-        Truck t1 = new Truck("Truck1", 200, 500, 10, 1000, null, p1, TruckType.REEFER);
-        Ship s1 = new Ship("Ship 1", 1000, 2000, 50, 10000, null, p2);
+        Vehicle t1 = new Truck("Truck1", 200, 500, 10, 1000, p1, TruckType.REEFER);
+        Vehicle s1 = new Ship("Ship 1", 1000, 2000, 50, 10000, p1);
+        p1.printOnPortContainers();
+
 
         User u1 = new Admin("a1","123");
         User u2 = new Manager("m1","123", p1);
 
-        Container c1 = new Container(12.4, ContainerType.DRY, p1);
-        Container c2 = new Container(42.1,ContainerType.OPEN_TOP, p2);
+        Container c1 = new Container(12.4, ContainerType.DRY);
+        Container c2 = new Container(42.1,ContainerType.OPEN_TOP);
+        Container c3 = new Container(42.1,ContainerType.OPEN_TOP);
+
+        System.out.println(t1.loadContainer(c1));
+        System.out.println(t1.loadContainer(c2));
+        System.out.println(t1.loadContainer(c3));
+        t1.printListOfContainers();
+
 
         Scanner scanner = new Scanner(System.in);
 

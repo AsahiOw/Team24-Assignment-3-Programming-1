@@ -1,5 +1,6 @@
 package Class;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Vehicle {
     private String id;
@@ -9,20 +10,21 @@ public abstract class Vehicle {
     private double maxFuel;
     private double capacity;
     private double maxLoad;
-    private ArrayList<Container> containers;
+    private ArrayList<Container> onVehicleContainers;
     private Port currentPort;
     private static final double MIN_REQUIRED_FUEL = 1000;
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
-    public Vehicle(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
+    public Vehicle(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort) {
         this.id = "vehicle" + nextId++;
         this.name = name;
         this.fuel = fuel;
         this.maxFuel = maxFuel;
         this.capacity = capacity;
         this.maxLoad = maxLoad;
-        this.containers = containers;
         this.currentPort = currentPort;
+        onVehicleContainers = new ArrayList<Container>();
+        currentPort.addVehicle(this);
         vehicles.add(this);
     }
     // Get vehicle info
@@ -57,13 +59,40 @@ public abstract class Vehicle {
     public void setFuel(double fuel) {
         this.fuel = fuel;
     }
+    public void addFuel(double amountOfFuel) {
+        if ((amountOfFuel + fuel) <= maxFuel) {
+            this.fuel += amountOfFuel;
+        } else {
+            System.out.println("Can't fuel!");
+        }
+    }
 
     public Port getCurrentPort() {
         return currentPort;
     }
 
     public void setCurrentPort(Port currentPort) {
+        this.currentPort.removeVehicle(this);
+        currentPort.addVehicle(this);
         this.currentPort = currentPort;
+    }
+
+    public static void removeVehicle(String idToRemove) {
+        Vehicle vehicle = Vehicle.matchVehicleId(idToRemove);
+
+        vehicle.currentPort.removeVehicle(vehicle);
+
+        vehicle.removeAllContainer();
+
+        System.out.println("Vehicle " + idToRemove + " removed successfully!");
+        vehicles.remove(vehicle);
+        vehicle = null;
+    }
+
+    public void removeAllContainer() {
+        while (onVehicleContainers.size() > 0) {
+            Container.removeContainer(onVehicleContainers.get(onVehicleContainers.size()-1).getId());
+        }
     }
 
     public double getMaxFuel() {
@@ -72,6 +101,10 @@ public abstract class Vehicle {
 
     public void setMaxFuel(double maxFuel) {
         this.maxFuel = maxFuel;
+    }
+
+    public boolean isFullFuel() {
+        return (fuel == maxFuel);
     }
 
     public double getCapacity() {
@@ -92,17 +125,22 @@ public abstract class Vehicle {
 
     public abstract double getTotalWeight() ;
 
-    public void addContainer(Container c) {
-        containers.add(c);
+    public void addContainer(Container container) {
+        onVehicleContainers.add(container);
+        container.setCurrentVehicle(this);
     }
 
-    public void removeContainer(Container c) {
-        containers.remove(c);
+    public void removeContainer(Container container) {
+        onVehicleContainers.remove(container);
     }
-
 
     public ArrayList<Container> listOfContainers() {
-        return containers;
+        return onVehicleContainers;
+    }
+    public void printListOfContainers() {
+        for (Container c: onVehicleContainers) {
+            System.out.println(c.toString());
+        }
     }
 
     // Fuel vehicle
@@ -126,16 +164,21 @@ public abstract class Vehicle {
         return null;
     }
 
+    public static void printListOfVehicles() {
+        System.out.println("List of Vehicles available: ");
+        for (Vehicle vehicle: vehicles) {
+            System.out.println("\t " + vehicle.toString());
+        }
+    }
+
     // Load / unload containers
     public abstract boolean loadContainer(Container c);
-    public abstract void unloadContainer(Container c);
+    public abstract boolean unloadContainer(Container c);
 
     // Get container info
     public int getNumContainers() {
-        return this.containers.size();
+        return onVehicleContainers.size();
     };
-    public abstract double getTotalContainerWeight();
-
     // Move vehicle
     public abstract void moveToPort(Port port);
     public abstract boolean canMoveToPort(Port targetPort);

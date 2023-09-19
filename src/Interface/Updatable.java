@@ -1,6 +1,6 @@
-//package Interface;
-//
-//public interface Updatable {
-//    public static void remove(Object obj);
-//
-//}
+package Interface;
+
+public interface Updatable {
+    public void remove();
+    public void add();
+}

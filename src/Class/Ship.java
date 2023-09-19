@@ -9,32 +9,23 @@ public class Ship extends Vehicle {
     private double totalWeight = 0;
     private Map<ContainerType, Double> fuelConsumptionRates;
     private List<TripLogEntry> tripLog;
-    private static ArrayList<Ship> ships = new ArrayList<Ship>();
 
 //    constructor, getter, setter
 
 
-    public Ship(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
-        super(name, fuel,maxFuel, capacity,maxLoad,containers,currentPort);
+    public Ship(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort) {
+        super(name, fuel,maxFuel, capacity,maxLoad, currentPort);
         fuelConsumptionRates = new HashMap<>();
         fuelConsumptionRates.put(ContainerType.DRY, 3.5);
         fuelConsumptionRates.put(ContainerType.OPEN_TOP, 2.8);
         fuelConsumptionRates.put(ContainerType.OPEN_SIDE, 2.7);
         fuelConsumptionRates.put(ContainerType.REFRIGERATED, 4.5);
         fuelConsumptionRates.put(ContainerType.LIQUID, 4.8);
-        ships.add(this);
     }
 
     @Override
     public double getTotalWeight() {
         return totalWeight;
-    }
-
-    public static void getShips() {
-        System.out.println("List of Ship: ");
-        for (Ship s: ships) {
-            System.out.println("\t" + s.toString());
-        }
     }
 
     @Override
@@ -61,7 +52,7 @@ public class Ship extends Vehicle {
         }
 
         // Check container weight
-        double totalWeight = this.getTotalContainerWeight();
+        double totalWeight = this.totalWeight;
         if (totalWeight + c.getWeight() > this.getMaxLoad()) {
             System.out.println("Container will exceed max load limit!");
             return false;
@@ -71,18 +62,17 @@ public class Ship extends Vehicle {
 
         // Load container
         super.addContainer(c); // Store in some list
-        super.getCurrentPort().removeContainer(c);
-
+        if (super.getCurrentPort() != null) {super.getCurrentPort().removeContainer(c);};
         return true;
     }
 
     @Override
-    public void unloadContainer(Container c) {
+    public boolean unloadContainer(Container c) {
         // Unload container
         // Check if container is loaded
         if (!super.listOfContainers().contains(c)) {
             System.out.println("This container is not on the ship!");
-            return;
+            return false;
         }
 
         // Unload container
@@ -93,18 +83,13 @@ public class Ship extends Vehicle {
         this.totalWeight -= c.getWeight();
 
         System.out.println("Unloaded container " + c.getId() + " from ship " + super.getName());
+        return false;
     }
 
     @Override
     public int getNumContainers() {
         // Return number of loaded containers
         return super.listOfContainers().size();
-    }
-
-    @Override
-    public double getTotalContainerWeight() {
-        // Calculate and return total weight
-        return totalWeight;
     }
 
     private double calculateFuelNeeded(double distance) {
@@ -148,7 +133,7 @@ public class Ship extends Vehicle {
         // Update log
         TripLogEntry entry = new TripLogEntry(destinationPort, new Date());
         tripLog.add(entry);
-
+        System.out.println("Vehicle " + super.getId() + " moved to " + destinationPort.getId() + " successfully!");
     }
 
     @Override

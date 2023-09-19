@@ -1,6 +1,7 @@
 package Class;
 
 import Enum.ContainerType;
+import Interface.Updatable;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,8 +12,8 @@ public class Container {
     private double weight;
     private final ContainerType type;
     private Port currentPort;
+    private Vehicle currentVehicle;
     private static ArrayList<Container> containers = new ArrayList<Container>();
-
 
     public static Container matchContainerId(String containerID) {
         for (Container c : containers) {
@@ -24,31 +25,69 @@ public class Container {
         return null;
     }
 
+    public Port getCurrentPort() {
+        return currentPort;
+    }
+
+    public void setCurrentPort(Port currentPort) {
+        this.currentPort = currentPort;
+    }
+
+    public Vehicle getCurrentVehicle() {
+        return currentVehicle;
+    }
+
+    public void setCurrentVehicle(Vehicle currentVehicle) {
+        this.currentVehicle = currentVehicle;
+    }
 
     public static void removeContainer(String idToRemove) {
-        for (Container c: containers) {
-            if (c.getId().equalsIgnoreCase(idToRemove)  ) {
-                containers.remove(c);
+        try {
+            Container c = Container.matchContainerId(idToRemove);
+            containers.remove(c);
+
+            if (c.currentPort != null) {
                 c.currentPort.removeContainer(c);
-                // Update to remove container in file
-                System.out.println("Container " + idToRemove + " removed successfully!");
-                c = null;
+            } else if (c.currentVehicle != null) {
+                c.currentVehicle.removeContainer(c);
             }
-            else {
-                System.out.println("Container not found with id: " + idToRemove);
-            }
+
+            // Update to remove container in file
+            System.out.println("Container " + idToRemove + " removed successfully!");
+            c = null;
+
+        } catch (Exception e) {
+            System.out.println("Container not found with id: " + idToRemove);
         }
     }
     // constructor, getters, setters
+    public Container(double weight, ContainerType type) {
+        this.id = "container" +nextId++;
+        this.weight = weight;
+        this.type = type;
+        this.currentPort = null;
+        this.currentVehicle = null;
+        containers.add(this);
+    }
     public Container(double weight, ContainerType type, Port currentPort) {
         this.id = "container" +nextId++;
         this.weight = weight;
         this.type = type;
         this.currentPort = currentPort;
+        this.currentVehicle = null;
         currentPort.addContainer(this);
         containers.add(this);
     }
 
+    public Container(double weight, ContainerType type, Vehicle currentVehicle) {
+        this.id = "container" +nextId++;
+        this.weight = weight;
+        this.type = type;
+        this.currentPort = null;
+        this.currentVehicle = currentVehicle;
+        currentVehicle.addContainer(this);
+        containers.add(this);
+    }
     public static void getContainers() {
         System.out.println("List of Ship: ");
         for (Container c: containers) {
@@ -102,7 +141,7 @@ public class Container {
         return type;
     }
 
-    public static void addContainer(Port p) {
+    public static void addNewContainer(Port p) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t Enter Container information: ");
         System.out.print("\t\t Enter container's weight: ");
@@ -113,4 +152,6 @@ public class Container {
         Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), p);
         System.out.println("New Container has been added: " + "\n" + newContainer.toString());
     }
+
+
 }

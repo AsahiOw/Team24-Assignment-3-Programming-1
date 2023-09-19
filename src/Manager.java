@@ -29,15 +29,15 @@ public class Manager extends User {
         int option = scanner.nextInt();
         switch (option) {
             case 1:
-                managedPort.listOnPortContainers();
+                managedPort.printOnPortContainers();
                 continueToOption();
                 break;
             case 2:
-                Container.addContainer(managedPort);
+                Container.addNewContainer(managedPort);
                 continueToOption();
                 break;
             case 3:
-                managedPort.listOnPortContainers();
+                managedPort.printOnPortContainers();
 
                 System.out.print("Enter id of the container want to remove: ");
                 String idToRemove = scanner.next();
