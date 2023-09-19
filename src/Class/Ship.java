@@ -1,22 +1,14 @@
 package Class;
 
-import Interface.Vehicle;
+import Class.Vehicle;
+import Class.*;
 
 import java.lang.reflect.Array;
 import java.util.*;
 
 import Enum.ContainerType;
 
-public class Ship implements Vehicle {
-    private String id;
-    private static int nextId = 1;
-    private String name;
-    private double fuel;
-    private double maxFuel;
-    private double capacity;
-    private double maxLoad;
-    private ArrayList<Container> containers;
-    private Port currentPort;
+public class Ship extends Vehicle {
     private static final double MIN_REQUIRED_FUEL = 1000;
     private double totalWeight = 0;
     private Map<ContainerType, Double> fuelConsumptionRates;
@@ -27,14 +19,7 @@ public class Ship implements Vehicle {
 
 
     public Ship(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
-        this.id = "ship"+nextId++;
-        this.name = name;
-        this.fuel = fuel;
-        this.maxFuel = maxFuel;
-        this.capacity = capacity;
-        this.maxLoad = maxLoad;
-        this.containers = containers;
-        this.currentPort = currentPort;
+        super(name, fuel,maxFuel, capacity,maxLoad,containers,currentPort);
         fuelConsumptionRates = new HashMap<>();
         fuelConsumptionRates.put(ContainerType.DRY, 3.5);
         fuelConsumptionRates.put(ContainerType.OPEN_TOP, 2.8);
@@ -44,6 +29,10 @@ public class Ship implements Vehicle {
         ships.add(this);
     }
 
+    @Override
+    public double getTotalWeight() {
+        return totalWeight;
+    }
 
     public static void getShips() {
         System.out.println("List of Ship: ");
@@ -55,67 +44,15 @@ public class Ship implements Vehicle {
     @Override
     public String toString() {
         return "Ship{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", fuel=" + fuel +
-                ", maxFuel=" + maxFuel +
-                ", capacity=" + capacity +
-                ", maxLoad=" + maxLoad +
-                ", currentPort=" + currentPort +
+                "id=" + super.getId() +
+                ", name='" + super.getName() + '\'' +
+                ", fuel=" + super.getFuel() +
+                ", maxFuel=" + super.getMaxFuel() +
+                ", capacity=" + super.getCapacity() +
+                ", maxLoad=" + super.getMaxLoad() +
+                ", currentPort=" + super.getCurrentPort().getName() +
                 ", totalWeight=" + totalWeight +
                 '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getFuel() {
-        return fuel;
-    }
-
-
-    public void setFuel(double fuel) {
-        this.fuel = fuel;
-    }
-
-    public double getCapacity() {
-        return capacity;
-    }
-
-
-    public double getMaxLoad() {
-        return maxLoad;
-    }
-
-    public void setMaxLoad(double maxLoad) {
-        this.maxLoad = maxLoad;
-    }
-
-    public double getMaxFuel() {
-        return maxFuel;
-    }
-
-    public void setMaxFuel(double maxFuel) {
-        this.maxFuel = maxFuel;
-    }
-
-    @Override
-    public Port getCurrentPort() {
-        return currentPort;
-    }
-
-    @Override
-    public void setCurrentPort(Port port) {
-        this.currentPort = port;
     }
 
     //    method
@@ -137,8 +74,8 @@ public class Ship implements Vehicle {
         this.totalWeight += c.getWeight();
 
         // Load container
-        this.containers.add(c); // Store in some list
-        currentPort.removeContainer(c);
+        super.addContainer(c); // Store in some list
+        super.getCurrentPort().removeContainer(c);
 
         System.out.println("Loaded container " + c.getId() + " on ship " + this.getName());
     }
@@ -147,14 +84,14 @@ public class Ship implements Vehicle {
     public void unloadContainer(Container c) {
         // Unload container
         // Check if container is loaded
-        if (!this.containers.contains(c)) {
+        if (!super.listOfContainers().contains(c)) {
             System.out.println("This container is not on the ship!");
             return;
         }
 
         // Unload container
-        this.containers.remove(c);
-        currentPort.addContainerToPort(c);
+        super.removeContainer(c);
+        super.getCurrentPort().addContainerToPort(c);
 
         // Update total weight
         this.totalWeight -= c.getWeight();
@@ -165,7 +102,7 @@ public class Ship implements Vehicle {
     @Override
     public int getNumContainers() {
         // Return number of loaded containers
-        return this.containers.size();
+        return super.listOfContainers().size();
     }
 
     @Override
@@ -178,7 +115,7 @@ public class Ship implements Vehicle {
 
         double totalConsumption = 0;
 
-        for (Container c : this.containers) {
+        for (Container c : super.listOfContainers()) {
             double rate = fuelConsumptionRates.get(c.getType());
             totalConsumption += rate * c.getWeight();
         }
@@ -210,7 +147,7 @@ public class Ship implements Vehicle {
         this.setCurrentPort(destinationPort);
 
         // Reduce fuel
-        this.fuel -= fuelNeeded;
+        super.setFuel(super.getFuel() - fuelNeeded);
 
         // Update log
         TripLogEntry entry = new TripLogEntry(destinationPort, new Date());
@@ -241,8 +178,8 @@ public class Ship implements Vehicle {
             System.out.println("Error! Ship must be docked to refuel.");
         }
 
-        double neededFuel = this.maxFuel - this.getFuel();
-        this.fuel = this.maxFuel;
+        double neededFuel = super.getMaxFuel() - this.getFuel();
+        super.setFuel(super.getMaxFuel());
         System.out.println("Refueled ship with " + neededFuel + " gallons.");
     }
 }

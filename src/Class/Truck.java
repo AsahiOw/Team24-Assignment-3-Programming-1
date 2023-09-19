@@ -7,23 +7,14 @@ import java.util.*;
 
 import Enum.ContainerType;
 
-import Interface.Vehicle;
+import Class.Vehicle;
 
 import static Enum.ContainerType.LIQUID;
 import static Enum.ContainerType.REFRIGERATED;
 import static Enum.TruckType.REEFER;
 import static Enum.TruckType.TANKER;
 
-public class Truck implements Vehicle{
-    private String id;
-    private static int nextId = 1;
-    private String name;
-    private double fuel;
-    private double maxFuel;
-    private double capacity;
-    private double maxLoad;
-    private ArrayList<Container> containers;
-    private Port currentPort;
+public class Truck extends Vehicle{
     private static final double MIN_REQUIRED_FUEL = 1000;
     private double totalWeight = 0;
     private Map<ContainerType, Double> fuelConsumptionRates;
@@ -32,14 +23,7 @@ public class Truck implements Vehicle{
     private static ArrayList<Truck> trucks = new ArrayList<Truck>();
 
     public Truck(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type) {
-        this.id = "truck" + nextId++;
-        this.name = name;
-        this.fuel = fuel;
-        this.maxFuel = maxFuel;
-        this.capacity = capacity;
-        this.maxLoad = maxLoad;
-        this.containers = containers;
-        this.currentPort = currentPort;
+        super(name, fuel,maxFuel, capacity,maxLoad,containers,currentPort);
         fuelConsumptionRates = new HashMap<>();
         fuelConsumptionRates.put(ContainerType.DRY, 4.6);
         fuelConsumptionRates.put(ContainerType.OPEN_TOP, 3.2);
@@ -58,84 +42,25 @@ public class Truck implements Vehicle{
     @Override
     public String toString() {
         return "Truck{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", fuel=" + fuel +
-                ", maxFuel=" + maxFuel +
-                ", capacity=" + capacity +
-                ", maxLoad=" + maxLoad +
-                ", currentPort=" + currentPort +
+                "id=" + super.getId() +
+                ", name='" + super.getName() + '\'' +
+                ", fuel=" + super.getFuel() +
+                ", maxFuel=" + super.getMaxFuel() +
+                ", capacity=" + super.getCapacity() +
+                ", maxLoad=" + super.getMaxLoad() +
+                ", currentPort=" + super.getCurrentPort().getName() +
                 ", totalWeight=" + totalWeight +
                 ", type=" + type +
                 '}';
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getFuel() {
-        return fuel;
-    }
-
-    public void setFuel(double fuel) {
-        this.fuel = fuel;
-    }
-
-    public double getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(double capacity) {
-        this.capacity = capacity;
-    }
-
-    public double getMaxLoad() {
-        return maxLoad;
-    }
-
-    public void setMaxLoad(double maxLoad) {
-        this.maxLoad = maxLoad;
-    }
-
-    public double getMaxFuel() {
-        return maxFuel;
-    }
-
-    public void setMaxFuel(double maxFuel) {
-        this.maxFuel = maxFuel;
-    }
-
     public TruckType getType() {
         return type;
     }
-
     @Override
-    public Port getCurrentPort() {
-        return currentPort;
+    public double getTotalWeight() {
+        return totalWeight;
     }
-
-    @Override
-    public void setCurrentPort(Port port) {
-        this.currentPort = port;
-    }
-
-    public ArrayList<Container> getContainers() {
-        return containers;
-    }
-
-    public void setContainers(ArrayList<Container> containers) {
-        this.containers = containers;
-    }
-
 
     //    method
     @Override
@@ -166,8 +91,8 @@ public class Truck implements Vehicle{
         this.totalWeight += c.getWeight();
 
         // Load container
-        this.containers.add(c); // Store in some list
-        currentPort.removeContainer(c);
+        super.addContainer(c); // Store in some list
+        super.getCurrentPort().removeContainer(c);
 
         System.out.println("Loaded container " + c.getId() + " on truck " + this.getName());
     }
@@ -176,14 +101,14 @@ public class Truck implements Vehicle{
     public void unloadContainer(Container c) {
         // Unload container
         // Check if container is loaded
-        if (!this.containers.contains(c)) {
+        if (!super.listOfContainers().contains(c)) {
             System.out.println("This container is not on the truck!");
             return;
         }
 
         // Unload container
-        this.containers.remove(c);
-        currentPort.addContainerToPort(c);
+        super.removeContainer(c);
+        super.getCurrentPort().addContainerToPort(c);
 
         // Update total weight
         this.totalWeight -= c.getWeight();
@@ -194,7 +119,7 @@ public class Truck implements Vehicle{
     @Override
     public int getNumContainers() {
         // Return number of loaded containers
-        return this.containers.size();
+        return super.listOfContainers().size();
     }
 
     @Override
@@ -207,7 +132,7 @@ public class Truck implements Vehicle{
 
         double totalConsumption = 0;
 
-        for (Container c : this.containers) {
+        for (Container c : super.listOfContainers()) {
             double rate = fuelConsumptionRates.get(c.getType());
             totalConsumption += rate * c.getWeight();
         }
@@ -239,7 +164,7 @@ public class Truck implements Vehicle{
         this.setCurrentPort(destinationPort);
 
         // Reduce fuel
-        this.fuel -= fuelNeeded;
+        super.setFuel(super.getFuel() - fuelNeeded);
 
         // Update log
         TripLogEntry entry = new TripLogEntry(destinationPort, new Date());
@@ -273,8 +198,8 @@ public class Truck implements Vehicle{
             System.out.println("Error! Truck must be docked to refuel.");
         }
 
-        double neededFuel = this.maxFuel - this.getFuel();
-        this.fuel = this.maxFuel;
+        double neededFuel = super.getMaxFuel() - this.getFuel();
+        super.setFuel(super.getMaxFuel());
         System.out.println("Refueled truck with " + neededFuel + " gallons.");
     }
 

@@ -1,7 +1,5 @@
 package Class;
 
-import Interface.Vehicle;
-
 import java.util.Date;
 
 import Enum.TripStatus;
