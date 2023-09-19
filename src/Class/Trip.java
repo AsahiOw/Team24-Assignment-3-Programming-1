@@ -17,7 +17,7 @@ public class Trip {
 
     // constructor, getters, setters
 
-    public Trip(String id, Vehicle vehicle, Date departureDate, Port departurePort, Date arrivalDate, Port arrivalPort, TripStatus status) {
+    public Trip(Vehicle vehicle, Date departureDate, Port departurePort, Date arrivalDate, Port arrivalPort, TripStatus status) {
         this.id = "trip" + nextId++;
         this.vehicle = vehicle;
         this.departureDate = departureDate;

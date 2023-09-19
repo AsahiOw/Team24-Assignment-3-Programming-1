@@ -26,7 +26,7 @@ public class Ship implements Vehicle {
 //    constructor, getter, setter
 
 
-    public Ship(String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
+    public Ship(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
         this.id = "ship"+nextId++;
         this.name = name;
         this.fuel = fuel;

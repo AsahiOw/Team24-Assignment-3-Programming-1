@@ -73,6 +73,7 @@ public class Truck implements Vehicle{
                 '}';
     }
 
+
     public String getId() {
         return id;
     }
@@ -277,6 +278,21 @@ public class Truck implements Vehicle{
         double neededFuel = this.maxFuel - this.getFuel();
         this.fuel = this.maxFuel;
         System.out.println("Refueled truck with " + neededFuel + " gallons.");
+    }
+
+    public static TruckType matchTruckType(String truckType) {
+        TruckType type;
+        if ("BASIC".equalsIgnoreCase(truckType)) {
+            type = TruckType.BASIC;
+        } else if ("REEFER".equalsIgnoreCase(truckType)) {
+            type = TruckType.REEFER;
+        } else if ("TANKER".equalsIgnoreCase(truckType)) {
+            type = TruckType.TANKER;
+        } else {
+            System.out.println("No matching type found!");
+            return null;
+        }
+        return type;
     }
 }
 

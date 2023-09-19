@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import Class.*;
+import Enum.*;
 
 public class Admin extends User {
     public Admin(String username, String password) {
@@ -32,12 +33,14 @@ public class Admin extends User {
             case 1:
 
 //              List of Options
+                System.out.println("\n----------------------");
                 System.out.println("1. List all ports");
                 System.out.println("2. List all vehicles");
                 System.out.println("3. List all containers");
                 System.out.println("4. List all managers");
 
 //              Select Option
+                System.out.println("\n----------------------");
                 System.out.print("\nSelect Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
@@ -63,16 +66,19 @@ public class Admin extends User {
 
             case 2:
 //              List of Options
+                System.out.println("\n----------------------");
                 System.out.println("1. Add new port");
                 System.out.println("2. Add new vehicle");
                 System.out.println("3. Add new container");
 
 //              Select Option
+                System.out.println("\n----------------------");
                 System.out.print("\nSelect Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
-                    case 1:
-                        Port p1 = new Port("port1",12.3,456,1000,true);
+                    case 1: // Add new port
+
+                        System.out.println("\n----------------------");
                         System.out.println("\t Enter Port information: ");
                         System.out.print("\t\t Enter port's name: ");
                         String port_name = scanner.next();
@@ -88,15 +94,43 @@ public class Admin extends User {
                         System.out.print("\t\t Enter port's landing Ability: ");
                         boolean port_landingAbility = scanner.nextBoolean();
 
-                        System.out.println("New port has been added: " + "\n" + new Port(port_name,port_latitude,port_longtitude,port_capacity,port_landingAbility).toString());
+                        System.out.println("New port has been added: " + "\n" + new Port(port_name, port_latitude, port_longtitude, port_capacity, port_landingAbility).toString());
                         continueToOption();
                         break;
-                    case 2:
+
+                    case 2: // Add new vehicle
+
+                        System.out.println("\n----------------------");
+                        System.out.print("\t Which vehicle you want to add (Enter Truck/Ship): ");
+                        String vehicle_type = scanner.next();
+
+                        System.out.println("\n\t Enter vehicle information: ");
+                        System.out.print("\t\t Enter vehicle's name: ");
+                        String veh_name = scanner.next();
+                        System.out.print("\t\t Enter vehicle's fuel: ");
+                        double veh_fuel = scanner.nextDouble();
+                        System.out.print("\t\t Enter vehicle's max fuel: ");
+                        double veh_maxFuel = scanner.nextDouble();
+                        System.out.print("\t\t Enter vehicle's capacity: ");
+                        double veh_capacity = scanner.nextDouble();
+                        System.out.print("\t\t Enter vehicle's maxLoad: ");
+                        double veh_maxLoad = scanner.nextDouble();
+                        System.out.print("\t\t Enter vehicle's port ID: ");
+                        String port_id = scanner.next();
+
+                        if (vehicle_type.equalsIgnoreCase("Truck")) {
+                            System.out.print("\t\t Enter vehicle's type: ");
+                            String veh_type = scanner.next();
+                            System.out.println("New Truck has been added: " + "\n" + new Truck(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, null, Port.getPortBasedOnID(port_id), Truck.matchTruckType(veh_type)).toString());
+                        } else if (vehicle_type.equalsIgnoreCase("Ship")) {
+                            System.out.println("New Ship has been added: " + "\n" + new Ship(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, null, Port.getPortBasedOnID(port_id)).toString());
+                        }
 
                         continueToOption();
                         break;
-                    case 3:
 
+                    case 3: // Add new container
+                        Container.addContainer();
                         continueToOption();
                         break;
                     default:

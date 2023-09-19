@@ -11,6 +11,20 @@ public class Port {
     private double capacity;
     private boolean landingAbility;
     private static ArrayList<Port> ports = new ArrayList<Port>();
+    private ArrayList<Container> onPortContainers = new ArrayList<Container>();
+
+    public void addContainerToPort(Container container) {
+        onPortContainers.add(container);
+        container.setPort(this);
+    }
+
+    public ArrayList<Container> getOnPortContainers() {
+        return onPortContainers;
+    }
+
+    public void removeContainer(Container c) {
+        onPortContainers.remove(c);
+    }
 
     // constructor, getters, setters
 
@@ -22,6 +36,15 @@ public class Port {
         this.capacity = capacity;
         this.landingAbility = landingAbility;
         ports.add(this);
+    }
+    public void addContainer(Container c) {
+        onPortContainers.add(c);
+    }
+    public static Port getPortBasedOnID(String id) {
+        for (Port p: ports) {
+            if (id == p.getId()) return p;
+        }
+        return null;
     }
 
     public String getId() {
