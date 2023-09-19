@@ -16,6 +16,7 @@ import static Enum.TruckType.TANKER;
 
 public class Truck implements Vehicle{
     private int id;
+    private static int nextId = 1;
     private String name;
     private double fuel;
     private double maxFuel;
@@ -28,12 +29,13 @@ public class Truck implements Vehicle{
     private Map<ContainerType, Double> fuelConsumptionRates;
     private TruckType type;
     private List<TripLogEntry> tripLog;
+    private Date dateAdded;
 
 //    constructor, getter, setter
 
 
-    public Truck(int id, String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type) {
-        this.id = id;
+    public Truck(String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type, Date dateAdded) {
+        this.id = nextId++;
         this.name = name;
         this.fuel = fuel;
         this.maxFuel = maxFuel;
@@ -48,6 +50,7 @@ public class Truck implements Vehicle{
         fuelConsumptionRates.put(ContainerType.REFRIGERATED, 5.4);
         fuelConsumptionRates.put(ContainerType.LIQUID, 5.3);
         this.type = type;
+        this.dateAdded = new Date();
     }
 
     public int getId() {
@@ -64,10 +67,6 @@ public class Truck implements Vehicle{
 
     public double getFuel() {
         return fuel;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setFuel(double fuel) {
@@ -110,6 +109,18 @@ public class Truck implements Vehicle{
     @Override
     public void setCurrentPort(Port port) {
         this.currentPort = port;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public ArrayList<Container> getContainers() {
+        return containers;
+    }
+
+    public void setContainers(ArrayList<Container> containers) {
+        this.containers = containers;
     }
 
 
