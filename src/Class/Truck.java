@@ -7,8 +7,6 @@ import java.util.*;
 
 import Enum.ContainerType;
 
-import Class.Vehicle;
-
 import static Enum.ContainerType.LIQUID;
 import static Enum.ContainerType.REFRIGERATED;
 import static Enum.TruckType.REEFER;
