@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import Class.*;
 import Enum.*;
@@ -12,15 +14,15 @@ public class Admin extends User {
     }
 
     // Get input choice and execute relevant method
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
     @Override
     public void showMenuOptions() {
         int sub_option = 0;
 
         System.out.println("Welcome Admin! Select an option: \n");
-        System.out.println("1. Listing Option");
-        System.out.println("2. Entity Management (Add)");
-        System.out.println("3. Remove");
+        System.out.println("1. Listing/Viewing options");
+        System.out.println("2. Adding entities");
+        System.out.println("3. Removing entities");
         System.out.println("4. Vehicle Options");
         System.out.println("5. User Management");
         System.out.println("6. Statistic Operation");
@@ -31,7 +33,7 @@ public class Admin extends User {
         switch (option) {
 
 
-            case 1:
+            case 1: // Listing/Viewing options
 //              List of Options
                 System.out.println("\n----------------------");
                 System.out.println("1. List all ports");
@@ -65,7 +67,7 @@ public class Admin extends User {
                 break;
 
 
-            case 2:
+            case 2: //Adding entities
 //              List of Options
                 System.out.println("\n----------------------");
                 System.out.println("1. Add new port");
@@ -146,7 +148,7 @@ public class Admin extends User {
                 break;
 
 
-            case 3:
+            case 3: // Removing entities
                 System.out.println("1. Remove port");
                 System.out.println("2. Remove vehicle");
                 System.out.println("3. Remove container");
@@ -179,6 +181,46 @@ public class Admin extends User {
                 System.out.println("3. Vehicle move to port");
                 System.out.println("4. Fuel up vehicle");
 
+//              Select Option
+                System.out.println("\n----------------------");
+                System.out.print("\nSelect Option: ");
+                sub_option = scanner.nextInt();
+                switch (sub_option) {
+                    case 1:
+                        ArrayList<Container> listOfContainers = new ArrayList<Container>();
+                        System.out.print("Select vehicles by ID: ");
+                        String veh_ID = scanner.next();
+
+                        System.out.print("Enter container(s) name (type 'stop' at the end): ");
+                        String con_Id = scanner.next();
+                        while (con_Id.equalsIgnoreCase("stop")) {
+                            listOfContainers.add(Container.matchContainerId(con_Id));
+                            con_Id = scanner.next();
+                        }
+
+                        int countContainers = 0;
+
+                        for (Container c: listOfContainers) {
+                            if (!Objects.requireNonNull(Vehicle.matchVehicleId(veh_ID)).loadContainer(c)) {
+                                break;
+                            } else {
+                                countContainers ++;
+                            }
+                        }
+
+                        if (countContainers == listOfContainers.size()) {
+                            System.out.println("All container loaded successfully!");
+                        } else {
+                            System.out.println("Only " + countContainers + " has been loaded");
+                            System.out.println("Containers ID that haven't been loaded: ");
+                            for (int i = countContainers; i<= listOfContainers.size(); i++) {
+                                System.out.print("\t " + listOfContainers.get(i));
+                            }
+                        }
+                        scanner.nextLine();
+                        continueToOption();
+                        break;
+                }
 
             case 5:
                 System.out.println("1. Add user");
@@ -199,13 +241,14 @@ public class Admin extends User {
                 break;
         }
     }
+
     public void continueToOption() {
         System.out.print("\nContinue? (Y/N) ");
-        String option = scanner.next();
+        String continueToOption = scanner.next();
 
-        if(option.equalsIgnoreCase("Y")) {
-            showMenuOptions();
-        } else if(option.equalsIgnoreCase("N")) {
+        if(continueToOption.equalsIgnoreCase("Y")) {
+            this.showMenuOptions();
+        } else if(continueToOption.equalsIgnoreCase("N")) {
             System.out.println("Session end.");
             return;
         }

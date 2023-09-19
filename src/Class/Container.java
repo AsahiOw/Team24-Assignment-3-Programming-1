@@ -13,6 +13,18 @@ public class Container {
     private Port currentPort;
     private static ArrayList<Container> containers = new ArrayList<Container>();
 
+
+    public static Container matchContainerId(String containerID) {
+        for (Container c : containers) {
+            if (c.getId().equalsIgnoreCase(containerID)) {
+                return c;
+            }
+        }
+        System.out.println("No matching container!");
+        return null;
+    }
+
+
     public static void removeContainer(String idToRemove) {
         for (Container c: containers) {
             if (c.getId().equalsIgnoreCase(idToRemove)  ) {

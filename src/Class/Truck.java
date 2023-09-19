@@ -7,8 +7,6 @@ import java.util.*;
 
 import Enum.ContainerType;
 
-import Class.Vehicle;
-
 import static Enum.ContainerType.LIQUID;
 import static Enum.ContainerType.REFRIGERATED;
 import static Enum.TruckType.REEFER;
@@ -64,28 +62,28 @@ public class Truck extends Vehicle{
 
     //    method
     @Override
-    public void loadContainer(Container c) {
+    public boolean loadContainer(Container c) {
         // Check if truck type can carry container type
         if(c.getType() == REFRIGERATED && type != REEFER) {
             System.out.println("Cannot load refrigerated container on this truck");
-            return;
+            return false;
         }
         if(c.getType() == LIQUID && type != TANKER) {
             System.out.println("Cannot load liquid container on this truck");
-            return;
+            return false;
         }
 
         // Check capacity and load
         if (this.getNumContainers() == this.getCapacity()) {
             System.out.println("Truck is at full capacity!");
-            return;
+            return false;
         }
 
         // Check container weight
         double totalWeight = this.getTotalContainerWeight();
         if (totalWeight + c.getWeight() > this.getMaxLoad()) {
             System.out.println("Container will exceed max load limit!");
-            return;
+            return false;
         }
         // Update total weight
         this.totalWeight += c.getWeight();
@@ -94,7 +92,7 @@ public class Truck extends Vehicle{
         super.addContainer(c); // Store in some list
         super.getCurrentPort().removeContainer(c);
 
-        System.out.println("Loaded container " + c.getId() + " on truck " + this.getName());
+        return true;
     }
 
     @Override

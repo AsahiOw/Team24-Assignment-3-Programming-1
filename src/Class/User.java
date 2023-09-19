@@ -19,7 +19,8 @@ abstract class User {
         this.password = password;
         this.role = role;
     }
-
+    public abstract void continueToOption();
+    public abstract void showMenuOptions();
     public int getId() {
         return id;
     }
@@ -67,7 +68,6 @@ abstract class User {
     public void setAdministration(boolean administration) {
         Administration = administration;
     }
-
 
     //    method
     public boolean login(String inputUsername, String inputPassword) {

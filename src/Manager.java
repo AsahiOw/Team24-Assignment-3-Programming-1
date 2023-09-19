@@ -8,16 +8,17 @@ public class Manager extends User {
         this.managedPort = managedPort;
     }
     // Get input choice and execute relevant method
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
     @Override
     public boolean validateCredential(String username, String password) {
         return super.getPassword().equals(password);
     }
     //    public Port managedPort;
+
     @Override
     public void showMenuOptions() {
         int sub_option = 0;
-        System.out.println("Welcome Manager of Port " + managedPort.getName() + "! Select an option:");
+        System.out.println("Welcome Manager of Port " + this.managedPort.getName() + "! Select an option:");
         System.out.println("1. Listing Container in port");
         System.out.println("2. Add Container in port");
         System.out.println("3. Remove Container in port");
@@ -48,11 +49,11 @@ public class Manager extends User {
     }
     public void continueToOption() {
         System.out.print("\nContinue? (Y/N) ");
-        String option = scanner.next();
+        String continueToOption = scanner.next();
 
-        if(option.equalsIgnoreCase("Y")) {
-            showMenuOptions();
-        } else if(option.equalsIgnoreCase("N")) {
+        if(continueToOption.equalsIgnoreCase("Y")) {
+            this.showMenuOptions();
+        } else if(continueToOption.equalsIgnoreCase("N")) {
             System.out.println("Session end.");
         }
     }

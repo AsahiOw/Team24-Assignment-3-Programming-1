@@ -1,9 +1,5 @@
 package Class;
 
-import Class.Vehicle;
-import Class.*;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 import Enum.ContainerType;
@@ -57,18 +53,18 @@ public class Ship extends Vehicle {
 
     //    method
     @Override
-    public void loadContainer(Container c) {
+    public boolean loadContainer(Container c) {
         // Check capacity and load
         if (this.getNumContainers() == this.getCapacity()) {
             System.out.println("Ship is at full capacity!");
-            return;
+            return false;
         }
 
         // Check container weight
         double totalWeight = this.getTotalContainerWeight();
         if (totalWeight + c.getWeight() > this.getMaxLoad()) {
             System.out.println("Container will exceed max load limit!");
-            return;
+            return false;
         }
         // Update total weight
         this.totalWeight += c.getWeight();
@@ -77,7 +73,7 @@ public class Ship extends Vehicle {
         super.addContainer(c); // Store in some list
         super.getCurrentPort().removeContainer(c);
 
-        System.out.println("Loaded container " + c.getId() + " on ship " + this.getName());
+        return true;
     }
 
     @Override
@@ -96,7 +92,7 @@ public class Ship extends Vehicle {
         // Update total weight
         this.totalWeight -= c.getWeight();
 
-        System.out.println("Unloaded container " + c.getId() + " from ship " + this.getName());
+        System.out.println("Unloaded container " + c.getId() + " from ship " + super.getName());
     }
 
     @Override
@@ -138,7 +134,7 @@ public class Ship extends Vehicle {
         double fuelNeeded = calculateFuelNeeded(this.getCurrentPort().distanceTo(destinationPort));
 
         // Check fuel available
-        if (fuelNeeded > this.getFuel()) {
+        if (fuelNeeded > super.getFuel()) {
             System.out.println("Not enough fuel!");
             return;
         }

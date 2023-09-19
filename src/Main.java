@@ -17,14 +17,13 @@ public class Main {
         Container c1 = new Container(12.4, ContainerType.DRY, p1);
         Container c2 = new Container(42.1,ContainerType.OPEN_TOP, p2);
 
-
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
 
-        if (Admin.matchUser(username) != null) {
-            User user = Admin.matchUser(username);
+        if (User.matchUser(username) != null) {
+            User user = User.matchUser(username);
             System.out.print("Enter password: ");
             String password = scanner.nextLine();
             if (user.validateCredential(username, password)) { user.showMenuOptions(); }

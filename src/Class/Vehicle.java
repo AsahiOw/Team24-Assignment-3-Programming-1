@@ -12,6 +12,7 @@ public abstract class Vehicle {
     private ArrayList<Container> containers;
     private Port currentPort;
     private static final double MIN_REQUIRED_FUEL = 1000;
+    private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
     public Vehicle(String name, double fuel, double maxFuel, double capacity, double maxLoad, ArrayList<Container> containers, Port currentPort) {
         this.id = "vehicle" + nextId++;
@@ -22,6 +23,7 @@ public abstract class Vehicle {
         this.maxLoad = maxLoad;
         this.containers = containers;
         this.currentPort = currentPort;
+        vehicles.add(this);
     }
     // Get vehicle info
     public String getId() {
@@ -114,8 +116,18 @@ public abstract class Vehicle {
         System.out.println("Refueled vehicle with " + neededFuel + " gallons.");
     }
 
+    public static Vehicle matchVehicleId(String vehicleID) {
+        for (Vehicle v: vehicles) {
+            if (v.getId().equalsIgnoreCase(vehicleID)) {
+                return v;
+            }
+        }
+        System.out.println("Vehicle not found with id: " + vehicleID);
+        return null;
+    }
+
     // Load / unload containers
-    public abstract void loadContainer(Container c);
+    public abstract boolean loadContainer(Container c);
     public abstract void unloadContainer(Container c);
 
     // Get container info
