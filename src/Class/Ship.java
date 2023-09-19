@@ -138,6 +138,7 @@ public class Ship implements Vehicle {
 
         // Load container
         this.containers.add(c); // Store in some list
+        currentPort.removeContainer(c);
 
         System.out.println("Loaded container " + c.getId() + " on ship " + this.getName());
     }
@@ -153,6 +154,7 @@ public class Ship implements Vehicle {
 
         // Unload container
         this.containers.remove(c);
+        currentPort.addContainerToPort(c);
 
         // Update total weight
         this.totalWeight -= c.getWeight();
