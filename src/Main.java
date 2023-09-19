@@ -1,17 +1,35 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.*;
+import Class.*;
+import Enum.*;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        ArrayList<User> users = new ArrayList<User>();
+        Port p1 = new Port(1,"port1",12.3,456,1000,true);
+        Port p2 = new Port(2,"port2",12.3,456,1000,true);
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        Truck t1 = new Truck("Truck1", 200, 500, 10, 1000, null, p1, TruckType.REEFER);
+        Ship s1 = new Ship(1, "Ship 1", 1000, 2000, 50, 10000, null, p2);
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        User u1 = new Admin("a1","123");
+        User u2 = new Manager("m1","123", p1);
+
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        if (Admin.matchUser(username) != null) {
+            User user = Admin.matchUser(username);
+            System.out.print("Enter password: ");
+            String password = scanner.nextLine();
+            if (user.validateCredential(username, password)) { user.showMenuOptions(); }
+            else System.out.println("Wrong password!");
         }
+        else System.out.println("No matching username!");
+
+        scanner.close();
     }
 }

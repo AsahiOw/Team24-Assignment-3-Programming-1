@@ -2,6 +2,7 @@ package Class;
 
 import Interface.Vehicle;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import Enum.ContainerType;
@@ -18,8 +19,8 @@ public class Ship implements Vehicle {
     private static final double MIN_REQUIRED_FUEL = 1000;
     private double totalWeight = 0;
     private Map<ContainerType, Double> fuelConsumptionRates;
-
     private List<TripLogEntry> tripLog;
+    private static ArrayList<Ship> ships = new ArrayList<Ship>();
 
 //    constructor, getter, setter
 
@@ -39,6 +40,29 @@ public class Ship implements Vehicle {
         fuelConsumptionRates.put(ContainerType.OPEN_SIDE, 2.7);
         fuelConsumptionRates.put(ContainerType.REFRIGERATED, 4.5);
         fuelConsumptionRates.put(ContainerType.LIQUID, 4.8);
+        ships.add(this);
+    }
+
+
+    public static void getShips() {
+        System.out.println("List of Ship: ");
+        for (Ship s: ships) {
+            System.out.println("\t" + s.toString());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", fuel=" + fuel +
+                ", maxFuel=" + maxFuel +
+                ", capacity=" + capacity +
+                ", maxLoad=" + maxLoad +
+                ", currentPort=" + currentPort +
+                ", totalWeight=" + totalWeight +
+                '}';
     }
 
     public int getId() {

@@ -1,5 +1,7 @@
 package Class;
 
+import java.util.ArrayList;
+
 public class Port {
     private int id;
     private String name;
@@ -7,6 +9,7 @@ public class Port {
     private double longitude;
     private int capacity;
     private boolean landingAbility;
+    private static ArrayList<Port> ports = new ArrayList<Port>();
 
     // constructor, getters, setters
 
@@ -17,10 +20,28 @@ public class Port {
         this.longitude = longitude;
         this.capacity = capacity;
         this.landingAbility = landingAbility;
+        ports.add(this);
     }
 
     public int getId() {
         return id;
+    }
+    public static void getPorts() {
+        for (Port p: ports) {
+            System.out.println(p.toString());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Port{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", capacity=" + capacity +
+                ", landingAbility=" + landingAbility +
+                '}';
     }
 
     public void setId(int id) {

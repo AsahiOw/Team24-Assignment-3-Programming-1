@@ -29,12 +29,12 @@ public class Truck implements Vehicle{
     private Map<ContainerType, Double> fuelConsumptionRates;
     private TruckType type;
     private List<TripLogEntry> tripLog;
-    private Date dateAdded;
+    private static ArrayList<Truck> trucks = new ArrayList<Truck>();
 
 //    constructor, getter, setter
 
 
-    public Truck(String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type, Date dateAdded) {
+    public Truck(String name, double fuel, double maxFuel, int capacity, double maxLoad, ArrayList<Container> containers, Port currentPort, TruckType type) {
         this.id = nextId++;
         this.name = name;
         this.fuel = fuel;
@@ -50,7 +50,27 @@ public class Truck implements Vehicle{
         fuelConsumptionRates.put(ContainerType.REFRIGERATED, 5.4);
         fuelConsumptionRates.put(ContainerType.LIQUID, 5.3);
         this.type = type;
-        this.dateAdded = new Date();
+        trucks.add(this);
+    }
+    public static void getTrucks() {
+        System.out.println("List of Trucks: ");
+        for (Truck t: trucks) {
+            System.out.println("\t" + t.toString());
+        }
+    }
+    @Override
+    public String toString() {
+        return "Truck{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", fuel=" + fuel +
+                ", maxFuel=" + maxFuel +
+                ", capacity=" + capacity +
+                ", maxLoad=" + maxLoad +
+                ", currentPort=" + currentPort +
+                ", totalWeight=" + totalWeight +
+                ", type=" + type +
+                '}';
     }
 
     public int getId() {
@@ -109,10 +129,6 @@ public class Truck implements Vehicle{
     @Override
     public void setCurrentPort(Port port) {
         this.currentPort = port;
-    }
-
-    public Date getDateAdded() {
-        return dateAdded;
     }
 
     public ArrayList<Container> getContainers() {
