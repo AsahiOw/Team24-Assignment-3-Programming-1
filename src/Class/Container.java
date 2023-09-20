@@ -156,7 +156,7 @@ public class Container {
         Container newContainer = new Container(con_weight, Container.matchContainerType(con_type));
         File file2 = new File("src/Data/Container.txt");
         PrintWriter writer = new PrintWriter(file2);
-        writer.write(Container.getId() + ", " + Container.getWeight() + ", " + Container.getType() + "\n");
+        writer.write(newContainer.getId() + ", " + newContainer.getWeight() + ", " + newContainer.getType() + "\n");
         System.out.println("New Container has been added: " + "\n" + newContainer);
     }
 

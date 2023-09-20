@@ -173,14 +173,15 @@ public class Admin extends User {
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1: // Add user
+                        User.addUser();
                         continueToOption();
                         break;
                     case 2: // Remove user
+                        User.removeUser();
                         continueToOption();
                         break;
                 }
                 break;
-
 
             case 6:
                 System.out.println("1. Total fuel used today");
@@ -198,7 +199,6 @@ public class Admin extends User {
                     case 3:
                 }
                 break;
-
 
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
@@ -291,9 +291,10 @@ public class Admin extends User {
     }
 
     public void addNewContainer() throws FileNotFoundException {
-        System.out.println("\n\t Enter port you want to load this container on: ");
+        System.out.print("\t Enter port you want to load this container on: ");
         String con_portid = scanner.next();
         Container.addNewContainer(Port.matchPortID(con_portid));
+        scanner.nextLine();
     }
 
     public static void loadContainerOnVehicle() {

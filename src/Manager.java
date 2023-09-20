@@ -14,8 +14,6 @@ public class Manager extends User {
     public boolean validateCredential(String username, String password) {
         return super.getPassword().equals(password);
     }
-    //    public Port managedPort;
-
     @Override
     public void showMenuOptions() throws FileNotFoundException {
         int sub_option = 0;
