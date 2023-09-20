@@ -1,8 +1,12 @@
+import Class.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-import Class.*;
-import Enum.*;
 
 public class Admin extends User {
     public Admin(String username, String password) {
@@ -12,11 +16,18 @@ public class Admin extends User {
     public boolean validateCredential(String username, String password) {
         return super.getPassword().equals(password);
     }
-
+//  Open txt file
+    File file1 = new File("src/Data/Port.txt");
+    File file2 = new File("src/Data/Container.txt");
+    File file3 = new File("src/Data/Trip.txt");
+    File file4 = new File("src/Data/Port manager.txt");
+    File file5 = new File("src/Data/Admin.txt");
+    File file6 = new File("src/Data/Ship.txt");
+    File file7 = new File("src/Data/Truck.txt");
     // Get input choice and execute relevant method
     static Scanner scanner = new Scanner(System.in);
     @Override
-    public void showMenuOptions() {
+    public void showMenuOptions() throws IOException {
         int sub_option = 0;
 
         System.out.println("Welcome Admin! Select an option: \n");
@@ -196,7 +207,7 @@ public class Admin extends User {
         }
     }
 
-    public void addNewPort() {
+    public void addNewPort() throws IOException {
 
         System.out.println("\n----------------------");
         System.out.println("\t Enter Port information: ");
@@ -214,10 +225,21 @@ public class Admin extends User {
         System.out.print("\t\t Enter port's landing Ability: ");
         boolean port_landingAbility = scanner.nextBoolean();
 
-        System.out.println("New port has been added: " + "\n" + new Port(port_name, port_latitude, port_longtitude, port_capacity, port_landingAbility).toString());
+
+        Port port = new Port(port_name, port_latitude, port_longtitude, port_capacity, port_landingAbility);
+//      add to data folder
+        PrintWriter writer = new PrintWriter(file1);
+        writer.print(port.getId() + ",");
+        writer.print(port.getName() + ",");
+        writer.print(port.getLatitude() + ",");
+        writer.print(port.getLongitude() + ",");
+        writer.print(port.getCapacity() + ",");
+        writer.println(port.isLandingAbility());
+        writer.close();
+        System.out.println("New port has been added: " + "\n" + port);
     }
 
-    public void addNewVehicle() {
+    public void addNewVehicle() throws FileNotFoundException {
         System.out.println("\n----------------------");
         System.out.print("\t Which vehicle you want to add (Enter Truck/Ship): ");
         String vehicle_type = scanner.next();
@@ -239,13 +261,36 @@ public class Admin extends User {
         if (vehicle_type.equalsIgnoreCase("Truck")) {
             System.out.print("\t\t Enter vehicle's type: ");
             String veh_type = scanner.next();
-            System.out.println("New Truck has been added: " + "\n" + new Truck(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id), Truck.matchTruckType(veh_type)).toString());
+            Vehicle truck = new Truck(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id), Truck.matchTruckType(veh_type));
+            //      add to data folder
+            PrintWriter writer = new PrintWriter(file7);
+            writer.print(truck.getId() + ",");
+            writer.print(truck.getName() + ",");
+            writer.print(truck.getFuel() + ",");
+            writer.print(truck.getMaxFuel() + ",");
+            writer.print(truck.getCapacity() + ",");
+            writer.print(truck.getMaxLoad() + ",");
+            writer.print(truck.getCurrentPort() + ",");
+            writer.println(Truck.matchTruckType(veh_type));
+            writer.close();
+            System.out.println("New Truck has been added: " + "\n" + truck);
         } else if (vehicle_type.equalsIgnoreCase("Ship")) {
-            System.out.println("New Ship has been added: " + "\n" + new Ship(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id)).toString());
+            Vehicle ship = new Ship(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id));
+            //      add to data folder
+            PrintWriter writer = new PrintWriter(file7);
+            writer.print(ship.getId() + ",");
+            writer.print(ship.getName() + ",");
+            writer.print(ship.getFuel() + ",");
+            writer.print(ship.getMaxFuel() + ",");
+            writer.print(ship.getCapacity() + ",");
+            writer.print(ship.getMaxLoad() + ",");
+            writer.print(ship.getCurrentPort());
+            writer.close();
+            System.out.println("New Ship has been added: " + "\n" + ship);
         }
     }
 
-    public void addNewContainer() {
+    public void addNewContainer() throws FileNotFoundException {
         System.out.println("\n\t Enter port you want to load this container on: ");
         String con_portid = scanner.next();
         Container.addNewContainer(Port.matchPortID(con_portid));
@@ -381,7 +426,7 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
-    public void continueToOption() {
+    public void continueToOption() throws IOException {
         System.out.print("\nContinue? (Y/N) ");
         String continueToOption = scanner.next();
 

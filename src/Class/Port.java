@@ -166,4 +166,15 @@ public class Port {
 
         return distance;
     }
+
+    public static Port getPortByName(String name) {
+
+        for (Port port : ports) {
+            if (port.getName().equals(name)) {
+                return port;
+            }
+        }
+
+        return null;
+    }
 }

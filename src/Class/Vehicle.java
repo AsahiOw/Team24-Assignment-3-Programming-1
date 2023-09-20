@@ -170,7 +170,16 @@ public abstract class Vehicle {
             System.out.println("\t " + vehicle.toString());
         }
     }
+    public static Vehicle getVehicleByName(String name) {
 
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getName().equals(name)) {
+                return vehicle;
+            }
+        }
+
+        return null;
+    }
     // Load / unload containers
     public abstract boolean loadContainer(Container c);
     public abstract boolean unloadContainer(Container c);

@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import Class.*;
 
@@ -16,7 +17,7 @@ public class Manager extends User {
     //    public Port managedPort;
 
     @Override
-    public void showMenuOptions() {
+    public void showMenuOptions() throws FileNotFoundException {
         int sub_option = 0;
         System.out.println("Welcome Manager of Port " + this.managedPort.getName() + "! Select an option:");
         System.out.println("1. Listing Container in port");
@@ -47,7 +48,7 @@ public class Manager extends User {
                 break;
         }
     }
-    public void continueToOption() {
+    public void continueToOption() throws FileNotFoundException {
         System.out.print("\nContinue? (Y/N) ");
         String continueToOption = scanner.next();
 

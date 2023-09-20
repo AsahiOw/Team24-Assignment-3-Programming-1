@@ -3,11 +3,14 @@ package Class;
 import Enum.ContainerType;
 import Interface.Updatable;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Container {
-    private final String id;
+    private String id;
     private static int nextId = 1;
     private double weight;
     private final ContainerType type;
@@ -60,34 +63,34 @@ public class Container {
             System.out.println("Container not found with id: " + idToRemove);
         }
     }
-    // constructor, getters, setters
+//     constructor, getters, setters
     public Container(double weight, ContainerType type) {
-        this.id = "container" +nextId++;
+        this.id = "container"+nextId++;
         this.weight = weight;
         this.type = type;
         this.currentPort = null;
         this.currentVehicle = null;
         containers.add(this);
     }
-    public Container(double weight, ContainerType type, Port currentPort) {
-        this.id = "container" +nextId++;
-        this.weight = weight;
-        this.type = type;
-        this.currentPort = currentPort;
-        this.currentVehicle = null;
-        currentPort.addContainer(this);
-        containers.add(this);
-    }
+//    public Container(double weight, ContainerType type, Port currentPort) {
+//        this.id = "container" +nextId++;
+//        this.weight = weight;
+//        this.type = type;
+//        this.currentPort = currentPort;
+//        this.currentVehicle = null;
+//        currentPort.addContainer(this);
+//        containers.add(this);
+//    }
 
-    public Container(double weight, ContainerType type, Vehicle currentVehicle) {
-        this.id = "container" +nextId++;
-        this.weight = weight;
-        this.type = type;
-        this.currentPort = null;
-        this.currentVehicle = currentVehicle;
-        currentVehicle.addContainer(this);
-        containers.add(this);
-    }
+//    public Container(double weight, ContainerType type, Vehicle currentVehicle) {
+//        this.id = "container" +nextId++;
+//        this.weight = weight;
+//        this.type = type;
+//        this.currentPort = null;
+//        this.currentVehicle = currentVehicle;
+//        currentVehicle.addContainer(this);
+//        containers.add(this);
+//    }
     public static void getContainers() {
         System.out.println("List of Ship: ");
         for (Container c: containers) {
@@ -106,6 +109,7 @@ public class Container {
     public String getId() {
         return id;
     }
+
     public void setPort(Port p) {
         this.currentPort = p;
     }
@@ -141,16 +145,19 @@ public class Container {
         return type;
     }
 
-    public static void addNewContainer(Port p) {
+    public static void addNewContainer(Port p) throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\t Enter Container information: ");
+        System.out.println("\t Enter Container information ");
         System.out.print("\t\t Enter container's weight: ");
         double con_weight = scanner.nextDouble();
         System.out.print("\t\t Enter container's type: ");
         String con_type = scanner.next();
 
-        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), p);
-        System.out.println("New Container has been added: " + "\n" + newContainer.toString());
+        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type));
+        File file2 = new File("src/Data/Container.txt");
+        PrintWriter writer = new PrintWriter(file2);
+        writer.write(Container.getId() + ", " + Container.getWeight() + ", " + Container.getType() + "\n");
+        System.out.println("New Container has been added: " + "\n" + newContainer);
     }
 
 

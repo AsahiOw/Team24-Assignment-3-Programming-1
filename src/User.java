@@ -39,5 +39,5 @@ public abstract class User implements Serializable {
 
 
     public abstract boolean validateCredential(String username, String password);
-    public void showMenuOptions() {};
+    public void showMenuOptions() throws IOException {};
 }
