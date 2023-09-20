@@ -72,25 +72,8 @@ public class Container {
         this.currentVehicle = null;
         containers.add(this);
     }
-//    public Container(double weight, ContainerType type, Port currentPort) {
-//        this.id = "container" +nextId++;
-//        this.weight = weight;
-//        this.type = type;
-//        this.currentPort = currentPort;
-//        this.currentVehicle = null;
-//        currentPort.addContainer(this);
-//        containers.add(this);
-//    }
 
-//    public Container(double weight, ContainerType type, Vehicle currentVehicle) {
-//        this.id = "container" +nextId++;
-//        this.weight = weight;
-//        this.type = type;
-//        this.currentPort = null;
-//        this.currentVehicle = currentVehicle;
-//        currentVehicle.addContainer(this);
-//        containers.add(this);
-//    }
+
     public static void getContainers() {
         System.out.println("List of Ship: ");
         for (Container c: containers) {
@@ -120,6 +103,16 @@ public class Container {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public static double calculateTotalWeightByType(ContainerType type) {
+        double totalWeight = 0;
+        for (Container container: containers) {
+            if (container.type == type) {
+                totalWeight += container.getWeight();
+            }
+        }
+        return totalWeight;
     }
 
     public ContainerType getType() {

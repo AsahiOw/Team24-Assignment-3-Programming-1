@@ -170,14 +170,19 @@ public abstract class Vehicle {
             System.out.println("\t " + vehicle.toString());
         }
     }
-    public static Vehicle getVehicleByName(String name) {
 
+    public String isShipOrTruck() {
+        if (this instanceof Ship) return "Ship";
+        return "Truck";
+    }
+
+
+    public static Vehicle getVehicleByName(String name) {
         for (Vehicle vehicle : vehicles) {
             if (vehicle.getName().equals(name)) {
                 return vehicle;
             }
         }
-
         return null;
     }
     // Load / unload containers

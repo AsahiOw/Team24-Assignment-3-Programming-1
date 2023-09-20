@@ -1,4 +1,5 @@
 import Class.*;
+import Enum.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -133,6 +134,7 @@ public class Admin extends User {
                 }
                 break;
 
+
             case 4:
                 System.out.println("1. Vehicle load container");
                 System.out.println("2. Vehicle unload container");
@@ -193,13 +195,28 @@ public class Admin extends User {
                 System.out.println("\n----------------------");
                 System.out.print("\nSelect Option: ");
                 sub_option = scanner.nextInt();
+
                 switch (sub_option) {
                     case 1: // Total fuel used today
-                    case 2:
-                    case 3:
+                        continueToOption();
+                        break;
+                    case 2: // Total weight of each type of container
+                        printTotalWeightByContainerType();
+                        continueToOption();
+                        break;
+                    case 3: // List all ships in a port
+                        printListOfShipInPort();
+                        continueToOption();
+                        break;
+                    case 4: // List all trips in a days
+                        
+                        continueToOption();
+                        break;
+                    case 5: // List all trips from day A to day B
+                        continueToOption();
+                        break;
                 }
                 break;
-
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
                 showMenuOptions();
@@ -208,7 +225,6 @@ public class Admin extends User {
     }
 
     public void addNewPort() throws IOException {
-
         System.out.println("\n----------------------");
         System.out.println("\t Enter Port information: ");
         System.out.print("\t\t Enter port's name: ");
@@ -348,7 +364,7 @@ public class Admin extends User {
     public static void removeSelectedContainer() {
         Container.getContainers();
         System.out.println("----------------------");
-        System.out.print("Enter id of the container you want to remove: ");
+        System.out.print("Enter ID of the container you want to remove: ");
         String containerIdToRemove = scanner.next();
         Container.removeContainer(containerIdToRemove);
         scanner.nextLine();
@@ -396,7 +412,7 @@ public class Admin extends User {
     public void moveVehicleToPort() {
         System.out.print("Select vehicle by ID: ");
         String vehId = scanner.next();
-        System.out.println("Select port you want to move to by ID: ");
+        System.out.println("Enter ID of the port you want to move to:");
         String port_ID = scanner.next();
         Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).moveToPort(Port.matchPortID(port_ID));
 
@@ -426,6 +442,48 @@ public class Admin extends User {
         }
         scanner.nextLine();
     }
+
+    public void printTotalWeightByContainerType() {
+
+        System.out.printf("╔%-30s╗%n", "═".repeat(30));
+
+        System.out.print("║Container Type ");
+        System.out.printf("%-15s║%n", "Total Weight");
+
+        for (ContainerType type : ContainerType.values()) {
+
+            System.out.print("║");
+            System.out.printf("%-15s", type.name());
+            System.out.printf("%-15.2f║%n",
+                    Container.calculateTotalWeightByType(type));
+        }
+
+        System.out.printf("╚%-30s╝%n", "═".repeat(30));
+
+    }
+
+    public void printListOfShipInPort() {
+        System.out.println("Enter ID of the port you want to view ships list: ");
+        String portId = scanner.next();
+        Port port = Port.matchPortID(portId);
+        System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════╦════════════╦═══════════╗");
+        System.out.println("║ Ship Name    ║ Fuel     ║ Max Fuel  ║ Capacity ║ Max Load ║ Port       ║#Containers║");
+        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════╬════════════╬═══════════╣");
+        for (Vehicle v : port.getOnPortVehicles()) {
+            if (v.isShipOrTruck().equals("Ship")) {
+                System.out.printf("║ %-12s ║ %-8.1f ║ %-9.1f ║ %-8.1f ║ %-8.1f ║ %-10s ║ %-9d ║%n",
+                        v.getName(),
+                        v.getFuel(),
+                        v.getMaxFuel(),
+                        v.getCapacity(),
+                        v.getMaxLoad(),
+                        v.getCurrentPort().getName(),
+                        v.getNumContainers());
+            }
+        }
+        System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════╩════════════╩═══════════╝");
+    }
+
 
     public void continueToOption() throws IOException {
         System.out.print("\nContinue? (Y/N) ");

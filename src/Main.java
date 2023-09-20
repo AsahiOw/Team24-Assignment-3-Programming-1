@@ -30,10 +30,11 @@ public class Main {
 
         Vehicle t1 = new Truck("Truck1", 200, 500, 10, 1000, p1, TruckType.REEFER);
         Vehicle s1 = new Ship("Ship 1", 1000, 2000, 50, 10000, p1);
+        Vehicle s2 = new Ship("Ship 2", 1000, 2050, 150, 100000, p1);
         p1.printOnPortContainers();
 
 
-        User u1 = new Admin("a1","123");
+        User u1 = new Admin("a","a");
         User u2 = new Manager("m1","123", p1);
 
         Container c1 = new Container(12.4, ContainerType.DRY);

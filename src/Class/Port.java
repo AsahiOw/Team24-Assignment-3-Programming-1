@@ -43,7 +43,8 @@ public class Port {
             System.out.println("\t" + c.toString());
         }
     }
-    private ArrayList<Vehicle> getOnPortVehicles() {
+
+    public ArrayList<Vehicle> getOnPortVehicles() {
         return onPortVehicles;
     }
 
@@ -81,7 +82,6 @@ public class Port {
             Port port = Port.matchPortID(idToRemove);
 
             port.removeAllVehicle();
-
             // Update to remove container in file
             ports.remove(port);
             port = null;

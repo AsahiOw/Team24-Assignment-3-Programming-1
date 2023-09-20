@@ -115,8 +115,8 @@ public abstract class User implements Serializable {
             System.out.println("║       User deleted successfully!       ║");
             System.out.println("╚════════════════════════════════════════╝");
         }
+        scanner.nextLine();
     }
-
 
 
     public abstract boolean validateCredential(String username, String password);
