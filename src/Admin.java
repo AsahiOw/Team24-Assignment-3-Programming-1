@@ -286,21 +286,21 @@ public class Admin extends User {
             writer.print(truck.getMaxFuel() + ",");
             writer.print(truck.getCapacity() + ",");
             writer.print(truck.getMaxLoad() + ",");
-            writer.print(truck.getCurrentPort() + ",");
+            writer.print(truck.getCurrentPortName() + ",");
             writer.println(Truck.matchTruckType(veh_type));
             writer.close();
             System.out.println("New Truck has been added: " + "\n" + truck);
         } else if (vehicle_type.equalsIgnoreCase("Ship")) {
             Vehicle ship = new Ship(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id));
             //      add to data folder
-            PrintWriter writer = new PrintWriter(file7);
+            PrintWriter writer = new PrintWriter(file6);
             writer.print(ship.getId() + ",");
             writer.print(ship.getName() + ",");
             writer.print(ship.getFuel() + ",");
             writer.print(ship.getMaxFuel() + ",");
             writer.print(ship.getCapacity() + ",");
             writer.print(ship.getMaxLoad() + ",");
-            writer.print(ship.getCurrentPort());
+            writer.print(ship.getCurrentPortName());
             writer.close();
             System.out.println("New Ship has been added: " + "\n" + ship);
         }
