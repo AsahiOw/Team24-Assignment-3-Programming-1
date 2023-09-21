@@ -196,5 +196,9 @@ public abstract class Vehicle {
     // Move vehicle
     public abstract void moveToPort(Port port);
     public abstract boolean canMoveToPort(Port targetPort);
+
+    public String getCurrentPortName(){
+        return currentPort.getName();
+    }
 }
 
