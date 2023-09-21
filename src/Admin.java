@@ -635,7 +635,7 @@ public class Admin extends User {
                 System.out.println("No trip found!");
             }
         } catch (ParseException e) {
-        System.out.println("Invalid date!");
+            System.out.println("Invalid date!");
         }
         scanner.nextLine();
     }

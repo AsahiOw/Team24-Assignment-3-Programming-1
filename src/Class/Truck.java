@@ -1,11 +1,10 @@
 package Class;
-import Enum.TruckType;
+import Enum.*;
 
-import java.util.Date;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-import Enum.ContainerType;
 
 import static Enum.ContainerType.LIQUID;
 import static Enum.ContainerType.REFRIGERATED;
@@ -149,7 +148,21 @@ public class Truck extends Vehicle{
 
         // Reduce fuel
         super.setFuel(super.getFuel() - fuelNeeded);
-        System.out.println("Vehicle " + super.getId() + " moved to " + destinationPort.getId() + " successfully!");
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.print("When do you want to move this vehicle (dd/mm/yyyy): ");
+        String startDateString = scanner.next();
+        System.out.print("When do you want this vehicle to arrive (dd/mm/yyyy): ");
+        String arrivalDateString = scanner.next();
+        try {
+            Date startDate = format.parse(startDateString);
+            Date arrivalDate = format.parse(arrivalDateString);
+            new Trip(this, startDate, this.getCurrentPort(), arrivalDate, destinationPort, TripStatus.IN_PROGRESS);
+        } catch (ParseException e) {
+            System.out.println("Invalid date!");
+        }
+
+        System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
 
     }
 

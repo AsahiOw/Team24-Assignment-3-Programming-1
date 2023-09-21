@@ -81,24 +81,6 @@ public class Main {
 
             Port port = new Port(name, latitude, longitude, capacity, landingAbility);
         }
-        Scanner fileScanner2 = new Scanner(file2);
-        while (fileScanner2.hasNextLine()){
-            String line = fileScanner2.nextLine();
-            String[] parts = line.split(",");
-            double weight = Double.parseDouble(parts[1]);
-            ContainerType type = ContainerType.valueOf(parts[2]);
-
-            if (parts.length > 3) {
-                String portOrVehicleID = parts[3];
-                if (Port.matchPortID(portOrVehicleID) != null) {
-                    Container container = new Container(weight,type, Port.matchPortID(portOrVehicleID));
-                } else if (Vehicle.matchVehicleId(portOrVehicleID) != null) {
-                    Container container = new Container(weight,type, Vehicle.matchVehicleId(portOrVehicleID));
-                }
-            } else {
-                    Container container = new Container(weight, type);
-            }
-        }
 
         Scanner fileScanner3 = new Scanner(file3);
         while (fileScanner3.hasNextLine()){
@@ -113,6 +95,7 @@ public class Main {
 
             Trip trip = new Trip(vehicle, departureDate, departurePort, arrivalDate, arrivalPort, status);
         }
+
         Scanner fileScanner4 = new Scanner(file4);
         while (fileScanner4.hasNextLine()){
             String line = fileScanner4.nextLine();
@@ -142,8 +125,6 @@ public class Main {
             double capacity = Double.parseDouble(parts[4]);
             double maxLoad = Double.parseDouble(parts[5]);
             Port currentPort = getPortByName(parts[6]);
-
-
             Vehicle vehicle = new Ship(name, fuel, maxFuel, capacity, maxLoad, currentPort);
         }
         Scanner fileScanner7 = new Scanner(file7);
@@ -160,6 +141,26 @@ public class Main {
 
             Vehicle vehicle = new Truck(name, fuel, maxFuel, capacity, maxLoad, currentPort, type);
         }
+        Scanner fileScanner2 = new Scanner(file2);
+        while (fileScanner2.hasNextLine()) {
+            String line = fileScanner2.nextLine();
+            String[] parts = line.split(",");
+            double weight = Double.parseDouble(parts[1]);
+            ContainerType type = ContainerType.valueOf(parts[2]);
+            ContainerState containerState = ContainerState.valueOf(parts[3]);
+
+            if (containerState == ContainerState.NEITHER) {
+                Container container = new Container(weight, type);
+                break;
+            } else if (containerState == ContainerState.ON_PORT) {
+                String port_id = String.valueOf(parts[4]);
+                Container container = new Container(weight, type, Port.matchPortID(port_id));
+            } else if (containerState == ContainerState.ON_VEHICLE) {
+                String vehicle_id = String.valueOf(parts[4]);
+                Container container = new Container(weight, type, Vehicle.matchVehicleId(vehicle_id));
+            }
+        }
+
 //              close scanner
         fileScanner1.close();
         fileScanner2.close();

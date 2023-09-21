@@ -111,6 +111,7 @@ public class Container {
                 "id=" + id +
                 ", weight=" + weight +
                 ", type=" + type +
+                ", containerState=" + currentState +
                 '}';
     }
 
@@ -196,9 +197,9 @@ public class Container {
 
             Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Vehicle.getVehicleByName(vehicle_Id));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
-            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + vehicle_Id + "\n");
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + vehicle_Id + "\n");
             writer.close();
-            System.out.println("New Container (co Veh) has been added: " + "\n" + newContainer);
+            System.out.println("New Container has been added: " + "\n" + newContainer);
 
         } else if (addOn.equalsIgnoreCase("port")) {
             System.out.print("\t\t Enter port ID: ");
@@ -207,18 +208,19 @@ public class Container {
                 System.out.print("\t\t Enter vehicle's port ID again: ");
                 port_Id = scanner.next();
             }
-
             Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Port.matchPortID(port_Id));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
-            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + port_Id + "\n");
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port_Id + "\n");
             writer.close();
-            System.out.println("New Container (co Port) has been added: " + "\n" + newContainer);
+            System.out.println("New Container has been added: " + "\n" + newContainer);
+
         } else if (addOn.equalsIgnoreCase("neither")) {
             Container newContainer = new Container(con_weight, Container.matchContainerType(con_type));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
-            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "\n");
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + newContainer.currentState + "\n");
             writer.close();
             System.out.println("New Container has been added: " + "\n" + newContainer);
+
         } else {
             System.out.println("Not exists container type!");
         }
