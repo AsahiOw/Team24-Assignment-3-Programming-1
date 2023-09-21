@@ -414,7 +414,6 @@ public class Admin extends User {
         System.out.println("Enter ID of the port you want to move to:");
         String port_ID = scanner.next();
         Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).moveToPort(Port.matchPortID(port_ID));
-
     }
 
     public void fuelUpVehicle() {

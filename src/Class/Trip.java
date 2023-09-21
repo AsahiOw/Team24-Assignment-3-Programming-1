@@ -115,6 +115,18 @@ public class Trip {
         return matchedTrip;
     }
 
+    public static ArrayList<Trip> searchTripByDateInPort(Date searchDate, Port port) {
+        ArrayList<Trip> matchedTrip = new ArrayList<Trip>();
+
+        for (Trip trip : trips) {
+            if (searchDate.equals(trip.departureDate) || searchDate.equals(trip.arrivalDate))
+                if (trip.arrivalPort == port || trip.departurePort == port) {
+                    matchedTrip.add(trip);
+                }
+        }
+        return matchedTrip;
+    }
+
     public static ArrayList<Trip> searchTripBetweenDates(Date startDate, Date endDate) {
         ArrayList<Trip> matchedTrips = new ArrayList<Trip>();
 
@@ -128,14 +140,17 @@ public class Trip {
         return matchedTrips;
     }
 
-//    public static ArrayList<Trip> searchTripArrivedToday() {
-//        ArrayList<Trip> matchedTrips = new ArrayList<Trip>();
-//
-//        for (Trip trip : trips) {
-//
-//        }
-//
-//    }
+    public static ArrayList<Trip> searchTripBetweenDatesInPort(Date startDate, Date endDate, Port port) {
+        ArrayList<Trip> matchedTrips = new ArrayList<Trip>();
+        for (Trip trip : trips) {
+            if ((trip.departureDate.compareTo(startDate) >= 0 && trip.departureDate.compareTo(endDate) <= 0)
+                    || (trip.arrivalDate.compareTo(startDate) >= 0 && trip.arrivalDate.compareTo(endDate) <= 0))
+                if (trip.arrivalPort == port || trip.departurePort == port) {
+                    matchedTrips.add(trip);
+                }
+        }
+        return matchedTrips;
+    }
 
     public static ArrayList<Trip> searchTripsArrivedToday() {
         ArrayList<Trip> matchedTrips = new ArrayList<>();
@@ -163,4 +178,15 @@ public class Trip {
         return total;
     }
 
+    public static double totalFuelUsedInPort(Port port) {
+        double total = 0;
+        ArrayList<Trip> tripsArrivedToday = searchTripsArrivedToday();
+
+        for (Trip trip: tripsArrivedToday) {
+            if (trip.arrivalPort == port) {
+                total += trip.getVehicle().getMaxFuel() - trip.getVehicle().getFuel();
+            }
+        }
+        return total;
+    }
 }

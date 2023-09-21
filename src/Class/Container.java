@@ -115,6 +115,17 @@ public class Container {
         return totalWeight;
     }
 
+    public static double calculateTotalWeightByTypeInPort(ContainerType type, Port port) {
+        double totalWeight = 0;
+        for (Container container: containers) {
+            if (container.type == type && container.currentPort == port) {
+                totalWeight += container.getWeight();
+            }
+        }
+        return totalWeight;
+    }
+
+
     public ContainerType getType() {
         return type;
     }
