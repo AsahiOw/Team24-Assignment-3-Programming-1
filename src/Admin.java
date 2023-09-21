@@ -1,13 +1,10 @@
 import Class.*;
 import Enum.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Admin extends User {
     public Admin(String username, String password) {
@@ -198,6 +195,7 @@ public class Admin extends User {
 
                 switch (sub_option) {
                     case 1: // Total fuel used today
+                        System.out.println(Trip.totalFuelUsedToday());
                         continueToOption();
                         break;
                     case 2: // Total weight of each type of container
@@ -209,10 +207,11 @@ public class Admin extends User {
                         continueToOption();
                         break;
                     case 4: // List all trips in a days
-                        
+                        printListOfTripByDate();
                         continueToOption();
                         break;
                     case 5: // List all trips from day A to day B
+                        printListOfTripFromDateToDate();
                         continueToOption();
                         break;
                 }
@@ -286,21 +285,21 @@ public class Admin extends User {
             writer.print(truck.getMaxFuel() + ",");
             writer.print(truck.getCapacity() + ",");
             writer.print(truck.getMaxLoad() + ",");
-            writer.print(truck.getCurrentPortName() + ",");
+            writer.print(truck.getCurrentPort() + ",");
             writer.println(Truck.matchTruckType(veh_type));
             writer.close();
             System.out.println("New Truck has been added: " + "\n" + truck);
         } else if (vehicle_type.equalsIgnoreCase("Ship")) {
             Vehicle ship = new Ship(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id));
             //      add to data folder
-            PrintWriter writer = new PrintWriter(file6);
+            PrintWriter writer = new PrintWriter(file7);
             writer.print(ship.getId() + ",");
             writer.print(ship.getName() + ",");
             writer.print(ship.getFuel() + ",");
             writer.print(ship.getMaxFuel() + ",");
             writer.print(ship.getCapacity() + ",");
             writer.print(ship.getMaxLoad() + ",");
-            writer.print(ship.getCurrentPortName());
+            writer.print(ship.getCurrentPort());
             writer.close();
             System.out.println("New Ship has been added: " + "\n" + ship);
         }
@@ -457,13 +456,11 @@ public class Admin extends User {
             System.out.printf("%-15.2f║%n",
                     Container.calculateTotalWeightByType(type));
         }
-
         System.out.printf("╚%-30s╝%n", "═".repeat(30));
-
     }
 
     public void printListOfShipInPort() {
-        System.out.println("Enter ID of the port you want to view ships list: ");
+        System.out.print("Enter ID of the port you want to view ships list: ");
         String portId = scanner.next();
         Port port = Port.matchPortID(portId);
         System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════╦════════════╦═══════════╗");
@@ -482,7 +479,82 @@ public class Admin extends User {
             }
         }
         System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════╩════════════╩═══════════╝");
+        scanner.nextLine();
     }
+
+    public void printListOfTripByDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter search date (dd/mm/yyyy): ");
+        String dateString = scanner.next();
+        try {
+            Date searchDate = format.parse(dateString);
+
+            ArrayList<Trip> results = Trip.searchTripByDate(searchDate);
+
+            if (!results.isEmpty()) {
+                // print header
+                System.out.println("╔═════════════╦═════════════╦════════════╦═══════════╦════════════╦═══════════╦═══════════════╗");
+                System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.println("╠═════════════╬═════════════╬════════════╬═══════════╬════════════╬═══════════╬═══════════════╣");
+                for (Trip trip : results) {
+                    System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n",
+                            trip.getId(),
+                            trip.getVehicle().getName(),
+                            format.format(trip.getDepartureDate()),
+                            trip.getDeparturePort().getName(),
+                            format.format(trip.getArrivalDate()),
+                            trip.getArrivalPort().getName(),
+                            trip.getStatus());
+                }
+                System.out.println("╚═════════════╩═════════════╩════════════╩═══════════╩════════════╩═══════════╩═══════════════╝");
+            } else {
+                System.out.println("No trip found!");
+            }
+        } catch (ParseException e) {
+        System.out.println("Invalid date!");
+        }
+        scanner.nextLine();
+    }
+
+    public void printListOfTripFromDateToDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            System.out.print("Enter start date (dd/mm/yyyy): ");
+            String startDateString = scanner.next();
+            Date startDate = format.parse(startDateString);
+            System.out.print("Enter end date (dd/mm/yyyy): ");
+            String endDateString = scanner.next();
+            Date endDate = format.parse(endDateString);
+
+            ArrayList<Trip> results = Trip.searchTripBetweenDates(startDate,endDate);
+
+            if (!results.isEmpty()) {
+                // print header
+                System.out.println("╔═════════════╦═════════════╦════════════╦═══════════╦════════════╦═══════════╦═══════════════╗");
+                System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.println("╠═════════════╬═════════════╬════════════╬═══════════╬════════════╬═══════════╬═══════════════╣");
+                for (Trip trip : results) {
+                    System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n",
+                            trip.getId(),
+                            trip.getVehicle().getName(),
+                            format.format(trip.getDepartureDate()),
+                            trip.getDeparturePort().getName(),
+                            format.format(trip.getArrivalDate()),
+                            trip.getArrivalPort().getName(),
+                            trip.getStatus());
+                }
+                System.out.println("╚═════════════╩═════════════╩════════════╩═══════════╩════════════╩═══════════╩═══════════════╝");
+            } else {
+                System.out.println("No trip found!");
+            }
+        } catch (ParseException e) {
+            System.out.println("Invalid date!");
+        }
+        scanner.nextLine();
+    }
+
 
 
     public void continueToOption() throws IOException {

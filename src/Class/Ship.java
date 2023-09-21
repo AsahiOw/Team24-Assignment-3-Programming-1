@@ -8,7 +8,6 @@ public class Ship extends Vehicle {
     private static final double MIN_REQUIRED_FUEL = 1000;
     private double totalWeight = 0;
     private Map<ContainerType, Double> fuelConsumptionRates;
-    private List<TripLogEntry> tripLog;
 
 //    constructor, getter, setter
 
@@ -129,10 +128,6 @@ public class Ship extends Vehicle {
 
         // Reduce fuel
         super.setFuel(super.getFuel() - fuelNeeded);
-
-        // Update log
-        TripLogEntry entry = new TripLogEntry(destinationPort, new Date());
-        tripLog.add(entry);
         System.out.println("Vehicle " + super.getId() + " moved to " + destinationPort.getId() + " successfully!");
     }
 

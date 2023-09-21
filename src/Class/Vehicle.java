@@ -32,9 +32,6 @@ public abstract class Vehicle {
         return id;
     }
 
-    public String getCurrentPortName(){
-        return currentPort.getName();
-    }
     public void setId(String id) {
         this.id = id;
     }

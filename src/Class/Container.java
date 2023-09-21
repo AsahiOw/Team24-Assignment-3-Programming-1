@@ -1,6 +1,7 @@
 package Class;
 
 import Enum.ContainerType;
+import Interface.Updatable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -73,12 +74,11 @@ public class Container {
     }
 
 
-    public static Container getContainers() {
+    public static void getContainers() {
         System.out.println("List of Ship: ");
         for (Container c: containers) {
             System.out.println("\t" + c.toString());
         }
-        return null;
     }
     @Override
     public String toString() {
@@ -152,5 +152,6 @@ public class Container {
         writer.write(newContainer.getId() + ", " + newContainer.getWeight() + ", " + newContainer.getType() + "\n");
         System.out.println("New Container has been added: " + "\n" + newContainer);
     }
+
 
 }

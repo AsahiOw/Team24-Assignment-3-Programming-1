@@ -17,7 +17,6 @@ public class Truck extends Vehicle{
     private double totalWeight = 0;
     private Map<ContainerType, Double> fuelConsumptionRates;
     private TruckType type;
-    private List<TripLogEntry> tripLog;
 
     public Truck(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort, TruckType type) {
         super(name, fuel,maxFuel, capacity,maxLoad,currentPort);
@@ -149,10 +148,7 @@ public class Truck extends Vehicle{
 
         // Reduce fuel
         super.setFuel(super.getFuel() - fuelNeeded);
-
-        // Update log
-        TripLogEntry entry = new TripLogEntry(destinationPort, new Date());
-        tripLog.add(entry);
+        System.out.println("Vehicle " + super.getId() + " moved to " + destinationPort.getId() + " successfully!");
 
     }
 
