@@ -1,9 +1,9 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import Class.*;
 import Enum.*;
@@ -44,6 +44,7 @@ public class Manager extends User {
                 break;
             case 2:
 //                Container.addNewContainer(managedPort);
+                Container.addNewContainerInPort(managedPort);
                 continueToOption();
                 break;
             case 3:
@@ -51,6 +52,28 @@ public class Manager extends User {
                 System.out.print("Enter ID of the container you want to remove: ");
                 String idToRemove = scanner.next();
                 if (Container.matchContainerId(idToRemove).getCurrentPort() == managedPort) {
+                    File inputFile;
+                    inputFile = new File("src/Data/Container.txt");
+                    BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+                    List<String> lines = new ArrayList<>();
+                    String lineFromFile;
+                    while ((lineFromFile = reader.readLine()) != null) {
+                        lines.add(lineFromFile);
+                    }
+                    reader.close();
+                    // Remove matching line from array
+                    for (int i=0; i<lines.size(); i++) {
+                        if (lines.get(i).startsWith(idToRemove)) {
+                            lines.remove(i);
+                            break;
+                        }
+                    }
+                    // Write array back to file
+                    PrintWriter writer = new PrintWriter(inputFile);
+                    for (String line : lines) {
+                        writer.println(line);
+                    }
+                    writer.close();
                     Container.removeContainer(idToRemove);
                 } else {
                     System.out.println("You don't have permission to remove this container. This container belongs to other port!");

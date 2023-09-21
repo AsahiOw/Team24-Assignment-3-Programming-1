@@ -338,7 +338,7 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
-    public static void loadContainerOnVehicle() {
+    public static void loadContainerOnVehicle() throws IOException {
         ArrayList<Container> listOfContainers = new ArrayList<Container>();
         System.out.print("Select vehicles by ID: ");
         String vehId = scanner.next();
@@ -457,6 +457,7 @@ public class Admin extends User {
     public static void removeSelectedContainer() throws IOException {
         Container.getContainers();
         System.out.println("----------------------");
+        Container.getContainers();
         System.out.print("Enter ID of the container you want to remove: ");
         String containerIdToRemove = scanner.next();
         File inputFile;

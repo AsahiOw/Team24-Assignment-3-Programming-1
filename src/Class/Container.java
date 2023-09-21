@@ -230,7 +230,27 @@ public class Container {
         }
 
     }
+    public static void addNewContainerInPort(Port port) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\t Enter Container information ");
+        System.out.print("\t\t Enter container's weight: ");
+        double con_weight = scanner.nextDouble();
+        System.out.print("\t\t Enter container's type: ");
+        String con_type = scanner.next();
 
+        System.out.print("\t\t Enter port ID: ");
+        String port_Id = scanner.next();
+        while (Port.matchPortID(port_Id) == null) {
+            System.out.print("\t\t Enter vehicle's port ID again: ");
+            port_Id = scanner.next();
+        }
+        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Port.matchPortID(port_Id));
+        FileWriter writer = new FileWriter("src/Data/Container.txt", true);
+        writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port_Id + "\n");
+        writer.close();
+        System.out.println("New Container has been added: " + "\n" + newContainer);
+
+    }
 
 
 }

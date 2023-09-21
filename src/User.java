@@ -94,6 +94,7 @@ public abstract class User implements Serializable {
             System.out.println("║     New Admin created successfully!    ║");
             System.out.println("╚════════════════════════════════════════╝");
         } else if (!isAdmin) {
+            Port.printListOfPorts();
             System.out.print("\t Which portID this manager manage: ");
             String portID = scanner.next();
             User newUser = new Manager(username, password, Port.matchPortID(portID));

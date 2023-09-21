@@ -8,7 +8,6 @@ import Class.*;
 import Enum.*;
 
 import static Class.Port.getPortByName;
-import static Class.Port.matchPortID;
 import static Class.Vehicle.getVehicleByName;
 
 public class Main {
@@ -159,7 +158,6 @@ public class Main {
                 Container container = new Container(weight, type, Vehicle.matchVehicleId(vehicle_id));
             }
         }
-
 //              close scanner
         fileScanner1.close();
         fileScanner2.close();
