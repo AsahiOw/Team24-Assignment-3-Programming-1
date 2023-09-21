@@ -15,13 +15,6 @@ public class Admin extends User {
         return super.getPassword().equals(password);
     }
 //  Open txt file
-    File file1 = new File("src/Data/Port.txt");
-    File file2 = new File("src/Data/Container.txt");
-    File file3 = new File("src/Data/Trip.txt");
-    File file4 = new File("src/Data/Port manager.txt");
-    File file5 = new File("src/Data/Admin.txt");
-    File file6 = new File("src/Data/Ship.txt");
-    File file7 = new File("src/Data/Truck.txt");
     // Get input choice and execute relevant method
     static Scanner scanner = new Scanner(System.in);
     @Override

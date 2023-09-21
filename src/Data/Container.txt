@@ -2,5 +2,7 @@ container1,5.6765765E7,DRY,ON_VEHICLE,vehicle1
 container2,4324234.0,OPEN_TOP,ON_VEHICLE,vehicle2
 container3,3534.53,DRY,ON_PORT,port2
 container4,78564.23,DRY,NEITHER
-container5,12.0,DRY,ON_VEHICLE,vehicle12
-container8,121323.0,DRY,ON_PORT,port5
+container5,78564.23,DRY,NEITHER
+container6,9999.0,LIQUID,ON_PORT,port5
+container7,88888.0,OPEN_TOP,ON_VEHICLE,vehicle8
+container8,3.4895734895E10,DRY,ON_VEHICLE,vehicle7

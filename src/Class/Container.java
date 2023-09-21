@@ -187,11 +187,13 @@ public class Container {
         String addOn = scanner.next();
 
         if (addOn.equalsIgnoreCase("vehicle")) {
+            Vehicle.printListOfVehicles();
             System.out.print("\t\t Enter vehicle ID: ");
             String vehicle_Id = scanner.next();
 
             while (Vehicle.getVehicleByName(vehicle_Id) != null) {
-                System.out.print("\t\t Enter vehicle's vehicle ID again: ");
+                Vehicle.printListOfVehicles();
+                System.out.print("\t\t Unknow ID, Enter vehicle's ID again: ");
                 vehicle_Id = scanner.next();
             }
 
@@ -202,10 +204,12 @@ public class Container {
             System.out.println("New Container has been added: " + "\n" + newContainer);
 
         } else if (addOn.equalsIgnoreCase("port")) {
+            Port.printListOfPorts();
             System.out.print("\t\t Enter port ID: ");
             String port_Id = scanner.next();
             while (Port.matchPortID(port_Id) == null) {
-                System.out.print("\t\t Enter vehicle's port ID again: ");
+                Port.printListOfPorts();
+                System.out.print("\t\t Unknow ID, Enter port ID again: ");
                 port_Id = scanner.next();
             }
             Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Port.matchPortID(port_Id));

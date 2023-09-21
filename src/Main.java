@@ -177,13 +177,13 @@ public class Main {
 
 //        User u1 = new Admin("a","a");
 //        User u2 = new Manager("m1","123", p1);
-        ArrayList<Container> containers2 = new ArrayList<Container>();
-        Container c1 = new Container(12.4, ContainerType.DRY);
-        Container c2 = new Container(42.1,ContainerType.OPEN_TOP);
-        Container c3 = new Container(42.1,ContainerType.OPEN_TOP);
-        containers2.add(c1);
-        containers2.add(c2);
-        containers2.add(c3);
+//        ArrayList<Container> containers2 = new ArrayList<Container>();
+//        Container c1 = new Container(12.4, ContainerType.DRY);
+//        Container c2 = new Container(42.1,ContainerType.OPEN_TOP);
+//        Container c3 = new Container(42.1,ContainerType.OPEN_TOP);
+//        containers2.add(c1);
+//        containers2.add(c2);
+//        containers2.add(c3);
 
 
 
