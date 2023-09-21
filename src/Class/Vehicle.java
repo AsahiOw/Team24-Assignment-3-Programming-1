@@ -1,6 +1,7 @@
 package Class;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Scanner;
 
 public abstract class Vehicle {
     private String id;
@@ -14,6 +15,7 @@ public abstract class Vehicle {
     private Port currentPort;
     private static final double MIN_REQUIRED_FUEL = 1000;
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    static Scanner scanner;
 
     public Vehicle(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort) {
         this.id = "vehicle" + nextId++;

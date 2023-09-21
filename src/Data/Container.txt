@@ -1,0 +1,28 @@
+container1,5.6765765E7,DRY,truck1
+container2,4324234.0,OPEN_TOP,truck2
+container3,3534.53,DRY, truck2
+container4,78564.23,DRY, truck2
+container5,325252.35,OPEN_TOP,truck2
+container6,7453242.34,DRY,port2
+container7,234525.234,OPEN_TOP
+container8,23456.547457,DRY
+container9,2353465474536.45642,DRY,port1
+container10,32423432.423,DRY
+container11,2345235.32325,OPEN_TOP,port2
+container12,5654652.3,DRY, port5
+container13,2353423.25,OPEN_TOP
+container14,635435.235,DRY
+container15,78655.47,DRY
+container16,2345.2352,OPEN_TOP
+container17,23523523.52111,DRY
+container18,3254252.356,DRY
+container19,23454.354768,OPEN_TOP
+container20,25424658687.6,DRY
+container21,245364876967.876,DRY,truck3
+container22,23455465475.878,OPEN_TOP
+container23,4254657658.6585,DRY
+container24,456354654.36,DRY
+container25,34655767.56755,DRY
+container19,132.0,DRY
+container20,2312.0,DRY
+container21,123.0,DRY,vehicle11

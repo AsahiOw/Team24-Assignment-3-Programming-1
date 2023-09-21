@@ -1,7 +1,10 @@
 package Class;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Iterator;
 
 public class Port {
     private String id;
@@ -27,8 +30,14 @@ public class Port {
     }
 
     public void addVehicle(Vehicle vehicle) {
-        onPortVehicles.add(vehicle);
+        if (vehicle instanceof Truck) {
+            if (!landingAbility) {
+                System.out.println("This port can't have truck.");
+                return;
+            } else onPortVehicles.add(vehicle);
+        }
     }
+
     public void addContainerToPort(Container container) {
         onPortContainers.add(container);
         container.setPort(this);
@@ -68,6 +77,8 @@ public class Port {
     public void addContainer(Container c) {
         onPortContainers.add(c);
     }
+
+
 
     public String getId() {
         return id;
@@ -141,7 +152,7 @@ public class Port {
         this.capacity = capacity;
     }
 
-    public boolean isLandingAbility() {
+    public boolean getLandingAbility() {
         return landingAbility;
     }
 
@@ -174,7 +185,6 @@ public class Port {
                 return port;
             }
         }
-
         return null;
     }
 }

@@ -134,6 +134,7 @@ public class Truck extends Vehicle{
             return;
         }
 
+
         // Calculate fuel needed
         double fuelNeeded = calculateFuelNeeded(this.getCurrentPort().distanceTo(destinationPort));
 
@@ -160,7 +161,7 @@ public class Truck extends Vehicle{
             return false;
         }
         // Check landingAbility
-        if (!targetPort.isLandingAbility()){
+        if (!targetPort.getLandingAbility()){
             return false;
         }
         // Check capacity

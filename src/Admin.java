@@ -216,6 +216,8 @@ public class Admin extends User {
                         break;
                 }
                 break;
+            case 7:
+                break;
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
                 showMenuOptions();
@@ -237,27 +239,32 @@ public class Admin extends User {
         System.out.print("\t\t Enter port's capacity: ");
         double port_capacity = scanner.nextDouble();
 
-        System.out.print("\t\t Enter port's landing Ability: ");
-        boolean port_landingAbility = scanner.nextBoolean();
+        System.out.print("\t\t Enter port's landing ability (true/false): ");
+        String port_landingAbility = scanner.next();
+        while ((!port_landingAbility.equalsIgnoreCase("true")) || (!port_landingAbility.equalsIgnoreCase("false"))) {
+            System.out.print("Enter a true or false for port's landing ability: ");
+            port_landingAbility = scanner.next();
+        }
 
+        boolean landingAbility;
+        if (port_landingAbility.equalsIgnoreCase("true")) landingAbility = true;
+        else landingAbility = false;
 
-        Port port = new Port(port_name, port_latitude, port_longtitude, port_capacity, port_landingAbility);
+        Port port = new Port(port_name, port_latitude, port_longtitude, port_capacity, landingAbility);
 //      add to data folder
-        PrintWriter writer = new PrintWriter(file1);
-        writer.print(port.getId() + ",");
-        writer.print(port.getName() + ",");
-        writer.print(port.getLatitude() + ",");
-        writer.print(port.getLongitude() + ",");
-        writer.print(port.getCapacity() + ",");
-        writer.println(port.isLandingAbility());
+        FileWriter writer = new FileWriter("src/Data/Port.txt", true);
+        writer.write(port.getId() + ",");
+        writer.write(port.getName() + ",");
+        writer.write(port.getLatitude() + ",");
+        writer.write(port.getLongitude() + ",");
+        writer.write(port.getCapacity() + ",");
+        writer.write(port.getLandingAbility() + "\n");
         writer.close();
         System.out.println("New port has been added: " + "\n" + port);
     }
 
-    public void addNewVehicle() throws FileNotFoundException {
+    public void addNewVehicle() throws IOException {
         System.out.println("\n----------------------");
-        System.out.print("\t Which vehicle you want to add (Enter Truck/Ship): ");
-        String vehicle_type = scanner.next();
 
         System.out.println("\n\t Enter vehicle information: ");
         System.out.print("\t\t Enter vehicle's name: ");
@@ -266,49 +273,75 @@ public class Admin extends User {
         double veh_fuel = scanner.nextDouble();
         System.out.print("\t\t Enter vehicle's max fuel: ");
         double veh_maxFuel = scanner.nextDouble();
+
+        while (veh_maxFuel < veh_fuel) {
+            System.out.println("Max fuel can't be lower than capacity. Enter max fuel again: ");
+            veh_maxFuel = scanner.nextDouble();
+        }
+
         System.out.print("\t\t Enter vehicle's capacity: ");
         double veh_capacity = scanner.nextDouble();
         System.out.print("\t\t Enter vehicle's maxLoad: ");
         double veh_maxLoad = scanner.nextDouble();
+
+        while (veh_maxLoad < veh_capacity) {
+            System.out.println("Max load can't be lower than capacity. Enter max load again: ");
+            veh_maxLoad = scanner.nextDouble();
+        }
+
+
         System.out.print("\t\t Enter vehicle's port ID: ");
         String port_id = scanner.next();
+        System.out.print("\t Which vehicle you want to add (Enter Truck/Ship): ");
+        String vehicle_type = scanner.next();
+
+        while (Port.matchPortID(port_id) == null) {
+            System.out.print("\t\t Enter vehicle's port ID again: ");
+            port_id = scanner.next();
+        }
 
         if (vehicle_type.equalsIgnoreCase("Truck")) {
             System.out.print("\t\t Enter vehicle's type: ");
             String veh_type = scanner.next();
-            Vehicle truck = new Truck(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id), Truck.matchTruckType(veh_type));
-            //      add to data folder
-            PrintWriter writer = new PrintWriter(file6);
-            writer.print(truck.getId() + ",");
-            writer.print(truck.getName() + ",");
-            writer.print(truck.getFuel() + ",");
-            writer.print(truck.getMaxFuel() + ",");
-            writer.print(truck.getCapacity() + ",");
-            writer.print(truck.getMaxLoad() + ",");
-            writer.print(truck.getCurrentPortName() + ",");
-            writer.println(Truck.matchTruckType(veh_type));
-            writer.close();
-            System.out.println("New Truck has been added: " + "\n" + truck);
+
+
+            if (Port.matchPortID(port_id).getLandingAbility()) {
+                //      add to data folder
+                Vehicle truck = new Truck(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id), Truck.matchTruckType(veh_type));
+                FileWriter writer = new FileWriter("src/Data/Truck.txt", true);
+                writer.write(truck.getId() + ",");
+                writer.write(truck.getName() + ",");
+                writer.write(truck.getFuel() + ",");
+                writer.write(truck.getMaxFuel() + ",");
+                writer.write(truck.getCapacity() + ",");
+                writer.write(truck.getMaxLoad() + ",");
+                writer.write(truck.getCurrentPortName() + ",");
+                writer.write(Truck.matchTruckType(veh_type) + "\n");
+                writer.close();
+                System.out.println("New Truck has been added: " + "\n" + truck);
+            } else {
+                System.out.println("This port does not allow trucks!");
+            }
         } else if (vehicle_type.equalsIgnoreCase("Ship")) {
             Vehicle ship = new Ship(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id));
             //      add to data folder
-            PrintWriter writer = new PrintWriter(file7);
-            writer.print(ship.getId() + ",");
-            writer.print(ship.getName() + ",");
-            writer.print(ship.getFuel() + ",");
-            writer.print(ship.getMaxFuel() + ",");
-            writer.print(ship.getCapacity() + ",");
-            writer.print(ship.getMaxLoad() + ",");
-            writer.print(ship.getCurrentPortName());
+            FileWriter writer = new FileWriter("src/Data/Ship.txt", true);
+            writer.write(ship.getId() + ",");
+            writer.write(ship.getName() + ",");
+            writer.write(ship.getFuel() + ",");
+            writer.write(ship.getMaxFuel() + ",");
+            writer.write(ship.getCapacity() + ",");
+            writer.write(ship.getMaxLoad() + ",");
+            writer.write(ship.getCurrentPortName() + "\n");
             writer.close();
             System.out.println("New Ship has been added: " + "\n" + ship);
+        } else {
+            System.out.println("Not existing vehicle type!");
         }
     }
 
-    public void addNewContainer() throws FileNotFoundException {
-        System.out.print("\t Enter port you want to load this container on: ");
-        String con_portid = scanner.next();
-        Container.addNewContainer(Port.matchPortID(con_portid));
+    public void addNewContainer() throws IOException {
+        Container.addNewContainer();
         scanner.nextLine();
     }
 
@@ -345,26 +378,117 @@ public class Admin extends User {
         }
         scanner.nextLine();
     }
-    public static void removeSelectedPort() {
+    public static void removeSelectedPort() throws IOException {
         Port.printListOfPorts();
         System.out.println("----------------------");
         System.out.print("Enter ID of the port you want to remove: ");
         String portIdToRemove = scanner.next();
+        File inputFile;
+        inputFile = new File("src/Data/Port.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        List<String> lines = new ArrayList<>();
+        String lineFromFile;
+        while ((lineFromFile = reader.readLine()) != null) {
+            lines.add(lineFromFile);
+        }
+        reader.close();
+
+        // Remove matching line from array
+        for (int i=0; i<lines.size(); i++) {
+            if (lines.get(i).startsWith(portIdToRemove)) {
+                lines.remove(i);
+                break;
+            }
+        }
+        // Write array back to file
+        PrintWriter writer = new PrintWriter(inputFile);
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
         Port.removePort(portIdToRemove);
     }
-    public static void removeSelectedVehicle() {
+    public static void removeSelectedVehicle() throws IOException {
         Vehicle.printListOfVehicles();
         System.out.println("----------------------");
         System.out.print("Enter ID of the vehicle you want to remove: ");
         String vehicleIdToRemove = scanner.next();
+        File inputFile;
+        if ("Ship" == Vehicle.matchVehicleId(vehicleIdToRemove).isShipOrTruck()) {
+            inputFile = new File("src/Data/Ship.txt");
+        } else {
+            inputFile = new File("src/Data/Truck.txt");
+        }
+//        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+//        PrintWriter writer = new PrintWriter(new FileWriter(inputFile));
+//
+//        String lineToRemove = null;
+//        String currentLine;
+//
+//        while((currentLine = reader.readLine()) != null) {
+//            String trimmedLine = currentLine.trim();
+//            if(trimmedLine.startsWith(vehicleIdToRemove)) {
+//                lineToRemove = trimmedLine;
+//                continue;
+//            }
+//            writer.println(currentLine);
+//        }
+//
+//        scanner.nextLine();
+//        writer.close();
+//        reader.close();
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        List<String> lines = new ArrayList<>();
+        String lineFromFile;
+        while ((lineFromFile = reader.readLine()) != null) {
+            lines.add(lineFromFile);
+        }
+        reader.close();
+
+        // Remove matching line from array
+        for (int i=0; i<lines.size(); i++) {
+            if (lines.get(i).startsWith(vehicleIdToRemove)) {
+                lines.remove(i);
+                break;
+            }
+        }
+        // Write array back to file
+        PrintWriter writer = new PrintWriter(inputFile);
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
         Vehicle.removeVehicle(vehicleIdToRemove);
     }
 
-    public static void removeSelectedContainer() {
+    public static void removeSelectedContainer() throws IOException {
         Container.getContainers();
         System.out.println("----------------------");
         System.out.print("Enter ID of the container you want to remove: ");
         String containerIdToRemove = scanner.next();
+        File inputFile;
+        inputFile = new File("src/Data/Container.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        List<String> lines = new ArrayList<>();
+        String lineFromFile;
+        while ((lineFromFile = reader.readLine()) != null) {
+            lines.add(lineFromFile);
+        }
+        reader.close();
+
+        // Remove matching line from array
+        for (int i=0; i<lines.size(); i++) {
+            if (lines.get(i).startsWith(containerIdToRemove)) {
+                lines.remove(i);
+                break;
+            }
+        }
+        // Write array back to file
+        PrintWriter writer = new PrintWriter(inputFile);
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
         Container.removeContainer(containerIdToRemove);
         scanner.nextLine();
     }

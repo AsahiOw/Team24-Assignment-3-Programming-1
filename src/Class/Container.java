@@ -1,11 +1,9 @@
 package Class;
 
-import Enum.ContainerType;
+import Enum.*;
 import Interface.Updatable;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,6 +14,7 @@ public class Container {
     private final ContainerType type;
     private Port currentPort;
     private Vehicle currentVehicle;
+    private ContainerState currentState;
     private static ArrayList<Container> containers = new ArrayList<Container>();
 
     public static Container matchContainerId(String containerID) {
@@ -42,6 +41,7 @@ public class Container {
 
     public void setCurrentVehicle(Vehicle currentVehicle) {
         this.currentVehicle = currentVehicle;
+        this.currentState = ContainerState.ON_VEHICLE;
     }
 
     public static void removeContainer(String idToRemove) {
@@ -71,14 +71,39 @@ public class Container {
         this.currentPort = null;
         this.currentVehicle = null;
         containers.add(this);
+        this.currentState = ContainerState.NEITHER;
+    }
+
+    public Container(double weight, ContainerType type, Port currentPort) {
+        this.id = "container"+nextId++;
+        this.weight = weight;
+        this.type = type;
+        this.currentPort = currentPort;
+        this.currentVehicle = null;
+        containers.add(this);
+        this.currentState = ContainerState.ON_PORT;
+    }
+
+    public Container(double weight, ContainerType type, Vehicle currentVehicle) {
+        this.id = "container"+nextId++;
+        this.weight = weight;
+        this.type = type;
+        this.currentPort = null;
+        this.currentVehicle = currentVehicle;
+        containers.add(this);
+        this.currentState = ContainerState.ON_VEHICLE;
     }
 
 
     public static void getContainers() {
-        System.out.println("List of Ship: ");
+        System.out.println("List of Container: ");
         for (Container c: containers) {
             System.out.println("\t" + c.toString());
         }
+    }
+
+    public static ArrayList<Container> getListOfContainers() {
+        return containers;
     }
     @Override
     public String toString() {
@@ -95,6 +120,7 @@ public class Container {
 
     public void setPort(Port p) {
         this.currentPort = p;
+        this.currentState = ContainerState.ON_PORT;
     }
 
     public double getWeight() {
@@ -149,20 +175,56 @@ public class Container {
         return type;
     }
 
-    public static void addNewContainer(Port p) throws FileNotFoundException {
+    public static void addNewContainer() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t Enter Container information ");
         System.out.print("\t\t Enter container's weight: ");
         double con_weight = scanner.nextDouble();
         System.out.print("\t\t Enter container's type: ");
         String con_type = scanner.next();
+        System.out.print("Add this container on vehicle/port: ");
+        String addOn = scanner.next();
 
-        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type));
-        File file2 = new File("src/Data/Container.txt");
-        PrintWriter writer = new PrintWriter(file2);
-        writer.write(newContainer.getId() + ", " + newContainer.getWeight() + ", " + newContainer.getType() + "\n");
-        System.out.println("New Container has been added: " + "\n" + newContainer);
+        if (addOn.equalsIgnoreCase("vehicle")) {
+            System.out.print("\t\t Enter vehicle ID: ");
+            String vehicle_Id = scanner.next();
+
+            while (Vehicle.getVehicleByName(vehicle_Id) != null) {
+                System.out.print("\t\t Enter vehicle's vehicle ID again: ");
+                vehicle_Id = scanner.next();
+            }
+
+            Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Vehicle.getVehicleByName(vehicle_Id));
+            FileWriter writer = new FileWriter("src/Data/Container.txt", true);
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + vehicle_Id + "\n");
+            writer.close();
+            System.out.println("New Container (co Veh) has been added: " + "\n" + newContainer);
+
+        } else if (addOn.equalsIgnoreCase("port")) {
+            System.out.print("\t\t Enter port ID: ");
+            String port_Id = scanner.next();
+            while (Port.matchPortID(port_Id) == null) {
+                System.out.print("\t\t Enter vehicle's port ID again: ");
+                port_Id = scanner.next();
+            }
+
+            Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Port.matchPortID(port_Id));
+            FileWriter writer = new FileWriter("src/Data/Container.txt", true);
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + port_Id + "\n");
+            writer.close();
+            System.out.println("New Container (co Port) has been added: " + "\n" + newContainer);
+        } else if (addOn.equalsIgnoreCase("neither")) {
+            Container newContainer = new Container(con_weight, Container.matchContainerType(con_type));
+            FileWriter writer = new FileWriter("src/Data/Container.txt", true);
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "\n");
+            writer.close();
+            System.out.println("New Container has been added: " + "\n" + newContainer);
+        } else {
+            System.out.println("Not exists container type!");
+        }
+
     }
+
 
 
 }

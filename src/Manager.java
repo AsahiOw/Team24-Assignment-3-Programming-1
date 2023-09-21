@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +14,11 @@ public class Manager extends User {
         super(username, password);
         this.managedPort = managedPort;
     }
+
+    public String getManagedPortName() {
+        return managedPort.getName();
+    }
+
     // Get input choice and execute relevant method
     static Scanner scanner = new Scanner(System.in);
     @Override
@@ -20,7 +26,7 @@ public class Manager extends User {
         return super.getPassword().equals(password);
     }
     @Override
-    public void showMenuOptions() throws FileNotFoundException {
+    public void showMenuOptions() throws IOException {
         int sub_option = 0;
         System.out.println("Welcome Manager of Port " + this.managedPort.getName() + "! Select an option:");
         System.out.println("1. Listing Container in port");
@@ -37,7 +43,7 @@ public class Manager extends User {
                 continueToOption();
                 break;
             case 2:
-                Container.addNewContainer(managedPort);
+//                Container.addNewContainer(managedPort);
                 continueToOption();
                 break;
             case 3:
@@ -200,7 +206,7 @@ public class Manager extends User {
 
 
 
-    public void continueToOption() throws FileNotFoundException {
+    public void continueToOption() throws IOException {
         System.out.print("\nContinue? (Y/N) ");
         String continueToOption = scanner.next();
 

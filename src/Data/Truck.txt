@@ -1,0 +1,10 @@
+vehicle1,truck1,1.0,100.0,1.0,100.0,port1,BASIC
+vehicle2,truck2,1231.0,123213.0,123312.0,1287423942349.0,port3,BASIC
+vehicle3,truck3,1.0,1234234.0,1.0,1324234234.0,port1,REEFER
+vehicle4,truck4,4.0,424234.0,4.0,42424.0,port5,TANKER
+vehicle5,truck5,1.0,12423.0,1.0,12424.0,port1,BASIC
+vehicle6,truck6,1231.0,123213.0,123312.0,1.0,port3,BASIC
+vehicle7,truck7,1.0,1243243.0,1.0,123424242.0,port1,REEFER
+vehicle8,truck8,4.0,45345324.0,4.0,44756546.0,port5,TANKER
+vehicle9,truck9,1.0,135435.0,1.0,1253525.0,port1,REEFER
+vehicle10,truck10,4.0,4354345.0,4.0,4345435345.0,port5,TANKER

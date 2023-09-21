@@ -8,6 +8,7 @@ import Class.*;
 import Enum.*;
 
 import static Class.Port.getPortByName;
+import static Class.Port.matchPortID;
 import static Class.Vehicle.getVehicleByName;
 
 public class Main {
@@ -25,16 +26,16 @@ public class Main {
     }
     public static void main(String[] args) throws IOException {
         ArrayList<User> users = new ArrayList<User>();
-        Port p1 = new Port("port1",12.3,456,1000,true);
-        Port p2 = new Port("port2",12.3,456,1000,true);
+//        Port p1 = new Port("port1",12.3,456,1000,true);
+//        Port p2 = new Port("port2",12.3,456,1000,true);
 
-        Vehicle t1 = new Truck("Truck1", 200, 500, 10, 1000, p1, TruckType.REEFER);
-        Vehicle s1 = new Ship("Ship 1", 1000, 2000, 50, 10000, p1);
-        Vehicle s2 = new Ship("Ship 2", 1000, 2050, 150, 100000, p1);
+//        Vehicle t1 = new Truck("Truck1", 200, 500, 10, 1000, p1, TruckType.REEFER);
+//        Vehicle s1 = new Ship("Ship 1", 1000, 2000, 50, 10000, p1);
+//        Vehicle s2 = new Ship("Ship 2", 1000, 2050, 150, 100000, p1);
 
-        new Trip(t1, "21/09/2023", p1, "21/09/2023", p2, TripStatus.IN_PROGRESS);
-        new Trip(s1,"21/09/2023" , p1,"21/09/2023" , p2, TripStatus.COMPLETED);
-        new Trip(s2, "21/09/2023", p2,"21/09/2023", p1, TripStatus.IN_PROGRESS);
+//        new Trip(t1, "21/09/2023", p1, "21/09/2023", p2, TripStatus.IN_PROGRESS);
+//        new Trip(s1,"21/09/2023" , p1,"21/09/2023" , p2, TripStatus.COMPLETED);
+//        new Trip(s2, "21/09/2023", p2,"21/09/2023", p1, TripStatus.IN_PROGRESS);
 
 //      Open txt file
         File file1 = new File("src/Data/Port.txt");
@@ -72,11 +73,11 @@ public class Main {
             String line = fileScanner1.nextLine();
             String[] parts = line.split(",");
 
-            String name = parts[0];
-            double latitude = Double.parseDouble(parts[1]);
-            double longitude = Double.parseDouble(parts[2]);
-            double capacity = Double.parseDouble(parts[3]);
-            boolean landingAbility = parts[4].equals("true");
+            String name = parts[1];
+            double latitude = Double.parseDouble(parts[2]);
+            double longitude = Double.parseDouble(parts[3]);
+            double capacity = Double.parseDouble(parts[4]);
+            boolean landingAbility = parts[5].equals("true");
 
             Port port = new Port(name, latitude, longitude, capacity, landingAbility);
         }
@@ -84,21 +85,31 @@ public class Main {
         while (fileScanner2.hasNextLine()){
             String line = fileScanner2.nextLine();
             String[] parts = line.split(",");
-            double weight = Double.parseDouble(parts[0]);
-            ContainerType type = ContainerType.valueOf(parts[1]);
+            double weight = Double.parseDouble(parts[1]);
+            ContainerType type = ContainerType.valueOf(parts[2]);
 
-            Container container = new Container(weight, type);
+            if (parts.length > 3) {
+                String portOrVehicleID = parts[3];
+                if (Port.matchPortID(portOrVehicleID) != null) {
+                    Container container = new Container(weight,type, Port.matchPortID(portOrVehicleID));
+                } else if (Vehicle.matchVehicleId(portOrVehicleID) != null) {
+                    Container container = new Container(weight,type, Vehicle.matchVehicleId(portOrVehicleID));
+                }
+            } else {
+                    Container container = new Container(weight, type);
+            }
         }
+
         Scanner fileScanner3 = new Scanner(file3);
         while (fileScanner3.hasNextLine()){
             String line = fileScanner3.nextLine();
             String[] parts = line.split(",");
-            Vehicle vehicle = getVehicleByName(parts[0]);
-            Date departureDate = stringToDate(parts[1]);
-            Port departurePort = getPortByName(parts[2]);
-            Date arrivalDate = stringToDate(parts[3]);
-            Port arrivalPort = getPortByName(parts[4]);
-            TripStatus status = TripStatus.valueOf(parts[5]);
+            Vehicle vehicle = getVehicleByName(parts[1]);
+            Date departureDate = stringToDate(parts[2]);
+            Port departurePort = getPortByName(parts[3]);
+            Date arrivalDate = stringToDate(parts[4]);
+            Port arrivalPort = getPortByName(parts[5]);
+            TripStatus status = TripStatus.valueOf(parts[6]);
 
             Trip trip = new Trip(vehicle, departureDate, departurePort, arrivalDate, arrivalPort, status);
         }
@@ -106,8 +117,8 @@ public class Main {
         while (fileScanner4.hasNextLine()){
             String line = fileScanner4.nextLine();
             String[] parts = line.split(",");
-            String name = parts[0];
-            String pass = parts[1];
+            String name = parts[1];
+            String pass = parts[2];
             Port managedPort = getPortByName(parts[3]);
 
             User u = new Manager(name, pass, managedPort);
@@ -116,8 +127,8 @@ public class Main {
         while (fileScanner5.hasNextLine()){
             String line = fileScanner5.nextLine();
             String[] parts = line.split(",");
-            String name = parts[0];
-            String pass = parts[1];
+            String name = parts[1];
+            String pass = parts[2];
 
             User u = new Admin(name, pass);
         }
@@ -125,12 +136,13 @@ public class Main {
         while (fileScanner6.hasNextLine()){
             String line = fileScanner6.nextLine();
             String[] parts = line.split(",");
-            String name = parts[0];
-            double fuel = Double.parseDouble(parts[1]);
-            double maxFuel = Double.parseDouble(parts[2]);
-            double capacity = Double.parseDouble(parts[3]);
-            double maxLoad = Double.parseDouble(parts[4]);
-            Port currentPort = getPortByName(parts[5]);
+            String name = parts[1];
+            double fuel = Double.parseDouble(parts[2]);
+            double maxFuel = Double.parseDouble(parts[3]);
+            double capacity = Double.parseDouble(parts[4]);
+            double maxLoad = Double.parseDouble(parts[5]);
+            Port currentPort = getPortByName(parts[6]);
+
 
             Vehicle vehicle = new Ship(name, fuel, maxFuel, capacity, maxLoad, currentPort);
         }
@@ -138,13 +150,13 @@ public class Main {
         while (fileScanner7.hasNextLine()){
             String line = fileScanner7.nextLine();
             String[] parts = line.split(",");
-            String name = parts[0];
-            double fuel = Double.parseDouble(parts[1]);
-            double maxFuel = Double.parseDouble(parts[2]);
-            double capacity = Double.parseDouble(parts[3]);
-            double maxLoad = Double.parseDouble(parts[4]);
-            Port currentPort = getPortByName(parts[5]);
-            TruckType type = TruckType.valueOf(parts[6]);
+            String name = parts[1];
+            double fuel = Double.parseDouble(parts[2]);
+            double maxFuel = Double.parseDouble(parts[3]);
+            double capacity = Double.parseDouble(parts[4]);
+            double maxLoad = Double.parseDouble(parts[5]);
+            Port currentPort = getPortByName(parts[6]);
+            TruckType type = TruckType.valueOf(parts[7]);
 
             Vehicle vehicle = new Truck(name, fuel, maxFuel, capacity, maxLoad, currentPort, type);
         }
@@ -157,20 +169,27 @@ public class Main {
         fileScanner6.close();
         fileScanner7.close();
 
-        p1.printOnPortContainers();
 
 
-        User u1 = new Admin("a","a");
-        User u2 = new Manager("m1","123", p1);
+//        p1.printOnPortContainers();
 
+
+//        User u1 = new Admin("a","a");
+//        User u2 = new Manager("m1","123", p1);
+        ArrayList<Container> containers2 = new ArrayList<Container>();
         Container c1 = new Container(12.4, ContainerType.DRY);
         Container c2 = new Container(42.1,ContainerType.OPEN_TOP);
         Container c3 = new Container(42.1,ContainerType.OPEN_TOP);
+        containers2.add(c1);
+        containers2.add(c2);
+        containers2.add(c3);
 
-        System.out.println(s1.loadContainer(c1));
-        System.out.println(s1.loadContainer(c2));
-        System.out.println(s2.loadContainer(c3));
-        t1.printListOfContainers();
+
+
+//        System.out.println(s1.loadContainer(c1));
+//        System.out.println(s1.loadContainer(c2));
+//        System.out.println(s2.loadContainer(c3));
+//        t1.printListOfContainers();
 
         Scanner scanner = new Scanner(System.in);
 

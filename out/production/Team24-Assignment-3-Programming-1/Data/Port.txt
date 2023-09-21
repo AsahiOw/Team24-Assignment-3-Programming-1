@@ -1,5 +1,5 @@
-port1,Test,-85.15459,73.17481,5000000.0,true
-port2,Test2,1.61323,-14.33289,10000000.0,false
-port3,Test3,-80.97864,-92.51353,2000000.0,true
-port4,Test4,69.81925,-21.61403,30000000.0,false
-port5,Test5,45.33175,31.52179,5000.0,true
+port1,port1,1.0,1.0,1.0,true
+port2,port2,2.0,2.0,2.0,false
+port3,port3,1.0,1.0,1.0,true
+port4,port4,2.0,2.0,2.0,false
+port5,port5,3.0,3.0,3.0,true
