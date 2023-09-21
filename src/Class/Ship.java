@@ -24,7 +24,7 @@ public class Ship extends Vehicle {
         fuelConsumptionRates.put(ContainerType.REFRIGERATED, 4.5);
         fuelConsumptionRates.put(ContainerType.LIQUID, 4.8);
     }
-
+    static Scanner scanner = new Scanner(System.in);
     @Override
     public double getTotalWeight() {
         return totalWeight;
@@ -141,21 +141,22 @@ public class Ship extends Vehicle {
             Date startDate = format.parse(startDateString);
             Date arrivalDate = format.parse(arrivalDateString);
             new Trip(this, startDate, this.getCurrentPort(), arrivalDate, destinationPort, TripStatus.IN_PROGRESS);
+            System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
         } catch (ParseException e) {
             System.out.println("Invalid date!");
         }
-
-        System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
     }
 
     @Override
     public boolean canMoveToPort(Port targetPort) {
-
-        // Check fuel level
-        if (this.getFuel() < MIN_REQUIRED_FUEL) {
+//        // Check fuel level
+//        if (this.getFuel() < MIN_REQUIRED_FUEL) {
+//            return false;
+//        }
+//      Check fuel level
+        if (this.getFuel() < getCurrentPort().distanceTo(targetPort)) {
             return false;
         }
-
         // Check capacity
         if (this.getNumContainers() == this.getCapacity()) {
             return false;

@@ -158,11 +158,10 @@ public class Truck extends Vehicle{
             Date startDate = format.parse(startDateString);
             Date arrivalDate = format.parse(arrivalDateString);
             new Trip(this, startDate, this.getCurrentPort(), arrivalDate, destinationPort, TripStatus.IN_PROGRESS);
+            System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
         } catch (ParseException e) {
             System.out.println("Invalid date!");
         }
-
-        System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
 
     }
 
@@ -170,7 +169,11 @@ public class Truck extends Vehicle{
     public boolean canMoveToPort(Port targetPort) {
 
         // Check fuel level
-        if (this.getFuel() < MIN_REQUIRED_FUEL) {
+//        if (this.getFuel() < MIN_REQUIRED_FUEL) {
+//            return false;
+//        }
+        // Check fuel level
+        if (this.getFuel() < getCurrentPort().distanceTo(targetPort)) {
             return false;
         }
         // Check landingAbility

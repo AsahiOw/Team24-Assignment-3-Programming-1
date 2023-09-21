@@ -338,7 +338,7 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
-    public static void loadContainerOnVehicle() throws IOException {
+    public static void loadContainerOnVehicle() {
         ArrayList<Container> listOfContainers = new ArrayList<Container>();
         System.out.print("Select vehicles by ID: ");
         String vehId = scanner.next();

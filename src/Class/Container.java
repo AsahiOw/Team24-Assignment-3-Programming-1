@@ -33,6 +33,7 @@ public class Container {
 
     public void setCurrentPort(Port currentPort) {
         this.currentPort = currentPort;
+        this.currentState = ContainerState.ON_PORT;
     }
 
     public Vehicle getCurrentVehicle() {
