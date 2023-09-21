@@ -151,7 +151,6 @@ public class Main {
 
             if (containerState == ContainerState.NEITHER) {
                 Container container = new Container(weight, type);
-                break;
             } else if (containerState == ContainerState.ON_PORT) {
                 String port_id = String.valueOf(parts[4]);
                 Container container = new Container(weight, type, Port.matchPortID(port_id));
