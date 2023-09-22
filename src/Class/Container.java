@@ -36,6 +36,10 @@ public class Container {
         this.currentState = ContainerState.ON_PORT;
     }
 
+    public ContainerState getCurrentState() {
+        return currentState;
+    }
+
     public Vehicle getCurrentVehicle() {
         return currentVehicle;
     }
@@ -83,6 +87,7 @@ public class Container {
         this.currentVehicle = null;
         containers.add(this);
         this.currentState = ContainerState.ON_PORT;
+        currentPort.addContainer(this);
     }
 
     public Container(double weight, ContainerType type, Vehicle currentVehicle) {
@@ -93,14 +98,28 @@ public class Container {
         this.currentVehicle = currentVehicle;
         containers.add(this);
         this.currentState = ContainerState.ON_VEHICLE;
+        currentVehicle.loadContainer(this);
     }
 
 
     public static void getContainers() {
-        System.out.println("List of Container: ");
-        for (Container c: containers) {
-            System.out.println("\t" + c.toString());
+        String onPortorVehicle;
+        System.out.println("List of containers: ");
+        System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════════╗");
+        System.out.println("║  Container   ║ Weight   ║ Type      ║ State    ║ Port/Vehicle ║");
+        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════════╬");
+
+        for (Container container: containers) {
+            if (container.getCurrentState() == ContainerState.NEITHER) onPortorVehicle = "None";
+            else onPortorVehicle = (container.getCurrentState() == ContainerState.ON_PORT) ? container.getCurrentPort().getId() : container.getCurrentVehicle().getId();
+            System.out.printf("║ %-12s ║ %-8.1f ║ %-9s ║ %-8s ║ %-12s ║%n",
+                    container.getId(),
+                    container.getWeight(),
+                    container.getType().name(),
+                    container.getCurrentState().name(),
+                    onPortorVehicle);
         }
+        System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════════╝");
     }
 
     public static ArrayList<Container> getListOfContainers() {
@@ -108,12 +127,23 @@ public class Container {
     }
     @Override
     public String toString() {
-        return "Container{" +
-                "id=" + id +
-                ", weight=" + weight +
-                ", type=" + type +
-                ", containerState=" + currentState +
-                '}';
+        if (currentState == ContainerState.ON_PORT)
+        return "Container " + id + " information: \n" +
+                "\n• Weight: " + weight +
+                "\n• Type: " + type +
+                "\n• Container State: " + currentState +
+                "\n• Current Port: " + currentPort.getId();
+        else if (currentState == ContainerState.ON_VEHICLE)
+            return "Container " + id + " information: \n" +
+                    "\n• Weight: " + weight +
+                    "\n• Type: " + type +
+                    "\n• Container State: " + currentState +
+                    "\n• Current Vehicle: " + currentVehicle.getId();
+        else
+            return "Container " + id + " information: \n" +
+                "\n• Weight: " + weight +
+                "\n• Type: " + type +
+                "\n• Container State: " + currentState;
     }
 
     public String getId() {

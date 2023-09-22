@@ -345,7 +345,7 @@ public class Admin extends User {
 
         System.out.print("Enter container(s) name (type 'stop' at the end): ");
         String con_Id = scanner.next();
-        while (con_Id.equalsIgnoreCase("stop")) {
+        while (!con_Id.equalsIgnoreCase("stop")) {
             listOfContainers.add(Container.matchContainerId(con_Id));
             con_Id = scanner.next();
         }

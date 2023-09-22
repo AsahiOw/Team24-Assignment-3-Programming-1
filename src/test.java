@@ -17,22 +17,27 @@ public class test {
         new Trip(s1,"21/09/2023" , p1,"21/09/2023" , p2, TripStatus.COMPLETED);
         new Trip(s2, "21/09/2023", p2,"21/09/2023", p1, TripStatus.IN_PROGRESS);
 
-
+        Container c1 = new Container(12.4, ContainerType.DRY, p1);
+        Container c2 = new Container(42.1, ContainerType.OPEN_TOP, p1);
+        Container c3 = new Container(42.1, ContainerType.OPEN_TOP, p1);
+        System.out.println(c1);
+        System.out.println(c2);
+        System.out.println(c3);
+        System.out.println(p1.getOnPortContainers());
 
         p1.printOnPortContainers();
+
 
 
         User u1 = new Admin("a","a");
         User u2 = new Manager("m1","123", p1);
 
-        Container c1 = new Container(12.4, ContainerType.DRY);
-        Container c2 = new Container(42.1, ContainerType.OPEN_TOP);
-        Container c3 = new Container(42.1, ContainerType.OPEN_TOP);
 
-        System.out.println(s1.loadContainer(c1));
-        System.out.println(s1.loadContainer(c2));
-        System.out.println(s2.loadContainer(c3));
-        t1.printListOfContainers();
-        System.out.println(Trip.searchTripsArrivedToday());
+
+//        System.out.println(s1.loadContainer(c1));
+//        System.out.println(s1.loadContainer(c2));
+//        System.out.println(s2.loadContainer(c3));
+//        t1.printListOfContainers();
+//        System.out.println(Trip.searchTripsArrivedToday());
     }
 }
