@@ -1,7 +1,9 @@
 package Class;
 import Enum.*;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -81,7 +83,7 @@ public abstract class Vehicle {
         this.currentPort = currentPort;
     }
 
-    public static void removeVehicle(String idToRemove) {
+    public static void removeVehicle(String idToRemove) throws IOException {
         Vehicle vehicle = Vehicle.matchVehicleId(idToRemove);
         Objects.requireNonNull(vehicle).currentPort.removeVehicle(vehicle);
         vehicle.removeAllContainer();
@@ -91,8 +93,30 @@ public abstract class Vehicle {
         vehicle = null;
     }
 
-    public void removeAllContainer() {
+    public void removeAllContainer() throws IOException {
         while (!onVehicleContainers.isEmpty()) {
+            File inputFile = new File("src/Data/Container.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            List<String> lines = new ArrayList<>();
+            String lineFromFile;
+            while ((lineFromFile = reader.readLine()) != null) {
+                lines.add(lineFromFile);
+            }
+            reader.close();
+
+            // Remove matching line from array
+            for (int i=0; i<lines.size(); i++) {
+                if (lines.get(i).startsWith(onVehicleContainers.get(onVehicleContainers.size()-1).getId())) {
+                    lines.remove(i);
+                    break;
+                }
+            }
+            // Write array back to file
+            PrintWriter writer = new PrintWriter(inputFile);
+            for (String line : lines) {
+                writer.println(line);
+            }
+            writer.close();
             Container.removeContainer(onVehicleContainers.get(onVehicleContainers.size()-1).getId());
         }
     }
@@ -139,6 +163,9 @@ public abstract class Vehicle {
     public ArrayList<Container> listOfContainers() {
         return onVehicleContainers;
     }
+    public static ArrayList<Vehicle> getVehicles() {
+        return vehicles;
+    }
     public void printListOfContainers() {
         String onPortorVehicle;
         System.out.println("List of containers on " + this.name + ": ");
@@ -181,25 +208,22 @@ public abstract class Vehicle {
 
     public static void printListOfVehicles() {
         System.out.println("List of Vehicles available: ");
-        System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════╦════════════╦═════════════╦═══════════╗");
-        System.out.println("║  Vehicle ID  ║ Fuel     ║ Max Fuel  ║ Capacity ║ Max Load ║ Port       ║ Type(Truck) ║#Containers║");
-        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════╬════════════╬═════════════╬═══════════╣");
+        System.out.println("╔══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╗");
+        System.out.println("║    Vehicle   ║     Fuel     ║   Max Fuel   ║   Capacity   ║   Max Load   ║     Port     ║  Type(Truck) ║  #Containers ║");
+        System.out.println("╠══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬══════════════╣");
         for (Vehicle v : vehicles) {
             String truckType = (v instanceof Truck) ? ((Truck) v).getType().name() : "None" ;
-            if (v instanceof Ship) {
-                System.out.printf("║ %-12s ║ %-8.1f ║ %-9.1f ║ %-8.1f ║ %-8.1f ║ %-10s ║ %-11s ║ %-9d ║%n",
-                        v.getName(),
-                        v.getFuel(),
-                        v.getMaxFuel(),
-                        v.getCapacity(),
-                        v.getMaxLoad(),
-                        v.getCurrentPort().getName(),
-                        truckType,
-                        v.getNumContainers());
-            }
+            System.out.printf("║ %-12s ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-12s ║ %-12s ║ %-12d ║%n",
+                    v.getName(),
+                    v.getFuel(),
+                    v.getMaxFuel(),
+                    v.getCapacity(),
+                    v.getMaxLoad(),
+                    v.getCurrentPort().getName(),
+                    truckType,
+                    v.getNumContainers());
         }
-        System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════╩════════════╩═════════════╩═══════════╝");
-        scanner.nextLine();
+        System.out.println("╚══════════════╩══════════════╩══════════════╩══════════════╩══════════════╩══════════════╩══════════════╩══════════════╝");
     }
 
     // Load / unload containers

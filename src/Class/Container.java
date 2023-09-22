@@ -103,21 +103,21 @@ public class Container {
     public static void getContainers() {
         String onPortorVehicle;
         System.out.println("List of containers: ");
-        System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════════╗");
-        System.out.println("║  Container   ║ Weight   ║ Type      ║ State    ║ Port/Vehicle ║");
-        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════════╣");
+        System.out.println("╔══════════════╦══════════════╦══════════════╦══════════════╦══════════════╗");
+        System.out.println("║  Container   ║    Weight    ║     Type     ║    State     ║ Port/Vehicle ║");
+        System.out.println("╠══════════════╬══════════════╬══════════════╬══════════════╬══════════════╣");
 
         for (Container container: containers) {
             if (container.getCurrentState() == ContainerState.NEITHER) onPortorVehicle = "None";
             else onPortorVehicle = (container.getCurrentState() == ContainerState.ON_PORT) ? container.getCurrentPort().getId() : container.getCurrentVehicle().getId();
-            System.out.printf("║ %-12s ║ %-8.1f ║ %-9s ║ %-8s ║ %-12s ║%n",
+            System.out.printf("║ %-12s ║ %-12.1f ║ %-12s ║ %-12s ║ %-12s ║%n",
                     container.getId(),
                     container.getWeight(),
                     container.getType().name(),
                     container.getCurrentState().name(),
                     onPortorVehicle);
         }
-        System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════════╝");
+        System.out.println("╚══════════════╩══════════════╩══════════════╩══════════════╩══════════════╝");
     }
 
     public static ArrayList<Container> getListOfContainers() {

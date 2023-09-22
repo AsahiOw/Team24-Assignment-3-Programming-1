@@ -153,14 +153,8 @@ public class Truck extends Vehicle{
         String startDateString = scanner.next();
         System.out.print("When do you want this vehicle to arrive (dd/mm/yyyy): ");
         String arrivalDateString = scanner.next();
-        try {
-            Date startDate = format.parse(startDateString);
-            Date arrivalDate = format.parse(arrivalDateString);
-            new Trip(this, startDate, this.getCurrentPort(), arrivalDate, destinationPort, TripStatus.IN_PROGRESS);
-            System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
-        } catch (ParseException e) {
-            System.out.println("Invalid date!");
-        }
+        new Trip(this, startDateString, this.getCurrentPort(), arrivalDateString, destinationPort, TripStatus.IN_PROGRESS);
+        System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
 
     }
 

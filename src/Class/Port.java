@@ -1,6 +1,8 @@
 package Class;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import Enum.*;
@@ -91,6 +93,8 @@ public class Port {
             if (!landingAbility) {
                 System.out.println("This port can't have truck.");
             } else onPortVehicles.add(vehicle);
+        } else {
+            onPortVehicles.add(vehicle);
         }
     }
     public void addContainerToPort(Container container) {
@@ -101,9 +105,53 @@ public class Port {
     public void removeVehicle(Vehicle vehicle) {
         onPortVehicles.remove(vehicle);
     }
-    public void removeAllVehicle() {
+    public void removeAllVehicle() throws IOException {
         while (!onPortVehicles.isEmpty()) {
-            Vehicle.removeVehicle(onPortVehicles.get(onPortVehicles.size()-1).getId());
+            Vehicle.removeVehicle(onPortVehicles.get(onPortVehicles.size() - 1).getId());
+        }
+        ArrayList<Vehicle> vehicle = new ArrayList<>();
+        ArrayList<Ship> ships = new ArrayList<>();
+        ArrayList<Truck> trucks = new ArrayList<>();
+        for (Vehicle v : Vehicle.getVehicles()) {
+            if (v instanceof Ship) {
+                ships.add((Ship) v);
+            } else if (v instanceof Truck) {
+                trucks.add((Truck) v);
+            }
+        }
+        System.out.println(vehicle);
+        System.out.println(ships);
+        System.out.println(trucks);
+
+        try {
+            // Write ships to ship.txt
+            BufferedWriter shipWriter = new BufferedWriter(new FileWriter("src/Data/Ship.txt", false));
+            for (Ship ship : ships) {
+                shipWriter.write(ship.getId() + ",");
+                shipWriter.write(ship.getName() + ",");
+                shipWriter.write(ship.getFuel() + ",");
+                shipWriter.write(ship.getMaxFuel() + ",");
+                shipWriter.write(ship.getCapacity() + ",");
+                shipWriter.write(ship.getMaxLoad() + ",");
+                shipWriter.write(ship.getCurrentPortName() + "\n");
+            }
+            shipWriter.close();
+
+            // Write trucks to truck.txt
+            BufferedWriter truckWriter = new BufferedWriter(new FileWriter("src/Data/Truck.txt", false));
+            for (Truck truck : trucks) {
+                truckWriter.write(truck.getId() + ",");
+                truckWriter.write(truck.getName() + ",");
+                truckWriter.write(truck.getFuel() + ",");
+                truckWriter.write(truck.getMaxFuel() + ",");
+                truckWriter.write(truck.getCapacity() + ",");
+                truckWriter.write(truck.getMaxLoad() + ",");
+                truckWriter.write(truck.getCurrentPortName() + ",");
+                truckWriter.write(truck.getType() + "\n");
+            }
+            truckWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 //  Other method
@@ -174,7 +222,7 @@ public class Port {
     }
 
     // Remove port selected by ID
-    public static void removePort(String idToRemove) {
+    public static void removePort(String idToRemove) throws IOException {
         Port port = Port.matchPortID(idToRemove);
         if (!Objects.requireNonNull(port).onPortVehicles.isEmpty()) port.removeAllVehicle();
         // Update to remove container in file

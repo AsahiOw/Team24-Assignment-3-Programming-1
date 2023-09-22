@@ -19,7 +19,7 @@ public class Admin extends User {
     static Scanner scanner = new Scanner(System.in);
     @Override
     public void showMenuOptions() throws IOException {
-        int sub_option;
+        int sub_option = 0;
 
         System.out.println("Welcome Admin! Select an option: \n");
         System.out.println("╔════════════List of Option════════════╗");
@@ -365,21 +365,35 @@ public class Admin extends User {
         int countContainers = 0;
 
         for (Container c: listOfContainers) {
-            if (!Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).loadContainer(c)) {
-                break;
-            } else {
+            if (Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).loadContainer(c)) {
                 countContainers ++;
+                listOfContainers.remove(c);
             }
         }
 
+        System.out.println("\n══════════════Result══════════════════");
         if (countContainers == listOfContainers.size()) {
             System.out.println("All container loaded successfully!");
         } else {
             System.out.println("Only " + countContainers + " has been loaded");
             System.out.println("Containers ID that haven't been loaded: ");
-            for (int i = countContainers; i<= listOfContainers.size(); i++) {
-                System.out.print("\t " + listOfContainers.get(i));
+            System.out.println("╔══════════════╦══════════════╦═══════════════════╦══════════════╦══════════════╗");
+            System.out.println("║  Container   ║    Weight    ║       Type        ║    State     ║ Port/Vehicle ║");
+            System.out.println("╠══════════════╬══════════════╬═══════════════════╬══════════════╬══════════════╣");
+
+            for (int i = 0; i <= listOfContainers.size()-1; i++) {
+                String onPortorVehicle;
+                Container container = listOfContainers.get(i);
+                if (container.getCurrentState() == ContainerState.NEITHER) onPortorVehicle = "None";
+                else onPortorVehicle = (container.getCurrentState() == ContainerState.ON_PORT) ? container.getCurrentPort().getId() : container.getCurrentVehicle().getId();
+                System.out.printf("║ %-12s ║ %-12.1f ║ %-17s ║ %-12s ║ %-12s ║%n",
+                        container.getId(),
+                        container.getWeight(),
+                        container.getType().name(),
+                        container.getCurrentState().name(),
+                        onPortorVehicle);
             }
+            System.out.println("╚══════════════╩══════════════╩═══════════════════╩══════════════╩══════════════╝");
         }
         scanner.nextLine();
     }
@@ -424,24 +438,6 @@ public class Admin extends User {
         } else {
             inputFile = new File("src/Data/Truck.txt");
         }
-//        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-//        PrintWriter writer = new PrintWriter(new FileWriter(inputFile));
-//
-//        String lineToRemove = null;
-//        String currentLine;
-//
-//        while((currentLine = reader.readLine()) != null) {
-//            String trimmedLine = currentLine.trim();
-//            if(trimmedLine.startsWith(vehicleIdToRemove)) {
-//                lineToRemove = trimmedLine;
-//                continue;
-//            }
-//            writer.println(currentLine);
-//        }
-//
-//        scanner.nextLine();
-//        writer.close();
-//        reader.close();
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         List<String> lines = new ArrayList<>();
         String lineFromFile;
@@ -546,6 +542,16 @@ public class Admin extends User {
         System.out.println("Enter ID of the port you want to move to:");
         String port_ID = scanner.next();
         Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).moveToPort(Port.matchPortID(port_ID));
+//        Trip trip = new Trip(Vehicle.matchVehicleId(vehId),, port_capacity, landingAbility);
+////      add to data folder
+//        FileWriter writer = new FileWriter("src/Data/Trip.txt", true);
+//        writer.write(port.getId() + ",");
+//        writer.write(port.getName() + ",");
+//        writer.write(port.getLatitude() + ",");
+//        writer.write(port.getLongitude() + ",");
+//        writer.write(port.getCapacity() + ",");
+//        writer.write(port.getLandingAbility() + "\n");
+//        writer.close();
     }
 
     public void fuelUpVehicle() {

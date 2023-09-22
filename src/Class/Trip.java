@@ -21,16 +21,16 @@ public class Trip {
 
     // constructor, getters, setters
 
-    public Trip(Vehicle vehicle, Date departureDate, Port departurePort, Date arrivalDate, Port arrivalPort, TripStatus status) {
-        this.id = "trip" + nextId++;
-        this.vehicle = vehicle;
-        this.departureDate = departureDate;
-        this.departurePort = departurePort;
-        this.arrivalDate = arrivalDate;
-        this.arrivalPort = arrivalPort;
-        this.status = status;
-        trips.add(this);
-    }
+//    public Trip(Vehicle vehicle, Date departureDate, Port departurePort, Date arrivalDate, Port arrivalPort, TripStatus status) {
+//        this.id = "trip" + nextId++;
+//        this.vehicle = vehicle;
+//        this.departureDate = departureDate;
+//        this.departurePort = departurePort;
+//        this.arrivalDate = arrivalDate;
+//        this.arrivalPort = arrivalPort;
+//        this.status = status;
+//        trips.add(this);
+//    }
 
     public Trip(Vehicle vehicle, String departureDate, Port departurePort, String arrivalDate, Port arrivalPort, TripStatus status) {
         this.id = "trip" + nextId++;
@@ -61,12 +61,20 @@ public class Trip {
         this.vehicle = vehicle;
     }
 
+//    public Date getDepartureDate() {
+//        return departureDate;
+//    }
+//
+//    public void setDepartureDate(Date departureDate) {
+//        this.departureDate = departureDate;
+//    }
+
     public Date getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
+    public Date getArrivalDate() {
+        return arrivalDate;
     }
 
     public Port getDeparturePort() {
@@ -77,13 +85,13 @@ public class Trip {
         this.departurePort = departurePort;
     }
 
-    public Date getArrivalDate() {
-        return arrivalDate;
-    }
-
-    public void setArrivalDate(Date arrivalDate) {
-        this.arrivalDate = arrivalDate;
-    }
+//    public Date getArrivalDate() {
+//        return arrivalDate;
+//    }
+//
+//    public void setArrivalDate(Date arrivalDate) {
+//        this.arrivalDate = arrivalDate;
+//    }
 
     public Port getArrivalPort() {
         return arrivalPort;

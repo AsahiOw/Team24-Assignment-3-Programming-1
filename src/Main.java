@@ -82,9 +82,9 @@ public class Main {
             String line = fileScanner3.nextLine();
             String[] parts = line.split(",");
             Vehicle vehicle = Vehicle.matchVehicleId(parts[1]);
-            Date departureDate = stringToDate(parts[2]);
+            String departureDate = parts[2];
             Port departurePort = Port.matchPortID(parts[3]);
-            Date arrivalDate = stringToDate(parts[4]);
+            String arrivalDate = parts[4];
             Port arrivalPort = Port.matchPortID(parts[5]);
             TripStatus status = TripStatus.valueOf(parts[6]);
 

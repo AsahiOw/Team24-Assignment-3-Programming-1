@@ -23,7 +23,7 @@ public class Manager extends User {
     }
     @Override
     public void showMenuOptions() throws IOException {
-        int sub_option;
+        int sub_option = 0;
         System.out.println("Welcome Manager of Port " + this.managedPort.getName() + "! Select an option:");
         System.out.println("╔════════════List of Option════════════╗");
         System.out.println("║ 1. Listing Container in port         ║");
@@ -83,7 +83,7 @@ public class Manager extends User {
                 System.out.println("╔════Statistic Operation for Managed Port═══╗");
                 System.out.println("║ 1. Total fuel used today                  ║");
                 System.out.println("║ 2. Total weight of each type of container ║");
-                System.out.println("║ 3. List all ships                         ║");
+                System.out.println("║ 3. List all Vehicle                        ║");
                 System.out.println("║ 4. List all trips in a day                ║");
                 System.out.println("║ 5. List all trips from day A to day B     ║");
                 System.out.println("╚═══════════════════════════════════════════╝");
@@ -136,12 +136,12 @@ public class Manager extends User {
     }
 
     public void printListOfShipInPort() {
-        System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════╦════════════╦═══════════╗");
-        System.out.println("║ Ship Name    ║ Fuel     ║ Max Fuel  ║ Capacity ║ Max Load ║ Port       ║#Containers║");
-        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════╬════════════╬═══════════╣");
+        System.out.println("╔══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦════════════╦═══════════╗");
+        System.out.println("║ Ship Name    ║     Fuel     ║   Max Fuel   ║   Capacity   ║   Max Load   ║ Port       ║#Containers║");
+        System.out.println("╠══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬════════════╬═══════════╣");
         for (Vehicle v : managedPort.getOnPortVehicles()) {
             if (v instanceof Ship) {
-                System.out.printf("║ %-12s ║ %-8.1f ║ %-9.1f ║ %-8.1f ║ %-8.1f ║ %-10s ║ %-9d ║%n",
+                System.out.printf("║ %-12s ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-10s ║ %-9d ║%n",
                         v.getName(),
                         v.getFuel(),
                         v.getMaxFuel(),
@@ -151,7 +151,7 @@ public class Manager extends User {
                         v.getNumContainers());
             }
         }
-        System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════╩════════════╩═══════════╝");
+        System.out.println("╚══════════════╩══════════════╩══════════════╩══════════════╩══════════════╩════════════╩═══════════╝");
         scanner.nextLine();
     }
 
