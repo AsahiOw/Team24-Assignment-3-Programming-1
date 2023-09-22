@@ -19,16 +19,18 @@ public class Admin extends User {
     static Scanner scanner = new Scanner(System.in);
     @Override
     public void showMenuOptions() throws IOException {
-        int sub_option = 0;
+        int sub_option;
 
         System.out.println("Welcome Admin! Select an option: \n");
-        System.out.println("1. Listing/Viewing options");
-        System.out.println("2. Adding entities");
-        System.out.println("3. Removing entities");
-        System.out.println("4. Vehicle Options");
-        System.out.println("5. User Management");
-        System.out.println("6. Statistic Operation");
-        System.out.println("7. Exit");
+        System.out.println("╔════════════List of Option════════════╗");
+        System.out.println("║ 1. Listing/Viewing options           ║");
+        System.out.println("║ 2. Adding entities                   ║");
+        System.out.println("║ 3. Removing entities                 ║");
+        System.out.println("║ 4. Vehicle Options                   ║");
+        System.out.println("║ 5. User Management                   ║");
+        System.out.println("║ 6. Statistic Operation               ║");
+        System.out.println("║ 7. Exit                              ║");
+        System.out.println("╚══════════════════════════════════════╝");
 
         System.out.print("\nSelect Option: ");
         int option = scanner.nextInt();
@@ -36,15 +38,15 @@ public class Admin extends User {
 
             case 1: // Listing/Viewing options
 //              List of Options
-                System.out.println("\n----------------------");
-                System.out.println("1. List all ports");
-                System.out.println("2. List all vehicles");
-                System.out.println("3. List all containers");
-                System.out.println("4. List all managers");
-
+                System.out.println("\n");
+                System.out.println("╔════════Listing/Viewing options═══════╗");
+                System.out.println("║ 1. List all ports                    ║");
+                System.out.println("║ 2. List all vehicles                 ║");
+                System.out.println("║ 3. List all containers               ║");
+                System.out.println("║ 4. List all managers                 ║");
+                System.out.println("╚══════════════════════════════════════╝");
 //              Select Option
-                System.out.println("\n----------------------");
-                System.out.print("\nSelect Option: ");
+                System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1:
@@ -69,14 +71,15 @@ public class Admin extends User {
 
             case 2: //Adding entities
 //              List of Options
-                System.out.println("\n----------------------");
-                System.out.println("1. Add new port");
-                System.out.println("2. Add new vehicle");
-                System.out.println("3. Add new container");
+                System.out.println("\n");
+                System.out.println("╔════════════Adding entities═══════════╗");
+                System.out.println("║ 1. Add new port                      ║");
+                System.out.println("║ 2. Add new vehicle                   ║");
+                System.out.println("║ 3. Add new container                 ║");
+                System.out.println("╚══════════════════════════════════════╝");
 
 //              Select Option
-                System.out.println("\n----------------------");
-                System.out.print("\nSelect Option: ");
+                System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1: // Add new port
@@ -100,13 +103,15 @@ public class Admin extends User {
 
 
             case 3: // Removing entities
-                System.out.println("1. Remove port");
-                System.out.println("2. Remove vehicle");
-                System.out.println("3. Remove container");
+                System.out.println("\n");
+                System.out.println("╔═══════════Removing entities══════════╗");
+                System.out.println("║ 1. Remove port                       ║");
+                System.out.println("║ 2. Remove vehicle                    ║");
+                System.out.println("║ 3. Remove container                  ║");
+                System.out.println("╚══════════════════════════════════════╝");
 
 //              Select Option
-                System.out.println("\n----------------------");
-                System.out.print("\nSelect Option: ");
+                System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1: // Remove Port
@@ -126,14 +131,15 @@ public class Admin extends User {
 
 
             case 4:
-                System.out.println("1. Vehicle load container");
-                System.out.println("2. Vehicle unload container");
-                System.out.println("3. Vehicle move to port");
-                System.out.println("4. Fuel up vehicle");
-
+                System.out.println("\n");
+                System.out.println("╔════════════Vehicle Options═══════════╗");
+                System.out.println("║ 1. Vehicle load container            ║");
+                System.out.println("║ 2. Vehicle unload container          ║");
+                System.out.println("║ 3. Vehicle move to port              ║");
+                System.out.println("║ 4. Fuel up vehicle                   ║");
+                System.out.println("╚══════════════════════════════════════╝");
 //              Select Option
-                System.out.println("\n----------------------");
-                System.out.print("\nSelect Option: ");
+                System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1: // Vehicle load container
@@ -157,11 +163,13 @@ public class Admin extends User {
 
 
             case 5:
-                System.out.println("1. Add user");
-                System.out.println("2. Remove user");
+                System.out.println("\n");
+                System.out.println("╔════════════User Management═══════════╗");
+                System.out.println("║ 1. Add user                          ║");
+                System.out.println("║ 2. Remove user                       ║");
+                System.out.println("╚══════════════════════════════════════╝");
 //              Select Option
-                System.out.println("\n----------------------");
-                System.out.print("\nSelect Option: ");
+                System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1: // Add user
@@ -176,14 +184,16 @@ public class Admin extends User {
                 break;
 
             case 6:
-                System.out.println("1. Total fuel used today");
-                System.out.println("2. Total weight of each type of container ");
-                System.out.println("3. List all ships in a port ");
-                System.out.println("4. List all trips in a day ");
-                System.out.println("5. List all trips from day A to day B");
+                System.out.println("\n");
+                System.out.println("╔════════════Statistic Operation════════════╗");
+                System.out.println("║ 1. Total fuel used today                  ║");
+                System.out.println("║ 2. Total weight of each type of container ║");
+                System.out.println("║ 3. List all ships in a port               ║");
+                System.out.println("║ 4. List all trips in a day                ║");
+                System.out.println("║ 5. List all trips from day A to day B     ║");
+                System.out.println("╚═══════════════════════════════════════════╝");
 //              Select Option
-                System.out.println("\n----------------------");
-                System.out.print("\nSelect Option: ");
+                System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
 
                 switch (sub_option) {
@@ -210,6 +220,7 @@ public class Admin extends User {
                 }
                 break;
             case 7:
+                System.out.println("Session end");
                 break;
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
@@ -219,14 +230,14 @@ public class Admin extends User {
     }
 
     public void addNewPort() throws IOException {
-        System.out.println("\n----------------------");
+        System.out.println("\n══════════════════════════════════════");
         System.out.println("\t Enter Port information: ");
         System.out.print("\t\t Enter port's name: ");
         String port_name = scanner.next();
 
-        System.out.print("\t\t Enter port's latitude and longtitude: ");
+        System.out.print("\t\t Enter port's latitude and longitude: ");
         double port_latitude = scanner.nextDouble();
-        double port_longtitude = scanner.nextDouble();
+        double port_longitude = scanner.nextDouble();
         scanner.nextLine();
 
         System.out.print("\t\t Enter port's capacity: ");
@@ -234,16 +245,16 @@ public class Admin extends User {
 
         System.out.print("\t\t Enter port's landing ability (true/false): ");
         String port_landingAbility = scanner.next();
+
         while ((!port_landingAbility.equalsIgnoreCase("true")) || (!port_landingAbility.equalsIgnoreCase("false"))) {
             System.out.print("Enter a true or false for port's landing ability: ");
             port_landingAbility = scanner.next();
         }
 
         boolean landingAbility;
-        if (port_landingAbility.equalsIgnoreCase("true")) landingAbility = true;
-        else landingAbility = false;
+        landingAbility = "true".equalsIgnoreCase(port_landingAbility);
 
-        Port port = new Port(port_name, port_latitude, port_longtitude, port_capacity, landingAbility);
+        Port port = new Port(port_name, port_latitude, port_longitude, port_capacity, landingAbility);
 //      add to data folder
         FileWriter writer = new FileWriter("src/Data/Port.txt", true);
         writer.write(port.getId() + ",");
@@ -257,7 +268,7 @@ public class Admin extends User {
     }
 
     public void addNewVehicle() throws IOException {
-        System.out.println("\n----------------------");
+        System.out.println("\n══════════════════════════════════════");
 
         System.out.println("\n\t Enter vehicle information: ");
         System.out.print("\t\t Enter vehicle's name: ");
@@ -298,7 +309,7 @@ public class Admin extends User {
             String veh_type = scanner.next();
 
 
-            if (Port.matchPortID(port_id).getLandingAbility()) {
+            if (Objects.requireNonNull(Port.matchPortID(port_id)).getLandingAbility()) {
                 //      add to data folder
                 Vehicle truck = new Truck(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id), Truck.matchTruckType(veh_type));
                 FileWriter writer = new FileWriter("src/Data/Truck.txt", true);
@@ -339,7 +350,8 @@ public class Admin extends User {
     }
 
     public static void loadContainerOnVehicle() {
-        ArrayList<Container> listOfContainers = new ArrayList<Container>();
+        System.out.println("\n══════════════════════════════════════");
+        ArrayList<Container> listOfContainers = new ArrayList<>();
         System.out.print("Select vehicles by ID: ");
         String vehId = scanner.next();
 
@@ -373,7 +385,7 @@ public class Admin extends User {
     }
     public static void removeSelectedPort() throws IOException {
         Port.printListOfPorts();
-        System.out.println("----------------------");
+        System.out.println("\n══════════════════════════════════════");
         System.out.print("Enter ID of the port you want to remove: ");
         String portIdToRemove = scanner.next();
         File inputFile;
@@ -403,11 +415,11 @@ public class Admin extends User {
     }
     public static void removeSelectedVehicle() throws IOException {
         Vehicle.printListOfVehicles();
-        System.out.println("----------------------");
+        System.out.println("\n══════════════════════════════════════");
         System.out.print("Enter ID of the vehicle you want to remove: ");
         String vehicleIdToRemove = scanner.next();
         File inputFile;
-        if ("Ship" == Vehicle.matchVehicleId(vehicleIdToRemove).isShipOrTruck()) {
+        if (Vehicle.matchVehicleId(vehicleIdToRemove) instanceof Ship) {
             inputFile = new File("src/Data/Ship.txt");
         } else {
             inputFile = new File("src/Data/Truck.txt");
@@ -456,7 +468,7 @@ public class Admin extends User {
 
     public static void removeSelectedContainer() throws IOException {
         Container.getContainers();
-        System.out.println("----------------------");
+        System.out.println("\n══════════════════════════════════════");
         Container.getContainers();
         System.out.print("Enter ID of the container you want to remove: ");
         String containerIdToRemove = scanner.next();
@@ -488,10 +500,11 @@ public class Admin extends User {
     }
 
     public static void unloadContainerOnVehicle(){
-        ArrayList<Container> listOfContainers = new ArrayList<Container>();
+        System.out.println("\n══════════════════════════════════════");
+        ArrayList<Container> listOfContainers = new ArrayList<>();
         System.out.print("Select vehicle by ID: ");
         String vehId = scanner.next();
-        Vehicle.matchVehicleId(vehId).printListOfContainers();
+        Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).printListOfContainers();
 
         System.out.print("Enter container(s) ID you want to remove (type 'stop' at the end): ");
         String con_Id = scanner.next();
@@ -500,8 +513,8 @@ public class Admin extends User {
             con_Id = scanner.next();
         }
 
-        ArrayList<Container> rejectedContainer = new ArrayList<Container>();
-        ArrayList<Container> acceptedContainer = new ArrayList<Container>();
+        ArrayList<Container> rejectedContainer = new ArrayList<>();
+        ArrayList<Container> acceptedContainer = new ArrayList<>();
         for (Container c: listOfContainers) {
             if (!Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).loadContainer(c)) {
                 rejectedContainer.add(c);
@@ -527,6 +540,7 @@ public class Admin extends User {
     }
 
     public void moveVehicleToPort() {
+        System.out.println("\n══════════════════════════════════════");
         System.out.print("Select vehicle by ID: ");
         String vehId = scanner.next();
         System.out.println("Enter ID of the port you want to move to:");
@@ -535,10 +549,11 @@ public class Admin extends User {
     }
 
     public void fuelUpVehicle() {
+        System.out.println("\n══════════════════════════════════════");
         System.out.print("Select vehicle by ID: ");
         String vehId = scanner.next();
         Vehicle vehicle = Vehicle.matchVehicleId(vehId);
-        if (vehicle.isFullFuel()) {
+        if (Objects.requireNonNull(vehicle).isFullFuel()) {
             System.out.println("This vehicle is full fuel.");
         } else {
             System.out.print("Input amount of fuel (type 'full' to fuel full): ");
@@ -577,14 +592,15 @@ public class Admin extends User {
     }
 
     public void printListOfShipInPort() {
+        System.out.println("\n══════════════════════════════════════");
         System.out.print("Enter ID of the port you want to view ships list: ");
         String portId = scanner.next();
         Port port = Port.matchPortID(portId);
         System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════╦════════════╦═══════════╗");
         System.out.println("║ Ship Name    ║ Fuel     ║ Max Fuel  ║ Capacity ║ Max Load ║ Port       ║#Containers║");
         System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════╬════════════╬═══════════╣");
-        for (Vehicle v : port.getOnPortVehicles()) {
-            if (v.isShipOrTruck().equals("Ship")) {
+        for (Vehicle v : Objects.requireNonNull(port).getOnPortVehicles()) {
+            if (v instanceof Ship) {
                 System.out.printf("║ %-12s ║ %-8.1f ║ %-9.1f ║ %-8.1f ║ %-8.1f ║ %-10s ║ %-9d ║%n",
                         v.getName(),
                         v.getFuel(),
@@ -600,6 +616,7 @@ public class Admin extends User {
     }
 
     public void printListOfTripByDate() {
+        System.out.println("\n══════════════════════════════════════");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter search date (dd/mm/yyyy): ");
@@ -635,6 +652,7 @@ public class Admin extends User {
     }
 
     public void printListOfTripFromDateToDate() {
+        System.out.println("\n══════════════════════════════════════");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
@@ -675,14 +693,14 @@ public class Admin extends User {
 
 
     public void continueToOption() throws IOException {
-        System.out.print("\nContinue? (Y/N) ");
+        System.out.println("\n══════════════════════════════════════");
+        System.out.print("Continue? (Y/N) ");
         String continueToOption = scanner.next();
 
         if(continueToOption.equalsIgnoreCase("Y")) {
             this.showMenuOptions();
         } else if(continueToOption.equalsIgnoreCase("N")) {
             System.out.println("Session end.");
-            return;
         }
     }
 }

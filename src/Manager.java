@@ -1,39 +1,37 @@
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 import Class.*;
 import Enum.*;
 
 public class Manager extends User {
-    private Port managedPort;
+    private final Port managedPort;
+    static Scanner scanner = new Scanner(System.in);
     public Manager(String username, String password, Port managedPort) {
         super(username, password);
         this.managedPort = managedPort;
     }
-
     public String getManagedPortName() {
         return managedPort.getName();
     }
 
-    // Get input choice and execute relevant method
-    static Scanner scanner = new Scanner(System.in);
     @Override
     public boolean validateCredential(String username, String password) {
         return super.getPassword().equals(password);
     }
     @Override
     public void showMenuOptions() throws IOException {
-        int sub_option = 0;
+        int sub_option;
         System.out.println("Welcome Manager of Port " + this.managedPort.getName() + "! Select an option:");
-        System.out.println("1. Listing Container in port");
-        System.out.println("2. Add Container in port");
-        System.out.println("3. Remove Container in port");
-        System.out.println("4. Statistic Operation");
-        System.out.println("5. Exit");
+        System.out.println("╔════════════List of Option════════════╗");
+        System.out.println("║ 1. Listing Container in port         ║");
+        System.out.println("║ 2. Add Container in port             ║");
+        System.out.println("║ 3. Remove Container in port          ║");
+        System.out.println("║ 4. Statistic Operation               ║");
+        System.out.println("║ 5. Exit                              ║");
+        System.out.println("╚══════════════════════════════════════╝");
 
         System.out.print("\nSelect Option: ");
         int option = scanner.nextInt();
@@ -43,15 +41,15 @@ public class Manager extends User {
                 continueToOption();
                 break;
             case 2:
-//                Container.addNewContainer(managedPort);
                 Container.addNewContainerInPort(managedPort);
                 continueToOption();
                 break;
             case 3:
                 managedPort.printOnPortContainers();
+                System.out.println("\n══════════════════════════════════════");
                 System.out.print("Enter ID of the container you want to remove: ");
                 String idToRemove = scanner.next();
-                if (Container.matchContainerId(idToRemove).getCurrentPort() == managedPort) {
+                if (Objects.requireNonNull(Container.matchContainerId(idToRemove)).getCurrentPort() == managedPort) {
                     File inputFile;
                     inputFile = new File("src/Data/Container.txt");
                     BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -81,15 +79,17 @@ public class Manager extends User {
                 continueToOption();
                 break;
             case 4:
-                System.out.println("1. Total fuel used today");
-                System.out.println("2. Total weight of each type of container ");
-                System.out.println("3. List all ships in managed port ");
-                System.out.println("4. List all trips in a day ");
-                System.out.println("5. List all trips from day A to day B");
-
+                System.out.println("\n");
+                System.out.println("╔════Statistic Operation for Managed Port═══╗");
+                System.out.println("║ 1. Total fuel used today                  ║");
+                System.out.println("║ 2. Total weight of each type of container ║");
+                System.out.println("║ 3. List all ships                         ║");
+                System.out.println("║ 4. List all trips in a day                ║");
+                System.out.println("║ 5. List all trips from day A to day B     ║");
+                System.out.println("╚═══════════════════════════════════════════╝");
 //              Select Option
-                System.out.println("\n----------------------");
-                System.out.print("\nSelect Option: ");
+                System.out.println("\n══════════════════════════════════════");
+                System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
                     case 1: // Total fuel used today
@@ -116,6 +116,7 @@ public class Manager extends User {
                 continueToOption();
                 break;
             case 5:
+                System.out.println("Session end.");
                 break;
         }
     }
@@ -139,7 +140,7 @@ public class Manager extends User {
         System.out.println("║ Ship Name    ║ Fuel     ║ Max Fuel  ║ Capacity ║ Max Load ║ Port       ║#Containers║");
         System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════╬════════════╬═══════════╣");
         for (Vehicle v : managedPort.getOnPortVehicles()) {
-            if (v.isShipOrTruck().equals("Ship")) {
+            if (v instanceof Ship) {
                 System.out.printf("║ %-12s ║ %-8.1f ║ %-9.1f ║ %-8.1f ║ %-8.1f ║ %-10s ║ %-9d ║%n",
                         v.getName(),
                         v.getFuel(),
@@ -155,6 +156,7 @@ public class Manager extends User {
     }
 
     public void printListOfTripByDateInPort() {
+        System.out.println("\n══════════════════════════════════════");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter search date (dd/mm/yyyy): ");
@@ -190,6 +192,7 @@ public class Manager extends User {
     }
 
     public void printListOfTripFromDateToDateInPort() {
+        System.out.println("\n══════════════════════════════════════");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
@@ -230,7 +233,8 @@ public class Manager extends User {
 
 
     public void continueToOption() throws IOException {
-        System.out.print("\nContinue? (Y/N) ");
+        System.out.println("\n══════════════════════════════════════");
+        System.out.print("Continue? (Y/N) ");
         String continueToOption = scanner.next();
 
         if(continueToOption.equalsIgnoreCase("Y")) {

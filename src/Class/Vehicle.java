@@ -1,8 +1,10 @@
 package Class;
+import Enum.*;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-import Enum.*;
+
 
 public abstract class Vehicle {
     private String id;
@@ -14,8 +16,7 @@ public abstract class Vehicle {
     private double maxLoad;
     private ArrayList<Container> onVehicleContainers;
     private Port currentPort;
-    private static final double MIN_REQUIRED_FUEL = 1000;
-    private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    private static ArrayList<Vehicle> vehicles = new ArrayList<>();
     static Scanner scanner;
 
     public Vehicle(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort) {
@@ -26,7 +27,7 @@ public abstract class Vehicle {
         this.capacity = capacity;
         this.maxLoad = maxLoad;
         this.currentPort = currentPort;
-        onVehicleContainers = new ArrayList<Container>();
+        onVehicleContainers = new ArrayList<>();
         currentPort.addVehicle(this);
         vehicles.add(this);
     }
@@ -82,9 +83,7 @@ public abstract class Vehicle {
 
     public static void removeVehicle(String idToRemove) {
         Vehicle vehicle = Vehicle.matchVehicleId(idToRemove);
-
-        vehicle.currentPort.removeVehicle(vehicle);
-
+        Objects.requireNonNull(vehicle).currentPort.removeVehicle(vehicle);
         vehicle.removeAllContainer();
 
         System.out.println("Vehicle " + idToRemove + " removed successfully!");
@@ -93,7 +92,7 @@ public abstract class Vehicle {
     }
 
     public void removeAllContainer() {
-        while (onVehicleContainers.size() > 0) {
+        while (!onVehicleContainers.isEmpty()) {
             Container.removeContainer(onVehicleContainers.get(onVehicleContainers.size()-1).getId());
         }
     }
@@ -165,7 +164,6 @@ public abstract class Vehicle {
         if (this.getCurrentPort() == null) {
             System.out.println("Error! Ship must be docked to refuel.");
         }
-
         double neededFuel = this.maxFuel - this.getFuel();
         this.fuel = this.maxFuel;
         System.out.println("Refueled vehicle with " + neededFuel + " gallons.");
@@ -188,7 +186,7 @@ public abstract class Vehicle {
         System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════╬════════════╬═════════════╬═══════════╣");
         for (Vehicle v : vehicles) {
             String truckType = (v instanceof Truck) ? ((Truck) v).getType().name() : "None" ;
-            if (v.isShipOrTruck().equals("Ship")) {
+            if (v instanceof Ship) {
                 System.out.printf("║ %-12s ║ %-8.1f ║ %-9.1f ║ %-8.1f ║ %-8.1f ║ %-10s ║ %-11s ║ %-9d ║%n",
                         v.getName(),
                         v.getFuel(),
@@ -204,20 +202,6 @@ public abstract class Vehicle {
         scanner.nextLine();
     }
 
-    public String isShipOrTruck() {
-        if (this instanceof Ship) return "Ship";
-        return "Truck";
-    }
-
-
-    public static Vehicle getVehicleByName(String name) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle.getName().equals(name)) {
-                return vehicle;
-            }
-        }
-        return null;
-    }
     // Load / unload containers
     public abstract boolean loadContainer(Container c);
     public abstract boolean unloadContainer(Container c);
@@ -225,7 +209,7 @@ public abstract class Vehicle {
     // Get container info
     public int getNumContainers() {
         return onVehicleContainers.size();
-    };
+    }
     // Move vehicle
     public abstract void moveToPort(Port port);
     public abstract boolean canMoveToPort(Port targetPort);

@@ -1,15 +1,13 @@
 package Class;
+import Enum.TripStatus;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Enum.TripStatus;
 public class Trip {
     private final String id;
     private static int nextId = 1;
@@ -19,7 +17,7 @@ public class Trip {
     private Date arrivalDate;
     private Port arrivalPort;
     private TripStatus status;
-    private static ArrayList<Trip> trips = new ArrayList<Trip>();
+    private static ArrayList<Trip> trips = new ArrayList<>();
 
     // constructor, getters, setters
 
@@ -46,7 +44,7 @@ public class Trip {
         try {
             this.arrivalDate = new SimpleDateFormat("dd/MM/yyyy").parse(arrivalDate);
         } catch (ParseException e) {
-            System.out.println("Failed!");
+            System.out.println("Invalid Date!");
         }
         this.arrivalPort = arrivalPort;
         this.status = status;
@@ -104,7 +102,7 @@ public class Trip {
     }
 
     public static ArrayList<Trip> searchTripByDate(Date searchDate) {
-        ArrayList<Trip> matchedTrip = new ArrayList<Trip>();
+        ArrayList<Trip> matchedTrip = new ArrayList<>();
 
         for (Trip trip : trips) {
             if (searchDate.equals(trip.departureDate) || searchDate.equals(trip.arrivalDate)) {
@@ -116,7 +114,7 @@ public class Trip {
     }
 
     public static ArrayList<Trip> searchTripByDateInPort(Date searchDate, Port port) {
-        ArrayList<Trip> matchedTrip = new ArrayList<Trip>();
+        ArrayList<Trip> matchedTrip = new ArrayList<>();
 
         for (Trip trip : trips) {
             if (searchDate.equals(trip.departureDate) || searchDate.equals(trip.arrivalDate))
@@ -128,7 +126,7 @@ public class Trip {
     }
 
     public static ArrayList<Trip> searchTripBetweenDates(Date startDate, Date endDate) {
-        ArrayList<Trip> matchedTrips = new ArrayList<Trip>();
+        ArrayList<Trip> matchedTrips = new ArrayList<>();
 
         for (Trip trip : trips) {
             if ((trip.departureDate.compareTo(startDate) >= 0 && trip.departureDate.compareTo(endDate) <= 0)
@@ -141,7 +139,7 @@ public class Trip {
     }
 
     public static ArrayList<Trip> searchTripBetweenDatesInPort(Date startDate, Date endDate, Port port) {
-        ArrayList<Trip> matchedTrips = new ArrayList<Trip>();
+        ArrayList<Trip> matchedTrips = new ArrayList<>();
         for (Trip trip : trips) {
             if ((trip.departureDate.compareTo(startDate) >= 0 && trip.departureDate.compareTo(endDate) <= 0)
                     || (trip.arrivalDate.compareTo(startDate) >= 0 && trip.arrivalDate.compareTo(endDate) <= 0))
@@ -160,7 +158,7 @@ public class Trip {
             LocalDate newArrivalDate = trip.arrivalDate.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
-            if (newArrivalDate.compareTo(now) == 0){
+            if (newArrivalDate.isEqual(now)){
                     matchedTrips.add(trip);
             }
         }

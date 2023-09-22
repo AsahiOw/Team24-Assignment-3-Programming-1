@@ -1,21 +1,19 @@
 package Class;
-
 import Enum.*;
-import Interface.Updatable;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Container {
-    private String id;
+    private final String id;
     private static int nextId = 1;
     private double weight;
     private final ContainerType type;
     private Port currentPort;
     private Vehicle currentVehicle;
     private ContainerState currentState;
-    private static ArrayList<Container> containers = new ArrayList<Container>();
+    private static ArrayList<Container> containers = new ArrayList<>();
+    static Scanner scanner = new Scanner(System.in);
 
     public static Container matchContainerId(String containerID) {
         for (Container c : containers) {
@@ -54,7 +52,7 @@ public class Container {
             Container c = Container.matchContainerId(idToRemove);
             containers.remove(c);
 
-            if (c.currentPort != null) {
+            if (Objects.requireNonNull(c).currentPort != null) {
                 c.currentPort.removeContainer(c);
             } else if (c.currentVehicle != null) {
                 c.currentVehicle.removeContainer(c);
@@ -107,7 +105,7 @@ public class Container {
         System.out.println("List of containers: ");
         System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════════╗");
         System.out.println("║  Container   ║ Weight   ║ Type      ║ State    ║ Port/Vehicle ║");
-        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════════╬");
+        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════════╣");
 
         for (Container container: containers) {
             if (container.getCurrentState() == ContainerState.NEITHER) onPortorVehicle = "None";
@@ -208,7 +206,7 @@ public class Container {
     }
 
     public static void addNewContainer() throws IOException {
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n══════════════════════════════════════");
         System.out.println("\t Enter Container information ");
         System.out.print("\t\t Enter container's weight: ");
         double con_weight = scanner.nextDouble();
@@ -222,13 +220,13 @@ public class Container {
             System.out.print("\t\t Enter vehicle ID: ");
             String vehicle_Id = scanner.next();
 
-            while (Vehicle.getVehicleByName(vehicle_Id) != null) {
+            while (Vehicle.matchVehicleId(vehicle_Id) == null) {
                 Vehicle.printListOfVehicles();
-                System.out.print("\t\t Unknow ID, Enter vehicle's ID again: ");
+                System.out.print("\t\t Unknown ID, Enter vehicle's ID again: ");
                 vehicle_Id = scanner.next();
             }
 
-            Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Vehicle.getVehicleByName(vehicle_Id));
+            Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
             writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + vehicle_Id + "\n");
             writer.close();
@@ -240,10 +238,10 @@ public class Container {
             String port_Id = scanner.next();
             while (Port.matchPortID(port_Id) == null) {
                 Port.printListOfPorts();
-                System.out.print("\t\t Unknow ID, Enter port ID again: ");
+                System.out.print("\t\t Unknown ID, Enter port ID again: ");
                 port_Id = scanner.next();
             }
-            Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Port.matchPortID(port_Id));
+            Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Objects.requireNonNull(Port.matchPortID(port_Id)));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
             writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port_Id + "\n");
             writer.close();
@@ -262,26 +260,17 @@ public class Container {
 
     }
     public static void addNewContainerInPort(Port port) throws IOException {
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n══════════════════════════════════════");
         System.out.println("\t Enter Container information ");
         System.out.print("\t\t Enter container's weight: ");
         double con_weight = scanner.nextDouble();
         System.out.print("\t\t Enter container's type: ");
         String con_type = scanner.next();
 
-        System.out.print("\t\t Enter port ID: ");
-        String port_Id = scanner.next();
-        while (Port.matchPortID(port_Id) == null) {
-            System.out.print("\t\t Enter vehicle's port ID again: ");
-            port_Id = scanner.next();
-        }
-        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Port.matchPortID(port_Id));
+        Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), port);
         FileWriter writer = new FileWriter("src/Data/Container.txt", true);
-        writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port_Id + "\n");
+        writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port.getId() + "\n");
         writer.close();
         System.out.println("New Container has been added: " + "\n" + newContainer);
-
     }
-
-
 }

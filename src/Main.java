@@ -7,9 +7,6 @@ import java.util.*;
 import Class.*;
 import Enum.*;
 
-import static Class.Port.getPortByName;
-import static Class.Vehicle.getVehicleByName;
-
 public class Main {
 
     private static Date stringToDate(String dateString) {
@@ -24,7 +21,6 @@ public class Main {
 
     }
     public static void main(String[] args) throws IOException {
-        ArrayList<User> users = new ArrayList<User>();
 //        Port p1 = new Port("port1",12.3,456,1000,true);
 //        Port p2 = new Port("port2",12.3,456,1000,true);
 
@@ -85,11 +81,11 @@ public class Main {
         while (fileScanner3.hasNextLine()){
             String line = fileScanner3.nextLine();
             String[] parts = line.split(",");
-            Vehicle vehicle = getVehicleByName(parts[1]);
+            Vehicle vehicle = Vehicle.matchVehicleId(parts[1]);
             Date departureDate = stringToDate(parts[2]);
-            Port departurePort = getPortByName(parts[3]);
+            Port departurePort = Port.matchPortID(parts[3]);
             Date arrivalDate = stringToDate(parts[4]);
-            Port arrivalPort = getPortByName(parts[5]);
+            Port arrivalPort = Port.matchPortID(parts[5]);
             TripStatus status = TripStatus.valueOf(parts[6]);
 
             Trip trip = new Trip(vehicle, departureDate, departurePort, arrivalDate, arrivalPort, status);
@@ -101,7 +97,7 @@ public class Main {
             String[] parts = line.split(",");
             String name = parts[1];
             String pass = parts[2];
-            Port managedPort = getPortByName(parts[3]);
+            Port managedPort = Port.matchPortID(parts[3]);
 
             User u = new Manager(name, pass, managedPort);
         }
@@ -123,7 +119,7 @@ public class Main {
             double maxFuel = Double.parseDouble(parts[3]);
             double capacity = Double.parseDouble(parts[4]);
             double maxLoad = Double.parseDouble(parts[5]);
-            Port currentPort = getPortByName(parts[6]);
+            Port currentPort = Port.matchPortID(parts[6]);
             Vehicle vehicle = new Ship(name, fuel, maxFuel, capacity, maxLoad, currentPort);
         }
         Scanner fileScanner7 = new Scanner(file7);
@@ -135,7 +131,7 @@ public class Main {
             double maxFuel = Double.parseDouble(parts[3]);
             double capacity = Double.parseDouble(parts[4]);
             double maxLoad = Double.parseDouble(parts[5]);
-            Port currentPort = getPortByName(parts[6]);
+            Port currentPort = Port.matchPortID(parts[6]);
             TruckType type = TruckType.valueOf(parts[7]);
 
             Vehicle vehicle = new Truck(name, fuel, maxFuel, capacity, maxLoad, currentPort, type);
@@ -152,10 +148,10 @@ public class Main {
                 Container container = new Container(weight, type);
             } else if (containerState == ContainerState.ON_PORT) {
                 String port_id = String.valueOf(parts[4]);
-                Container container = new Container(weight, type, Port.matchPortID(port_id));
+                Container container = new Container(weight, type, Objects.requireNonNull(Port.matchPortID(port_id)));
             } else if (containerState == ContainerState.ON_VEHICLE) {
                 String vehicle_id = String.valueOf(parts[4]);
-                Container container = new Container(weight, type, Vehicle.matchVehicleId(vehicle_id));
+                Container container = new Container(weight, type, Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_id)));
             }
         }
 //              close scanner

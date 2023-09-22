@@ -1,6 +1,5 @@
 package Class;
 
-import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -8,9 +7,8 @@ import java.util.*;
 import Enum.*;
 
 public class Ship extends Vehicle {
-    private static final double MIN_REQUIRED_FUEL = 1000;
     private double totalWeight = 0;
-    private Map<ContainerType, Double> fuelConsumptionRates;
+    private final Map<ContainerType, Double> fuelConsumptionRates;
 
 //    constructor, getter, setter
 
@@ -64,7 +62,7 @@ public class Ship extends Vehicle {
 
         // Load container
         super.addContainer(c); // Store in some list
-        if (super.getCurrentPort() != null) {super.getCurrentPort().removeContainer(c);};
+        if (super.getCurrentPort() != null) {super.getCurrentPort().removeContainer(c);}
         return true;
     }
 
@@ -95,16 +93,13 @@ public class Ship extends Vehicle {
     }
 
     private double calculateFuelNeeded(double distance) {
-
         double totalConsumption = 0;
-
         for (Container c : super.listOfContainers()) {
             double rate = fuelConsumptionRates.get(c.getType());
             totalConsumption += rate * c.getWeight();
         }
 
         return totalConsumption * distance;
-
     }
 
     @Override
@@ -149,21 +144,13 @@ public class Ship extends Vehicle {
 
     @Override
     public boolean canMoveToPort(Port targetPort) {
-//        // Check fuel level
-//        if (this.getFuel() < MIN_REQUIRED_FUEL) {
-//            return false;
-//        }
-//      Check fuel level
         if (this.getFuel() < getCurrentPort().distanceTo(targetPort)) {
             return false;
         }
         // Check capacity
-        if (this.getNumContainers() == this.getCapacity()) {
-            return false;
-        }
+        return this.getNumContainers() != this.getCapacity();
         // Check weather conditions
         // Any other checks
-        return true;
     }
 
     @Override
@@ -171,7 +158,6 @@ public class Ship extends Vehicle {
         if (this.getCurrentPort() == null) {
             System.out.println("Error! Ship must be docked to refuel.");
         }
-
         double neededFuel = super.getMaxFuel() - this.getFuel();
         super.setFuel(super.getMaxFuel());
         System.out.println("Refueled ship with " + neededFuel + " gallons.");

@@ -1,15 +1,14 @@
-import javax.lang.model.type.ArrayType;
 import java.io.*;
 import java.util.*;
 import Class.*;
 
 public abstract class User implements Serializable {
-    private String username;
+    private final String username;
     private String password;
-    private String id;
+    private final String id;
     private static int nextId = 1;
-    public static HashMap<String,User> matchUsername = new HashMap<String, User>();
-    public static ArrayList<User> users = new ArrayList<User>();
+    public static HashMap<String,User> matchUsername = new HashMap<>();
+    public static ArrayList<User> users = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static User matchUser(String username) {
@@ -93,7 +92,7 @@ public abstract class User implements Serializable {
             System.out.println("╔════════════════════════════════════════╗");
             System.out.println("║     New Admin created successfully!    ║");
             System.out.println("╚════════════════════════════════════════╝");
-        } else if (!isAdmin) {
+        } else {
             Port.printListOfPorts();
             System.out.print("\t Which portID this manager manage: ");
             String portID = scanner.next();
@@ -161,5 +160,5 @@ public abstract class User implements Serializable {
 
 
     public abstract boolean validateCredential(String username, String password);
-    public void showMenuOptions() throws IOException {};
+    public void showMenuOptions() throws IOException {}
 }

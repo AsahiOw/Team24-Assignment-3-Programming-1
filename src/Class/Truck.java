@@ -12,10 +12,9 @@ import static Enum.TruckType.REEFER;
 import static Enum.TruckType.TANKER;
 
 public class Truck extends Vehicle{
-    private static final double MIN_REQUIRED_FUEL = 1000;
     private double totalWeight = 0;
-    private Map<ContainerType, Double> fuelConsumptionRates;
-    private TruckType type;
+    private final Map<ContainerType, Double> fuelConsumptionRates;
+    private final TruckType type;
 
     public Truck(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort, TruckType type) {
         super(name, fuel,maxFuel, capacity,maxLoad,currentPort);
@@ -76,7 +75,7 @@ public class Truck extends Vehicle{
 
         // Load container
         super.addContainer(c); // Store in some list
-        if (super.getCurrentPort() != null) {super.getCurrentPort().removeContainer(c);};
+        if (super.getCurrentPort() != null) {super.getCurrentPort().removeContainer(c);}
 
         return true;
     }
@@ -169,10 +168,6 @@ public class Truck extends Vehicle{
     public boolean canMoveToPort(Port targetPort) {
 
         // Check fuel level
-//        if (this.getFuel() < MIN_REQUIRED_FUEL) {
-//            return false;
-//        }
-        // Check fuel level
         if (this.getFuel() < getCurrentPort().distanceTo(targetPort)) {
             return false;
         }
@@ -181,12 +176,9 @@ public class Truck extends Vehicle{
             return false;
         }
         // Check capacity
-        if (this.getNumContainers() == this.getCapacity()) {
-            return false;
-        }
+        return this.getNumContainers() != this.getCapacity();
         // Check weather conditions
         // Any other checks
-        return true;
     }
 
     @Override
