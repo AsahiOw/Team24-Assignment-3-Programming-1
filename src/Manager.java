@@ -9,10 +9,12 @@ import Enum.*;
 public class Manager extends User {
     private final Port managedPort;
     static Scanner scanner = new Scanner(System.in);
+
     public Manager(String username, String password, Port managedPort) {
         super(username, password);
         this.managedPort = managedPort;
     }
+
     public String getManagedPortName() {
         return managedPort.getName();
     }
@@ -21,6 +23,7 @@ public class Manager extends User {
     public boolean validateCredential(String username, String password) {
         return super.getPassword().equals(password);
     }
+
     @Override
     public void showMenuOptions() throws IOException {
         int sub_option = 0;
@@ -34,8 +37,8 @@ public class Manager extends User {
         System.out.println("╚══════════════════════════════════════╝");
 
         System.out.print("\nSelect Option: ");
-        int option = scanner.nextInt();
-        switch (option) {
+        sub_option = scanner.nextInt();
+        switch (sub_option) {
             case 1:
                 managedPort.printOnPortContainers();
                 continueToOption();
@@ -60,7 +63,7 @@ public class Manager extends User {
                     }
                     reader.close();
                     // Remove matching line from array
-                    for (int i=0; i<lines.size(); i++) {
+                    for (int i = 0; i < lines.size(); i++) {
                         if (lines.get(i).startsWith(idToRemove)) {
                             lines.remove(i);
                             break;
@@ -170,7 +173,7 @@ public class Manager extends User {
             if (!results.isEmpty()) {
                 // print header
                 System.out.println("╔════════════════╦════════════════╦═══════════════╦══════════════╦══════════════╦══════════════╦═══════════════╗");
-                System.out.printf("║ %-12s   ║ %-12s   ║ %-13s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.printf("║ %-12s   ║ %-12s   ║ %-13s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID", "Vehicle", "Departure", "From", "Arrival", "To", "Status");
                 System.out.println("╠════════════════╬════════════════╬═══════════════╬══════════════╬══════════════╬══════════════╬═══════════════╣");
                 for (Trip trip : results) {
                     System.out.printf("║ %-12s   ║ %-12s   ║ %-13s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
@@ -204,12 +207,12 @@ public class Manager extends User {
             String endDateString = scanner.next();
             Date endDate = format.parse(endDateString);
 
-            ArrayList<Trip> results = Trip.searchTripBetweenDatesInPort(startDate,endDate, managedPort);
+            ArrayList<Trip> results = Trip.searchTripBetweenDatesInPort(startDate, endDate, managedPort);
 
             if (!results.isEmpty()) {
                 // print header
                 System.out.println("╔════════════════╦════════════════╦══════════════╦══════════════╦══════════════╦══════════════╦═══════════════╗");
-                System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID", "Vehicle", "Departure", "From", "Arrival", "To", "Status");
                 System.out.println("╠════════════════╬════════════════╬══════════════╬══════════════╬══════════════╬══════════════╬═══════════════╣");
                 for (Trip trip : results) {
                     System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
@@ -231,16 +234,19 @@ public class Manager extends User {
         scanner.nextLine();
     }
 
-
-
     public void continueToOption() throws IOException {
         System.out.println("\n══════════════════════════════════════");
-        System.out.print("Continue? (Y/N) ");
+        System.out.print("Continue? (y/n) ");
         String continueToOption = scanner.next();
 
-        if(continueToOption.equalsIgnoreCase("Y")) {
+        while ((!continueToOption.equalsIgnoreCase("Y")) && (!continueToOption.equalsIgnoreCase("N"))) {
+            System.out.println("Please enter a valid option y/n: ");
+            continueToOption = scanner.next();
+        }
+
+        if (continueToOption.equalsIgnoreCase("Y")) {
             this.showMenuOptions();
-        } else if(continueToOption.equalsIgnoreCase("N")) {
+        } else if (continueToOption.equalsIgnoreCase("N")) {
             System.out.println("Session end.");
         }
     }

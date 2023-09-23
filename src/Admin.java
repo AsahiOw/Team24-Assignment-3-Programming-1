@@ -165,7 +165,6 @@ public class Admin extends User {
                 }
                 break;
 
-
             case 5:
                 System.out.println("\n");
                 System.out.println("╔════════════User Management═══════════╗");
@@ -365,9 +364,16 @@ public class Admin extends User {
             System.out.print("Enter vehicle ID again: ");
             vehicle_Id = scanner.next();
         }
+
         Container.getContainers();
         System.out.print("Enter container(s) id (type 'stop' at the end): ");
         String con_Id = scanner.next();
+
+        while (Container.matchContainerId(con_Id) == null) {
+            System.out.print("Enter vehicle ID again: ");
+            con_Id = scanner.next();
+        }
+
         while (!con_Id.equalsIgnoreCase("stop")) {
             listOfContainers.add(Container.matchContainerId(con_Id));
             con_Id = scanner.next();
@@ -444,6 +450,11 @@ public class Admin extends User {
         System.out.println("\n══════════════════════════════════════");
         System.out.print("Enter ID of the port you want to remove: ");
         String portIdToRemove = scanner.next();
+        while (Port.matchPortID(portIdToRemove) == null) {
+            System.out.println("Please enter existing port ID: ");
+            portIdToRemove = scanner.next();
+        }
+
         File inputFile;
         inputFile = new File("src/Data/Port.txt");
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -474,6 +485,12 @@ public class Admin extends User {
         System.out.println("\n══════════════════════════════════════");
         System.out.print("Enter ID of the vehicle you want to remove: ");
         String vehicleIdToRemove = scanner.next();
+
+        while (Vehicle.matchVehicleId(vehicleIdToRemove) == null) {
+            System.out.println("Please enter existing port ID: ");
+            vehicleIdToRemove = scanner.next();
+        }
+
         File inputFile;
         if (Vehicle.matchVehicleId(vehicleIdToRemove) instanceof Ship) {
             inputFile = new File("src/Data/Ship.txt");
@@ -510,6 +527,12 @@ public class Admin extends User {
         Container.getContainers();
         System.out.print("Enter ID of the container you want to remove: ");
         String containerIdToRemove = scanner.next();
+
+        while (Container.matchContainerId(containerIdToRemove) == null) {
+            System.out.println("Please enter existing container ID: ");
+            containerIdToRemove = scanner.next();
+        }
+
         File inputFile;
         inputFile = new File("src/Data/Container.txt");
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -541,11 +564,18 @@ public class Admin extends User {
         System.out.println("\n══════════════════════════════════════");
         ArrayList<Container> listOfContainers = new ArrayList<>();
         System.out.print("Select vehicle by ID: ");
-        String vehId = scanner.next();
-        Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).printListOfContainers();
+        String vehicle_Id = scanner.next();
+        while (Vehicle.matchVehicleId(vehicle_Id) == null) {
+            Vehicle.printListOfVehicles();
+            System.out.print("Enter vehicle ID again: ");
+            vehicle_Id = scanner.next();
+        }
+
+        Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)).printListOfContainers();
 
         System.out.print("Enter container(s) ID you want to remove (type 'stop' at the end): ");
         String con_Id = scanner.next();
+
         while (!con_Id.equalsIgnoreCase("stop")) {
             listOfContainers.add(Container.matchContainerId(con_Id));
             con_Id = scanner.next();
@@ -560,7 +590,7 @@ public class Admin extends User {
             int index = newListOfContainers.indexOf(c);
             newListOfContainers.remove(c);
 
-            if (!Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).unloadContainer(c)) {
+            if (!Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)).unloadContainer(c)) {
                 rejectedContainer.add(c);
             } else {
                 acceptedContainer.add(c);
@@ -609,11 +639,23 @@ public class Admin extends User {
         System.out.println("\n══════════════════════════════════════");
         Vehicle.printListOfVehicles();
         System.out.print("Select vehicle by ID: ");
-        String vehId = scanner.next();
+        String vehicle_Id = scanner.next();
+
+        while (Vehicle.matchVehicleId(vehicle_Id) == null) {
+            System.out.print("Enter vehicle ID again: ");
+            vehicle_Id = scanner.next();
+        }
+
         Port.printListOfPorts();
         System.out.println("Enter ID of the port you want to move to:");
-        String port_ID = scanner.next();
-        Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).moveToPort(Port.matchPortID(port_ID));
+        String port_Id = scanner.next();
+
+        while (Port.matchPortID(port_Id) == null) {
+            System.out.print("Enter port ID again: ");
+            port_Id = scanner.next();
+        }
+
+        Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)).moveToPort(Port.matchPortID(port_ID));
         List<Trip> allTrips = new ArrayList<>();
 
         // Get trips from Trip class
@@ -687,8 +729,15 @@ public class Admin extends User {
     public void printListOfShipInPort() {
         System.out.println("\n══════════════════════════════════════");
         System.out.print("Enter ID of the port you want to view ships list: ");
-        String portId = scanner.next();
-        Port port = Port.matchPortID(portId);
+        String port_Id = scanner.next();
+
+        while (Port.matchPortID(port_Id) == null) {
+            System.out.print("Enter port ID again: ");
+            port_Id = scanner.next();
+        }
+
+
+        Port port = Port.matchPortID(port_Id);
         System.out.println("╔══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╗");
         System.out.println("║ Ship Name    ║     Fuel     ║   Max Fuel   ║   Capacity   ║   Max Load   ║     Port     ║ #Containers  ║");
         System.out.println("╠══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬══════════════╣");
@@ -788,8 +837,13 @@ public class Admin extends User {
 
     public void continueToOption() throws IOException {
         System.out.println("\n══════════════════════════════════════");
-        System.out.print("Continue? (Y/N) ");
+        System.out.print("Continue? (y/n) ");
         String continueToOption = scanner.next();
+
+        while ((!continueToOption.equalsIgnoreCase("Y")) && (!continueToOption.equalsIgnoreCase("N"))) {
+            System.out.println("Please enter a valid option y/n: ");
+            continueToOption = scanner.next();
+        }
 
         if(continueToOption.equalsIgnoreCase("Y")) {
             this.showMenuOptions();

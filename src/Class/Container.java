@@ -250,6 +250,7 @@ public class Container {
                 System.out.print("\t\t Unknown ID, Enter port ID again: ");
                 port_Id = scanner.next();
             }
+
             Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Objects.requireNonNull(Port.matchPortID(port_Id)));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
             writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + Port.getNameById(port_Id) + "\n");
