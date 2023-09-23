@@ -1,9 +1,7 @@
 package Class;
 import Enum.TripStatus;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -80,7 +78,7 @@ public class Trip {
         return dateFormat.format(arrivalDate);
     }
 
-    public static void removeTrip(Trip trip) {
+    public static void removeTrip(Trip trip) throws IOException {
         trips.remove(trip);
         trip = null;
     }

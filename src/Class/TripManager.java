@@ -13,32 +13,19 @@ public class TripManager {
         this.trips = trips;
     }
 
-    public void deleteTrip(){
-        List<Trip> allTrips = new ArrayList<>();
-
-        // Get trips from Trip class
-        List<Trip> trips = Trip.getTrips();
-
-        // Add trips to list
-        for (Trip trip : trips) {
-            allTrips.add(trip);
+    public static void deleteTrip() throws IOException{
+        List<Trip> allTrips = Trip.getTrips();
+        FileWriter tripWriter = new FileWriter("src/Data/Trip.txt", false);
+        for (Trip trip : allTrips) {
+            tripWriter.write(trip.getId() + ",");
+            tripWriter.write(trip.getVehicleName() + ",");
+            tripWriter.write(trip.getDepartureDateString() + ",");
+            tripWriter.write(trip.getdeparturePortName() + ",");
+            tripWriter.write(trip.getArrivalDateString() + ",");
+            tripWriter.write(trip.getarrivalPortName() + ",");
+            tripWriter.write(trip.getStatus() + "\n");
         }
-        try {
-            // Write trips to Trip.txt
-            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
-            for (Trip trip : allTrips) {
-                tripWriter.write(trip.getId() + ",");
-                tripWriter.write(trip.getVehicleName() + ",");
-                tripWriter.write(trip.getDepartureDateString() + ",");
-                tripWriter.write(trip.getdeparturePortName() + ",");
-                tripWriter.write(trip.getArrivalDateString() + ",");
-                tripWriter.write(trip.getarrivalPortName() + ",");
-                tripWriter.write(trip.getStatus() + "\n");
-            }
-            tripWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        tripWriter.close();
     }
     public void deleteDataAfter7Days() throws IOException {
 

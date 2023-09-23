@@ -495,7 +495,31 @@ public class Admin extends User {
         }
         writer.close();
         Port.removePort(portIdToRemove);
+        List<Trip> allTrips = new ArrayList<>();
 
+        // Get trips from Trip class
+        List<Trip> trips = Trip.getTrips();
+
+        // Add trips to list
+        for (Trip trip : trips) {
+            allTrips.add(trip);
+        }
+        try {
+            // Write trips to Trip.txt
+            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
+            for (Trip trip : allTrips) {
+                tripWriter.write(trip.getId() + ",");
+                tripWriter.write(trip.getVehicleName() + ",");
+                tripWriter.write(trip.getDepartureDateString() + ",");
+                tripWriter.write(trip.getdeparturePortName() + ",");
+                tripWriter.write(trip.getArrivalDateString() + ",");
+                tripWriter.write(trip.getarrivalPortName() + ",");
+                tripWriter.write(trip.getStatus() + "\n");
+            }
+            tripWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static void removeSelectedVehicle() throws IOException {
         Vehicle.printListOfVehicles();
@@ -536,6 +560,31 @@ public class Admin extends User {
         }
         writer.close();
         Vehicle.removeVehicle(vehicleIdToRemove);
+        List<Trip> allTrips = new ArrayList<>();
+
+        // Get trips from Trip class
+        List<Trip> trips = Trip.getTrips();
+
+        // Add trips to list
+        for (Trip trip : trips) {
+            allTrips.add(trip);
+        }
+        try {
+            // Write trips to Trip.txt
+            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
+            for (Trip trip : allTrips) {
+                tripWriter.write(trip.getId() + ",");
+                tripWriter.write(trip.getVehicleName() + ",");
+                tripWriter.write(trip.getDepartureDateString() + ",");
+                tripWriter.write(trip.getdeparturePortName() + ",");
+                tripWriter.write(trip.getArrivalDateString() + ",");
+                tripWriter.write(trip.getarrivalPortName() + ",");
+                tripWriter.write(trip.getStatus() + "\n");
+            }
+            tripWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void removeSelectedContainer() throws IOException {
