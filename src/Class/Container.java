@@ -171,7 +171,7 @@ public class Container {
     public static double calculateTotalWeightByType(ContainerType type) {
         double totalWeight = 0;
         for (Container container: containers) {
-            if (container.type == type) {
+            if (container.getType() == type) {
                 totalWeight += container.getWeight();
             }
         }

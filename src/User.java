@@ -157,6 +157,19 @@ public abstract class User implements Serializable {
         scanner.nextLine();
     }
 
+    public static void listAllManagers() {
+        System.out.println("List of containers: ");
+        System.out.println("╔══════════════╦══════════════╗");
+        System.out.println("║  Username    ║ Managed Port ║");
+        System.out.println("╠══════════════╬══════════════╣");
+        for (User user : users) {
+            if (user instanceof Manager) {
+                System.out.printf("║ %-12s ║ %-12s ║\n", user.getUsername(), ((Manager) user).getManagedPortName());
+            }
+        }
+        System.out.println("╚══════════════╩══════════════╝");
+    }
+
 
     public abstract boolean validateCredential(String username, String password);
     public void showMenuOptions() throws IOException {}

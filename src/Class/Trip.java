@@ -76,6 +76,13 @@ public class Trip {
         return dateFormat.format(arrivalDate);
     }
 
+    public static void removeTrip(Trip trip) {
+        trips.remove(trip);
+        trip = null;
+    }
+
+
+
     public Port getArrivalPort() {
         return arrivalPort;
     }

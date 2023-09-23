@@ -61,6 +61,10 @@ public class Admin extends User {
                         Container.getContainers();
                         continueToOption();
                         break;
+                    case 4:
+                        User.listAllManagers();
+                        continueToOption();
+                        break;
                     default:
                         System.out.println("Unexpected value: " + option + ", please select again!");
                         showMenuOptions();
@@ -246,7 +250,7 @@ public class Admin extends User {
         System.out.print("\t\t Enter port's landing ability (true/false): ");
         String port_landingAbility = scanner.next();
 
-        while ((!port_landingAbility.equalsIgnoreCase("true")) || (!port_landingAbility.equalsIgnoreCase("false"))) {
+        while ((!port_landingAbility.equalsIgnoreCase("true")) && (!port_landingAbility.equalsIgnoreCase("false"))) {
             System.out.print("Enter a true or false for port's landing ability: ");
             port_landingAbility = scanner.next();
         }

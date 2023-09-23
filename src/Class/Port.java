@@ -127,6 +127,7 @@ public class Port {
         while (!onPortVehicles.isEmpty()) {
             Vehicle.removeVehicle(onPortVehicles.get(onPortVehicles.size() - 1).getId());
         }
+
         ArrayList<Ship> ships = new ArrayList<>();
         ArrayList<Truck> trucks = new ArrayList<>();
         for (Vehicle v : Vehicle.getVehicles()) {
@@ -237,6 +238,13 @@ public class Port {
     // Remove port selected by ID
     public static void removePort(String idToRemove) throws IOException {
         Port port = Port.matchPortID(idToRemove);
+
+        for (Trip trip: Trip.getTrips()) {
+            if ((trip.getArrivalPort() == port) || (trip.getDeparturePort() == port)) {
+                Trip.removeTrip(trip);
+            }
+        }
+
         if (!Objects.requireNonNull(port).onPortVehicles.isEmpty()) port.removeAllVehicle();
         // Update to remove container in file
         ports.remove(port);

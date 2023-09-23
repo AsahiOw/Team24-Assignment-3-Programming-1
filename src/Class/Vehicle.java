@@ -85,6 +85,12 @@ public abstract class Vehicle {
 
     public static void removeVehicle(String idToRemove) throws IOException {
         Vehicle vehicle = Vehicle.matchVehicleId(idToRemove);
+
+        for (Trip trip: Trip.getTrips()) {
+            if (trip.getVehicle() == vehicle) {
+                Trip.removeTrip(trip);
+            }
+        }
         Objects.requireNonNull(vehicle).currentPort.removeVehicle(vehicle);
         vehicle.removeAllContainer();
 
