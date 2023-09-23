@@ -1,12 +1,16 @@
 package Class;
 import Enum.TripStatus;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Trip {
     private final String id;
@@ -200,19 +204,6 @@ public class Trip {
             }
         }
         return total;
-    }
-
-    public static void deleteTripOlderThan7Days() {
-        LocalDate now = LocalDate.now();
-
-        for (Trip trip: Trip.getTrips()) {
-            LocalDate newArrivalDate = trip.getArrivalDate().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-            if (newArrivalDate.compareTo(now) <= -7) {
-                Trip.removeTrip(trip);
-            }
-        }
     }
 
     @Override

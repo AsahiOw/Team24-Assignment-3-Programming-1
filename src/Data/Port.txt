@@ -1,6 +1,4 @@
-port1,hello,1.0,1.0,1.0,true
 port2,hi,2.0,2.0,2.0,false
 port3,howareyou,1.0,1.0,1.0,true
 port4,imdying,2.0,2.0,2.0,false
 port5,uwu,3.0,3.0,3.0,true
-port6,helpme,3.0,3.0,3.0,false

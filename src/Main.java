@@ -149,9 +149,6 @@ public class Main {
 //        Main program
         Scanner scanner = new Scanner(System.in);
 
-//      Delete trip has arrival date 7 days earlier than today
-        Trip.deleteTripOlderThan7Days();
-
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
 

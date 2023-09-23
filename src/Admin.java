@@ -495,6 +495,7 @@ public class Admin extends User {
         }
         writer.close();
         Port.removePort(portIdToRemove);
+
     }
     public static void removeSelectedVehicle() throws IOException {
         Vehicle.printListOfVehicles();
