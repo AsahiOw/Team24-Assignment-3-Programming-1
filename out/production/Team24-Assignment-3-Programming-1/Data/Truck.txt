@@ -1,7 +1,2 @@
-vehicle1,truck8,4.0,4.5345324E7,4.0,4.4756546E7,port1,TANKER
-vehicle2,truck1,1.0,100.0,1.0,100.0,port1,BASIC
-vehicle3,truck3,1.0,1234234.0,1.0,1.324234234E9,port1,REEFER
-vehicle4,truck7,1.0,1243243.0,1.0,1.23424242E8,port3,REEFER
-vehicle5,truck2,1231.0,123213.0,123312.0,1.287423942349E12,port3,BASIC
-vehicle6,truck4,4.0,424234.0,4.0,42424.0,port5,TANKER
-vehicle7,truck6,1231.0,123213.0,123312.0,1.0,port3,BASIC
+vehicle2,sad,1.0E7,1.0E7,100000.0,1.0E8,howareyou,BASIC
+vehicle3,oof,1.0E8,1.0E14,1000000.0,1.0E10,helpme,BASIC

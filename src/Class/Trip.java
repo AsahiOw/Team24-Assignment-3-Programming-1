@@ -104,7 +104,16 @@ public class Trip {
     public TripStatus getStatus() {
         return status;
     }
-
+    public static ArrayList<Trip> getTrips() {
+        return trips;
+    }
+    public String getVehicleName(){ return vehicle.getName();}
+    public String getarrivalPortName(){
+        return arrivalPort.getName();
+    }
+    public String getdeparturePortName(){
+        return departurePort.getName();
+    }
     public void setStatus(TripStatus status) {
         this.status = status;
     }

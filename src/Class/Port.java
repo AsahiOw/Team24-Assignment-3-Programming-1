@@ -97,6 +97,24 @@ public class Port {
             onPortVehicles.add(vehicle);
         }
     }
+    public static String getIdByName(String name) {
+
+        for (Port port : ports) {
+            if (port.getName().equals(name)) {
+                return port.getId();
+            }
+        }
+        return null;
+    }
+    public static String getNameById(String id) {
+
+        for (Port port : ports) {
+            if (port.getId().equals(id)) {
+                return port.getName();
+            }
+        }
+        return null;
+    }
     public void addContainerToPort(Container container) {
         onPortContainers.add(container);
         container.setPort(this);
@@ -109,7 +127,6 @@ public class Port {
         while (!onPortVehicles.isEmpty()) {
             Vehicle.removeVehicle(onPortVehicles.get(onPortVehicles.size() - 1).getId());
         }
-        ArrayList<Vehicle> vehicle = new ArrayList<>();
         ArrayList<Ship> ships = new ArrayList<>();
         ArrayList<Truck> trucks = new ArrayList<>();
         for (Vehicle v : Vehicle.getVehicles()) {
@@ -119,10 +136,6 @@ public class Port {
                 trucks.add((Truck) v);
             }
         }
-        System.out.println(vehicle);
-        System.out.println(ships);
-        System.out.println(trucks);
-
         try {
             // Write ships to ship.txt
             BufferedWriter shipWriter = new BufferedWriter(new FileWriter("src/Data/Ship.txt", false));

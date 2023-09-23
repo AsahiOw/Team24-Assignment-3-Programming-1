@@ -205,7 +205,24 @@ public abstract class Vehicle {
         System.out.println("Vehicle not found with id: " + vehicleID);
         return null;
     }
+    public static String getIdByName(String name) {
 
+        for (Vehicle v: vehicles) {
+            if (v.getName().equals(name)) {
+                return v.getId();
+            }
+        }
+        return null;
+    }
+    public static String getNameById(String id) {
+
+        for (Vehicle v : vehicles) {
+            if (v.getId().equals(id)) {
+                return v.getName();
+            }
+        }
+        return null;
+    }
     public static void printListOfVehicles() {
         System.out.println("List of Vehicles available: ");
         System.out.println("╔══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╗");

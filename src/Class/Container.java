@@ -228,7 +228,7 @@ public class Container {
 
             Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
-            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + vehicle_Id + "\n");
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + Vehicle.getNameById(vehicle_Id) + "\n");
             writer.close();
             System.out.println("New Container has been added: " + "\n" + newContainer);
 
@@ -243,7 +243,7 @@ public class Container {
             }
             Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), Objects.requireNonNull(Port.matchPortID(port_Id)));
             FileWriter writer = new FileWriter("src/Data/Container.txt", true);
-            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port_Id + "\n");
+            writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + Port.getNameById(port_Id) + "\n");
             writer.close();
             System.out.println("New Container has been added: " + "\n" + newContainer);
 
@@ -269,7 +269,7 @@ public class Container {
 
         Container newContainer = new Container(con_weight, Container.matchContainerType(con_type), port);
         FileWriter writer = new FileWriter("src/Data/Container.txt", true);
-        writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port.getId() + "\n");
+        writer.write(newContainer.getId() + "," + newContainer.getWeight() + "," + newContainer.getType() + "," + newContainer.currentState + "," + port.getName() + "\n");
         writer.close();
         System.out.println("New Container has been added: " + "\n" + newContainer);
     }

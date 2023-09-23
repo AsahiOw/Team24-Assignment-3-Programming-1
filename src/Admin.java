@@ -355,7 +355,7 @@ public class Admin extends User {
         System.out.print("Select vehicles by ID: ");
         String vehId = scanner.next();
 
-        System.out.print("Enter container(s) name (type 'stop' at the end): ");
+        System.out.print("Enter container(s) id (type 'stop' at the end): ");
         String con_Id = scanner.next();
         while (!con_Id.equalsIgnoreCase("stop")) {
             listOfContainers.add(Container.matchContainerId(con_Id));
@@ -395,6 +395,29 @@ public class Admin extends User {
             }
             System.out.println("╚══════════════╩══════════════╩═══════════════════╩══════════════╩══════════════╝");
         }
+//        My I need helppppppppppppppppppppppppppppppppppppppppppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!
+//        List<Container> allContainer = new ArrayList<>();
+//
+//        List<Container> containers = Container.getListOfContainers();
+//
+//        for (Container container : containers){
+//            allContainer.add(container);
+//        }
+//        try {
+//            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Container.txt", false));
+//            for (Container container : allContainer) {
+//                tripWriter.write(trip.getId() + ",");
+//                tripWriter.write(trip.getVehicleName() + ",");
+//                tripWriter.write(trip.getDepartureDate() + ",");
+//                tripWriter.write(trip.getdeparturePortName() + ",");
+//                tripWriter.write(trip.getArrivalDate() + ",");
+//                tripWriter.write(trip.getarrivalPortName() + ",");
+//                tripWriter.write(trip.getStatus() + "\n");
+//            }
+//            tripWriter.close();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
         scanner.nextLine();
     }
     public static void removeSelectedPort() throws IOException {
@@ -542,16 +565,31 @@ public class Admin extends User {
         System.out.println("Enter ID of the port you want to move to:");
         String port_ID = scanner.next();
         Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).moveToPort(Port.matchPortID(port_ID));
-//        Trip trip = new Trip(Vehicle.matchVehicleId(vehId),, port_capacity, landingAbility);
-////      add to data folder
-//        FileWriter writer = new FileWriter("src/Data/Trip.txt", true);
-//        writer.write(port.getId() + ",");
-//        writer.write(port.getName() + ",");
-//        writer.write(port.getLatitude() + ",");
-//        writer.write(port.getLongitude() + ",");
-//        writer.write(port.getCapacity() + ",");
-//        writer.write(port.getLandingAbility() + "\n");
-//        writer.close();
+        List<Trip> allTrips = new ArrayList<>();
+
+        // Get trips from Trip class
+        List<Trip> trips = Trip.getTrips();
+
+        // Add trips to list
+        for (Trip trip : trips) {
+            allTrips.add(trip);
+        }
+        try {
+            // Write trips to Trip.txt
+            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
+            for (Trip trip : allTrips) {
+                tripWriter.write(trip.getId() + ",");
+                tripWriter.write(trip.getVehicleName() + ",");
+                tripWriter.write(trip.getDepartureDate() + ",");
+                tripWriter.write(trip.getdeparturePortName() + ",");
+                tripWriter.write(trip.getArrivalDate() + ",");
+                tripWriter.write(trip.getarrivalPortName() + ",");
+                tripWriter.write(trip.getStatus() + "\n");
+            }
+            tripWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void fuelUpVehicle() {
