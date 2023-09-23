@@ -28,6 +28,8 @@ public class TripManager {
             if(currentDate.after(arrivalCalendar.getTime())) {
                 // Remove old trip
                 System.out.println("The " +trip.getId() + " has date of " + trip.getArrivalDateString() + " has been removed.");
+                System.out.println("To keep the data for validation, the trip data will not be Deleted in Data folder.");
+                System.out.println("If You want to remove this function, Add comment line 117 to 120 in Main.java and rerun the code.");
                 trips.remove(trip);
             }
 

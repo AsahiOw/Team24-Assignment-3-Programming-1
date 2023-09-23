@@ -352,14 +352,16 @@ public class Admin extends User {
     public static void loadContainerOnVehicle() {
         System.out.println("\n══════════════════════════════════════");
         ArrayList<Container> listOfContainers = new ArrayList<>();
+        Vehicle.printListOfVehicles();
         System.out.print("Select vehicles by ID: ");
         String vehicle_Id = scanner.next();
 
         while (Vehicle.matchVehicleId(vehicle_Id) == null) {
+            Vehicle.printListOfVehicles();
             System.out.print("Enter vehicle ID again: ");
             vehicle_Id = scanner.next();
         }
-
+        Container.getContainers();
         System.out.print("Enter container(s) id (type 'stop' at the end): ");
         String con_Id = scanner.next();
         while (!con_Id.equalsIgnoreCase("stop")) {
@@ -619,7 +621,7 @@ public class Admin extends User {
         }
         try {
             // Write trips to Trip.txt
-            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", true));
+            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
             for (Trip trip : allTrips) {
                 tripWriter.write(trip.getId() + ",");
                 tripWriter.write(trip.getVehicleName() + ",");
@@ -683,12 +685,12 @@ public class Admin extends User {
         System.out.print("Enter ID of the port you want to view ships list: ");
         String portId = scanner.next();
         Port port = Port.matchPortID(portId);
-        System.out.println("╔══════════════╦══════════╦═══════════╦══════════╦══════════╦════════════╦═══════════╗");
-        System.out.println("║ Ship Name    ║ Fuel     ║ Max Fuel  ║ Capacity ║ Max Load ║ Port       ║#Containers║");
-        System.out.println("╠══════════════╬══════════╬═══════════╬══════════╬══════════╬════════════╬═══════════╣");
+        System.out.println("╔══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╦══════════════╗");
+        System.out.println("║ Ship Name    ║     Fuel     ║   Max Fuel   ║   Capacity   ║   Max Load   ║     Port     ║ #Containers  ║");
+        System.out.println("╠══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬══════════════╬══════════════╣");
         for (Vehicle v : Objects.requireNonNull(port).getOnPortVehicles()) {
             if (v instanceof Ship) {
-                System.out.printf("║ %-12s ║ %-8.1f ║ %-9.1f ║ %-8.1f ║ %-8.1f ║ %-10s ║ %-9d ║%n",
+                System.out.printf("║ %-12s ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-12s ║ %-12d ║%n",
                         v.getName(),
                         v.getFuel(),
                         v.getMaxFuel(),
@@ -698,7 +700,7 @@ public class Admin extends User {
                         v.getNumContainers());
             }
         }
-        System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════╩════════════╩═══════════╝");
+        System.out.println("╚══════════════╩══════════════╩══════════════╩══════════════╩══════════════╩══════════════╩══════════════╝");
         scanner.nextLine();
     }
 
@@ -715,11 +717,11 @@ public class Admin extends User {
 
             if (!results.isEmpty()) {
                 // print header
-                System.out.println("╔═════════════╦═════════════╦════════════╦═══════════╦════════════╦═══════════╦═══════════════╗");
-                System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
-                System.out.println("╠═════════════╬═════════════╬════════════╬═══════════╬════════════╬═══════════╬═══════════════╣");
+                System.out.println("╔════════════════╦════════════════╦═══════════════╦══════════════╦══════════════╦══════════════╦═══════════════╗");
+                System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.println("╠════════════════╬════════════════╬═══════════════╬══════════════╬══════════════╬══════════════╬═══════════════╣");
                 for (Trip trip : results) {
-                    System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n",
+                    System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
                             trip.getId(),
                             trip.getVehicle().getName(),
                             format.format(trip.getDepartureDate()),
@@ -728,7 +730,7 @@ public class Admin extends User {
                             trip.getArrivalPort().getName(),
                             trip.getStatus());
                 }
-                System.out.println("╚═════════════╩═════════════╩════════════╩═══════════╩════════════╩═══════════╩═══════════════╝");
+                System.out.println("╚════════════════╩════════════════╩═══════════════╩══════════════╩══════════════╩══════════════╩═══════════════╝");
             } else {
                 System.out.println("No trip found!");
             }
@@ -754,11 +756,11 @@ public class Admin extends User {
 
             if (!results.isEmpty()) {
                 // print header
-                System.out.println("╔═════════════╦═════════════╦════════════╦═══════════╦════════════╦═══════════╦═══════════════╗");
-                System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
-                System.out.println("╠═════════════╬═════════════╬════════════╬═══════════╬════════════╬═══════════╬═══════════════╣");
+                System.out.println("╔════════════════╦════════════════╦══════════════╦══════════════╦══════════════╦══════════════╦═══════════════╗");
+                System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.println("╠════════════════╬════════════════╬══════════════╬══════════════╬══════════════╬══════════════╬═══════════════╣");
                 for (Trip trip : results) {
-                    System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n",
+                    System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
                             trip.getId(),
                             trip.getVehicle().getName(),
                             format.format(trip.getDepartureDate()),
@@ -767,7 +769,7 @@ public class Admin extends User {
                             trip.getArrivalPort().getName(),
                             trip.getStatus());
                 }
-                System.out.println("╚═════════════╩═════════════╩════════════╩═══════════╩════════════╩═══════════╩═══════════════╝");
+                System.out.println("╚════════════════╩════════════════╩══════════════╩══════════════╩══════════════╩══════════════╩═══════════════╝");
             } else {
                 System.out.println("No trip found!");
             }

@@ -1,2 +1,10 @@
-vehicle1,sad,1.0E7,1.0E7,100000.0,1.0E8,howareyou,BASIC
-vehicle2,oof,1.0E8,1.0E14,1000000.0,1.0E10,helpme,BASIC
+vehicle1,truckun1,13000.0,13000.0,5000.0,15000.0,hello,BASIC
+vehicle1,truckun2,13000.0,13000.0,5000.0,15000.0,howareyou,REEFER
+vehicle1,truckun3,13000.0,13000.0,5000.0,15000.0,uwu,TANKER
+vehicle1,truckun4,13000.0,13000.0,5000.0,15000.0,uwu,BASIC
+vehicle1,truckun5,13000.0,13000.0,5000.0,15000.0,howareyou,REEFER
+vehicle1,truckun6,13000.0,13000.0,5000.0,15000.0,hello,TANKER
+vehicle1,truckun7,13000.0,13000.0,5000.0,15000.0,uwu,BASIC
+vehicle1,truckun8,13000.0,13000.0,5000.0,15000.0,hello,REEFER
+vehicle1,truckun9,13000.0,13000.0,5000.0,15000.0,howareyou,TANKER
+vehicle1,truckun10,13000.0,13000.0,5000.0,15000.0,hello,BASIC

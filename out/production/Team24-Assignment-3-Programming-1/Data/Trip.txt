@@ -1,1 +1,3 @@
-trip1,sad,01/09/2023,helpme,10/09/2023,helpme,IN_PROGRESS
+trip1,truckun10,20/09/2023,howareyou,26/09/2023,howareyou,IN_PROGRESS
+trip2,truckun5,11/01/2020,hello,15/01/2020,hello,IN_PROGRESS
+trip3,shipkun2,20/09/2023,imdying,22/09/2023,imdying,IN_PROGRESS

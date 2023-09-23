@@ -83,7 +83,7 @@ public class Manager extends User {
                 System.out.println("╔════Statistic Operation for Managed Port═══╗");
                 System.out.println("║ 1. Total fuel used today                  ║");
                 System.out.println("║ 2. Total weight of each type of container ║");
-                System.out.println("║ 3. List all Vehicle                        ║");
+                System.out.println("║ 3. List all Vehicle                       ║");
                 System.out.println("║ 4. List all trips in a day                ║");
                 System.out.println("║ 5. List all trips from day A to day B     ║");
                 System.out.println("╚═══════════════════════════════════════════╝");
@@ -168,11 +168,11 @@ public class Manager extends User {
 
             if (!results.isEmpty()) {
                 // print header
-                System.out.println("╔═════════════╦═════════════╦════════════╦═══════════╦════════════╦═══════════╦═══════════════╗");
-                System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
-                System.out.println("╠═════════════╬═════════════╬════════════╬═══════════╬════════════╬═══════════╬═══════════════╣");
+                System.out.println("╔════════════════╦════════════════╦═══════════════╦══════════════╦══════════════╦══════════════╦═══════════════╗");
+                System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.println("╠════════════════╬════════════════╬═══════════════╬══════════════╬══════════════╬══════════════╬═══════════════╣");
                 for (Trip trip : results) {
-                    System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n",
+                    System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
                             trip.getId(),
                             trip.getVehicle().getName(),
                             format.format(trip.getDepartureDate()),
@@ -181,7 +181,7 @@ public class Manager extends User {
                             trip.getArrivalPort().getName(),
                             trip.getStatus());
                 }
-                System.out.println("╚═════════════╩═════════════╩════════════╩═══════════╩════════════╩═══════════╩═══════════════╝");
+                System.out.println("╚════════════════╩════════════════╩═══════════════╩══════════════╩══════════════╩══════════════╩═══════════════╝");
             } else {
                 System.out.println("No trip found!");
             }
@@ -207,11 +207,11 @@ public class Manager extends User {
 
             if (!results.isEmpty()) {
                 // print header
-                System.out.println("╔═════════════╦═════════════╦════════════╦═══════════╦════════════╦═══════════╦═══════════════╗");
-                System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
-                System.out.println("╠═════════════╬═════════════╬════════════╬═══════════╬════════════╬═══════════╬═══════════════╣");
+                System.out.println("╔════════════════╦════════════════╦══════════════╦══════════════╦══════════════╦══════════════╦═══════════════╗");
+                System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.println("╠════════════════╬════════════════╬══════════════╬══════════════╬══════════════╬══════════════╬═══════════════╣");
                 for (Trip trip : results) {
-                    System.out.printf("║ %-9s   ║ %-9s   ║ %-10s ║ %-9s ║ %-10s ║ %-9s ║ %-13s ║\n",
+                    System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
                             trip.getId(),
                             trip.getVehicle().getName(),
                             format.format(trip.getDepartureDate()),
@@ -220,7 +220,7 @@ public class Manager extends User {
                             trip.getArrivalPort().getName(),
                             trip.getStatus());
                 }
-                System.out.println("╚═════════════╩═════════════╩════════════╩═══════════╩════════════╩═══════════╩═══════════════╝");
+                System.out.println("╚════════════════╩════════════════╩══════════════╩══════════════╩══════════════╩══════════════╩═══════════════╝");
             } else {
                 System.out.println("No trip found!");
             }

@@ -192,7 +192,7 @@ public class Port {
                 return p;
             }
         }
-        System.out.println("No matching port!");
+//        System.out.println("No matching port!");
         return null;
     }
 
