@@ -148,17 +148,9 @@ public class Main {
 
 //        Main program
         Scanner scanner = new Scanner(System.in);
-        LocalDate now = LocalDate.now();
 
 //      Delete trip has arrival date 7 days earlier than today
-        for (Trip trip: Trip.getTrips()) {
-            LocalDate newArrivalDate = trip.getArrivalDate().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-            if (newArrivalDate.compareTo(now) <= -7) {
-                Trip.removeTrip(trip);
-            }
-        }
+        Trip.deleteTripOlderThan7Days();
 
         System.out.print("Enter username: ");
         String username = scanner.nextLine();

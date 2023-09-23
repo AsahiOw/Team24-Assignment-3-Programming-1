@@ -202,6 +202,19 @@ public class Trip {
         return total;
     }
 
+    public static void deleteTripOlderThan7Days() {
+        LocalDate now = LocalDate.now();
+
+        for (Trip trip: Trip.getTrips()) {
+            LocalDate newArrivalDate = trip.getArrivalDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            if (newArrivalDate.compareTo(now) <= -7) {
+                Trip.removeTrip(trip);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "Trip{" +
