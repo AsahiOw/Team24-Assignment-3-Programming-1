@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import Class.*;
 import Enum.*;
@@ -144,29 +146,19 @@ public class Main {
         fileScanner6.close();
         fileScanner7.close();
 
-
-
-//        p1.printOnPortContainers();
-
-
-//        User u1 = new Admin("a","a");
-//        User u2 = new Manager("m1","123", p1);
-//        ArrayList<Container> containers2 = new ArrayList<Container>();
-//        Container c1 = new Container(12.4, ContainerType.DRY);
-//        Container c2 = new Container(42.1,ContainerType.OPEN_TOP);
-//        Container c3 = new Container(42.1,ContainerType.OPEN_TOP);
-//        containers2.add(c1);
-//        containers2.add(c2);
-//        containers2.add(c3);
-
-
-
-//        System.out.println(s1.loadContainer(c1));
-//        System.out.println(s1.loadContainer(c2));
-//        System.out.println(s2.loadContainer(c3));
-//        t1.printListOfContainers();
-
+//        Main program
         Scanner scanner = new Scanner(System.in);
+        LocalDate now = LocalDate.now();
+
+//      Delete trip has arrival date 7 days earlier than today
+        for (Trip trip: Trip.getTrips()) {
+            LocalDate newArrivalDate = trip.getArrivalDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            if (newArrivalDate.compareTo(now) <= -7) {
+                Trip.removeTrip(trip);
+            }
+        }
 
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
