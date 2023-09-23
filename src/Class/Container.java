@@ -99,6 +99,13 @@ public class Container {
         currentVehicle.loadContainer(this);
     }
 
+    public static boolean checkIfContainerExist(String containerID) {
+        return (matchContainerId(containerID) == null) ? false : true;
+    }
+
+    public void setCurrentState(ContainerState currentState) {
+        this.currentState = currentState;
+    }
 
     public static void getContainers() {
         String onPortorVehicle;
@@ -212,6 +219,8 @@ public class Container {
         double con_weight = scanner.nextDouble();
         System.out.print("\t\t Enter container's type: ");
         String con_type = scanner.next();
+
+
         System.out.print("Add this container on vehicle/port: ");
         String addOn = scanner.next();
 
@@ -255,7 +264,7 @@ public class Container {
             System.out.println("New Container has been added: " + "\n" + newContainer);
 
         } else {
-            System.out.println("Not exists container type!");
+            System.out.println("Not exists type!");
         }
 
     }

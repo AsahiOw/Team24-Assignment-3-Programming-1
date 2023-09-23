@@ -8,29 +8,7 @@ import Class.*;
 import Enum.*;
 
 public class Main {
-
-    private static Date stringToDate(String dateString) {
-
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return format.parse(dateString);
-        } catch (ParseException e) {
-            System.out.println("Error parsing date " + dateString);
-            return null;
-        }
-
-    }
     public static void main(String[] args) throws IOException {
-//        Port p1 = new Port("port1",12.3,456,1000,true);
-//        Port p2 = new Port("port2",12.3,456,1000,true);
-
-//        Vehicle t1 = new Truck("Truck1", 200, 500, 10, 1000, p1, TruckType.REEFER);
-//        Vehicle s1 = new Ship("Ship 1", 1000, 2000, 50, 10000, p1);
-//        Vehicle s2 = new Ship("Ship 2", 1000, 2050, 150, 100000, p1);
-
-//        new Trip(t1, "21/09/2023", p1, "21/09/2023", p2, TripStatus.IN_PROGRESS);
-//        new Trip(s1,"21/09/2023" , p1,"21/09/2023" , p2, TripStatus.COMPLETED);
-//        new Trip(s2, "21/09/2023", p2,"21/09/2023", p1, TripStatus.IN_PROGRESS);
 
 //      Open txt file
         File file1 = new File("src/Data/Port.txt");
@@ -76,21 +54,6 @@ public class Main {
 
             Port port = new Port(name, latitude, longitude, capacity, landingAbility);
         }
-
-        Scanner fileScanner3 = new Scanner(file3);
-        while (fileScanner3.hasNextLine()){
-            String line = fileScanner3.nextLine();
-            String[] parts = line.split(",");
-            Vehicle vehicle = Vehicle.matchVehicleId(Vehicle.getIdByName(parts[1]));
-            String departureDate = parts[2];
-            Port departurePort = Port.matchPortID(Port.getIdByName(parts[3]));
-            String arrivalDate = parts[4];
-            Port arrivalPort = Port.matchPortID(Port.getIdByName(parts[5]));
-            TripStatus status = TripStatus.valueOf(parts[6]);
-
-            Trip trip = new Trip(vehicle, departureDate, departurePort, arrivalDate, arrivalPort, status);
-        }
-
         Scanner fileScanner4 = new Scanner(file4);
         while (fileScanner4.hasNextLine()){
             String line = fileScanner4.nextLine();
@@ -136,6 +99,25 @@ public class Main {
 
             Vehicle vehicle = new Truck(name, fuel, maxFuel, capacity, maxLoad, currentPort, type);
         }
+        List<Trip> trips = new ArrayList<>();
+        Scanner fileScanner3 = new Scanner(file3);
+        while (fileScanner3.hasNextLine()){
+            String line = fileScanner3.nextLine();
+            String[] parts = line.split(",");
+            Vehicle vehicle = Vehicle.matchVehicleId(Vehicle.getIdByName(parts[1]));
+            String departureDate = parts[2];
+            Port departurePort = Port.matchPortID(Port.getIdByName(parts[3]));
+            String arrivalDate = parts[4];
+            Port arrivalPort = Port.matchPortID(Port.getIdByName(parts[5]));
+            TripStatus status = TripStatus.valueOf(parts[6]);
+
+            Trip trip = new Trip(vehicle, departureDate, departurePort, arrivalDate, arrivalPort, status);
+            trips.add(trip);
+        }
+        TripManager manager = new TripManager();
+        manager.setTrips(trips);
+        manager.deleteDataAfter7Days();
+
         Scanner fileScanner2 = new Scanner(file2);
         while (fileScanner2.hasNextLine()) {
             String line = fileScanner2.nextLine();

@@ -353,7 +353,12 @@ public class Admin extends User {
         System.out.println("\n══════════════════════════════════════");
         ArrayList<Container> listOfContainers = new ArrayList<>();
         System.out.print("Select vehicles by ID: ");
-        String vehId = scanner.next();
+        String vehicle_Id = scanner.next();
+
+        while (Vehicle.matchVehicleId(vehicle_Id) == null) {
+            System.out.print("Enter vehicle ID again: ");
+            vehicle_Id = scanner.next();
+        }
 
         System.out.print("Enter container(s) id (type 'stop' at the end): ");
         String con_Id = scanner.next();
@@ -363,16 +368,28 @@ public class Admin extends User {
         }
 
         int countContainers = 0;
+        int beforeSize = listOfContainers.size();
 
-        for (Container c: listOfContainers) {
-            if (Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).loadContainer(c)) {
-                countContainers ++;
-                listOfContainers.remove(c);
+        ArrayList<Container> newListOfContainers = new ArrayList<>(Container.getListOfContainers());
+        ArrayList<Container> failedToLoadContainers = new ArrayList<>(listOfContainers);
+
+
+        for (Container c : listOfContainers) {
+            int index = newListOfContainers.indexOf(c);
+            newListOfContainers.remove(c);
+
+            if (Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)).loadContainer(c)) {
+                countContainers++;
+                newListOfContainers.add(index, c);
+                failedToLoadContainers.remove(c);
+            } else {
+                newListOfContainers.add(index, c);
             }
+
         }
 
         System.out.println("\n══════════════Result══════════════════");
-        if (countContainers == listOfContainers.size()) {
+        if (countContainers == beforeSize) {
             System.out.println("All container loaded successfully!");
         } else {
             System.out.println("Only " + countContainers + " has been loaded");
@@ -381,11 +398,12 @@ public class Admin extends User {
             System.out.println("║  Container   ║    Weight    ║       Type        ║    State     ║ Port/Vehicle ║");
             System.out.println("╠══════════════╬══════════════╬═══════════════════╬══════════════╬══════════════╣");
 
-            for (int i = 0; i <= listOfContainers.size()-1; i++) {
+            for (int i = 0; i <= beforeSize; i++) {
                 String onPortorVehicle;
-                Container container = listOfContainers.get(i);
+                Container container = failedToLoadContainers.get(i);
                 if (container.getCurrentState() == ContainerState.NEITHER) onPortorVehicle = "None";
-                else onPortorVehicle = (container.getCurrentState() == ContainerState.ON_PORT) ? container.getCurrentPort().getId() : container.getCurrentVehicle().getId();
+                else
+                    onPortorVehicle = (container.getCurrentState() == ContainerState.ON_PORT) ? container.getCurrentPort().getId() : container.getCurrentVehicle().getId();
                 System.out.printf("║ %-12s ║ %-12.1f ║ %-17s ║ %-12s ║ %-12s ║%n",
                         container.getId(),
                         container.getWeight(),
@@ -395,31 +413,26 @@ public class Admin extends User {
             }
             System.out.println("╚══════════════╩══════════════╩═══════════════════╩══════════════╩══════════════╝");
         }
-//        My I need helppppppppppppppppppppppppppppppppppppppppppppppppppp!!!!!!!!!!!!!!!!!!!!!!!!!!
-//        List<Container> allContainer = new ArrayList<>();
-//
-//        List<Container> containers = Container.getListOfContainers();
-//
-//        for (Container container : containers){
-//            allContainer.add(container);
-//        }
-//        try {
-//            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Container.txt", false));
-//            for (Container container : allContainer) {
-//                tripWriter.write(trip.getId() + ",");
-//                tripWriter.write(trip.getVehicleName() + ",");
-//                tripWriter.write(trip.getDepartureDate() + ",");
-//                tripWriter.write(trip.getdeparturePortName() + ",");
-//                tripWriter.write(trip.getArrivalDate() + ",");
-//                tripWriter.write(trip.getarrivalPortName() + ",");
-//                tripWriter.write(trip.getStatus() + "\n");
-//            }
-//            tripWriter.close();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-        scanner.nextLine();
+        try {
+            FileWriter deleteWriter = new FileWriter("src/Data/Container.txt", false);
+            FileWriter writer = new FileWriter("src/Data/Container.txt", true);
+
+            for (Container container : newListOfContainers) {
+                if (container.getCurrentState() == ContainerState.ON_VEHICLE) {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "," + container.getCurrentVehicle().getName() + "\n");
+                } else if (container.getCurrentState() == ContainerState.ON_PORT) {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "," + container.getCurrentPort().getName() + "\n");
+                } else {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "\n");
+                }
+            }
+            writer.close();
+            scanner.nextLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     public static void removeSelectedPort() throws IOException {
         Port.printListOfPorts();
         System.out.println("\n══════════════════════════════════════");
@@ -527,19 +540,28 @@ public class Admin extends User {
 
         System.out.print("Enter container(s) ID you want to remove (type 'stop' at the end): ");
         String con_Id = scanner.next();
-        while (con_Id.equalsIgnoreCase("stop")) {
+        while (!con_Id.equalsIgnoreCase("stop")) {
             listOfContainers.add(Container.matchContainerId(con_Id));
             con_Id = scanner.next();
         }
 
+        ArrayList<Container> newListOfContainers = new ArrayList<>(Container.getListOfContainers());
+
         ArrayList<Container> rejectedContainer = new ArrayList<>();
         ArrayList<Container> acceptedContainer = new ArrayList<>();
+
         for (Container c: listOfContainers) {
-            if (!Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).loadContainer(c)) {
+            int index = newListOfContainers.indexOf(c);
+            newListOfContainers.remove(c);
+
+            if (!Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).unloadContainer(c)) {
                 rejectedContainer.add(c);
             } else {
                 acceptedContainer.add(c);
             }
+
+            System.out.println(c.toString());
+            newListOfContainers.add(index, c);
         }
 
         if (rejectedContainer.isEmpty()) {
@@ -556,12 +578,33 @@ public class Admin extends User {
                 System.out.println("\t " + c1.getId());
             }
         }
+
+        try {
+            FileWriter deleteWriter = new FileWriter("src/Data/Container.txt", false);
+            FileWriter writer = new FileWriter("src/Data/Container.txt", true);
+
+            for (Container container : newListOfContainers) {
+                if (container.getCurrentState() == ContainerState.ON_VEHICLE) {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "," + container.getCurrentVehicle().getName() + "\n");
+                } else if (container.getCurrentState() == ContainerState.ON_PORT) {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "," + container.getCurrentPort().getName() + "\n");
+                } else {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "\n");
+                }
+            }
+            writer.close();
+            scanner.nextLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void moveVehicleToPort() {
         System.out.println("\n══════════════════════════════════════");
+        Vehicle.printListOfVehicles();
         System.out.print("Select vehicle by ID: ");
         String vehId = scanner.next();
+        Port.printListOfPorts();
         System.out.println("Enter ID of the port you want to move to:");
         String port_ID = scanner.next();
         Objects.requireNonNull(Vehicle.matchVehicleId(vehId)).moveToPort(Port.matchPortID(port_ID));
@@ -576,13 +619,13 @@ public class Admin extends User {
         }
         try {
             // Write trips to Trip.txt
-            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
+            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", true));
             for (Trip trip : allTrips) {
                 tripWriter.write(trip.getId() + ",");
                 tripWriter.write(trip.getVehicleName() + ",");
-                tripWriter.write(trip.getDepartureDate() + ",");
+                tripWriter.write(trip.getDepartureDateString() + ",");
                 tripWriter.write(trip.getdeparturePortName() + ",");
-                tripWriter.write(trip.getArrivalDate() + ",");
+                tripWriter.write(trip.getArrivalDateString() + ",");
                 tripWriter.write(trip.getarrivalPortName() + ",");
                 tripWriter.write(trip.getStatus() + "\n");
             }

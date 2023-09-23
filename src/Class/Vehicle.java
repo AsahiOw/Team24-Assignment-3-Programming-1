@@ -158,6 +158,8 @@ public abstract class Vehicle {
 
     public void removeContainer(Container container) {
         onVehicleContainers.remove(container);
+        container.setCurrentState(ContainerState.NEITHER);
+        container.setCurrentVehicle(null);
     }
 
     public ArrayList<Container> listOfContainers() {
@@ -185,17 +187,7 @@ public abstract class Vehicle {
         }
         System.out.println("╚══════════════╩══════════╩═══════════╩══════════╩══════════════╝");
     }
-
-    // Fuel vehicle
-    public void refuel(double fuel) {
-        if (this.getCurrentPort() == null) {
-            System.out.println("Error! Ship must be docked to refuel.");
-        }
-        double neededFuel = this.maxFuel - this.getFuel();
-        this.fuel = this.maxFuel;
-        System.out.println("Refueled vehicle with " + neededFuel + " gallons.");
-    }
-
+    
     public static Vehicle matchVehicleId(String vehicleID) {
         for (Vehicle v: vehicles) {
             if (v.getId().equalsIgnoreCase(vehicleID)) {
@@ -231,7 +223,7 @@ public abstract class Vehicle {
         for (Vehicle v : vehicles) {
             String truckType = (v instanceof Truck) ? ((Truck) v).getType().name() : "None" ;
             System.out.printf("║ %-12s ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-12.1f ║ %-12s ║ %-12s ║ %-12d ║%n",
-                    v.getName(),
+                    v.getId(),
                     v.getFuel(),
                     v.getMaxFuel(),
                     v.getCapacity(),

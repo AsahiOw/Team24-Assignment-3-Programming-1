@@ -1,2 +1,3 @@
-container1,1000.0,DRY,ON_VEHICLE,sad
-container2,100000.0,DRY,ON_PORT,hello
+container1,1000.0,DRY,ON_PORT,helpme
+container2,1000.0,DRY,ON_VEHICLE,sad
+container3,1000.0,DRY,ON_VEHICLE,oof

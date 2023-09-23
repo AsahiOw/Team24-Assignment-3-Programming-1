@@ -77,6 +77,8 @@ public class Ship extends Vehicle {
 
         // Unload container
         super.removeContainer(c);
+        c.setCurrentVehicle(null);
+        c.setCurrentState(ContainerState.NEITHER);
         super.getCurrentPort().addContainerToPort(c);
 
         // Update total weight
@@ -107,6 +109,7 @@ public class Ship extends Vehicle {
         // Set current port
         // Consume fuel based on distance
         // Check if valid move
+        Scanner scanner = new Scanner(System.in);
         if (!canMoveToPort(destinationPort)) {
             System.out.println("Cannot move ship to port!");
             return;
@@ -133,7 +136,7 @@ public class Ship extends Vehicle {
         System.out.print("When do you want this vehicle to arrive (dd/mm/yyyy): ");
         String arrivalDateString = scanner.next();
         new Trip(this, startDateString, this.getCurrentPort(), arrivalDateString, destinationPort, TripStatus.IN_PROGRESS);
-        System.out.println("Vehicle " + super.getId() + "plan to be moved to " + destinationPort.getId() + " successfully!");
+        System.out.println("Vehicle " + super.getId() + " plan to be moved to " + destinationPort.getId() + " successfully!");
     }
 
     @Override
@@ -143,16 +146,6 @@ public class Ship extends Vehicle {
         }
         // Check capacity
         return this.getNumContainers() != this.getCapacity();
-    }
-
-    @Override
-    public void refuel(double fuel) {
-        if (this.getCurrentPort() == null) {
-            System.out.println("Error! Ship must be docked to refuel.");
-        }
-        double neededFuel = super.getMaxFuel() - this.getFuel();
-        super.setFuel(super.getMaxFuel());
-        System.out.println("Refueled ship with " + neededFuel + " gallons.");
     }
 }
 
