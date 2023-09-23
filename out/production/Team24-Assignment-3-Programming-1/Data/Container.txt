@@ -42,9 +42,9 @@ container1,2000.0,DRY,ON_PORT,imdying
 container1,2000.0,OPEN_TOP,ON_PORT,imdying
 container1,2000.0,OPEN_SIDE,ON_PORT,imdying
 container1,2000.0,REFRIGERATED,ON_PORT,imdying
-container1,2000.0,LIQUID,ON_PORT,imdying
-container1,2000.0,DRY,ON_PORT,uwu
-container1,2000.0,OPEN_TOP,ON_PORT,uwu
-container1,2000.0,OPEN_SIDE,ON_PORT,uwu
-container1,2000.0,REFRIGERATED,ON_PORT,uwu
-container1,2000.0,LIQUID,ON_PORT,uwu
+container1,2000.0,LIQUID,ON_VEHICLE,shipkun1
+container1,2000.0,DRY,ON_VEHICLE,shipkun1
+container1,2000.0,OPEN_TOP,ON_VEHICLE,shipkun1
+container1,2000.0,OPEN_SIDE,ON_VEHICLE,shipkun1
+container1,2000.0,REFRIGERATED,ON_VEHICLE,shipkun1
+container1,2000.0,LIQUID,ON_VEHICLE,shipkun1

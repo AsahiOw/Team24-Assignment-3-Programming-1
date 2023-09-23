@@ -234,7 +234,7 @@ public abstract class Vehicle {
                     v.getMaxFuel(),
                     v.getCapacity(),
                     v.getMaxLoad(),
-                    v.getCurrentPort().getName(),
+                    v.getCurrentPort().getId(),
                     truckType,
                     v.getNumContainers());
         }

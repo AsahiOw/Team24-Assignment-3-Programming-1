@@ -252,6 +252,34 @@ public class Port {
         System.out.println("Port " + idToRemove + " removed successfully!");
     }
 
+    public void removeAllContainer() throws IOException {
+        System.out.println(onPortContainers);
+        while (!onPortContainers.isEmpty()) {
+            File inputFile = new File("src/Data/Container.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            List<String> lines = new ArrayList<>();
+            String lineFromFile;
+            while ((lineFromFile = reader.readLine()) != null) {
+                lines.add(lineFromFile);
+            }
+            reader.close();
+
+            // Remove matching line from array
+            for (int i=0; i<lines.size(); i++) {
+                if (lines.get(i).startsWith(onPortContainers.get(onPortContainers.size()-1).getId())) {
+                    lines.remove(i);
+                    break;
+                }
+            }
+            // Write array back to file
+            PrintWriter writer = new PrintWriter(inputFile);
+            for (String line : lines) {
+                writer.println(line);
+            }
+            writer.close();
+            Container.removeContainer(onPortContainers.get(onPortContainers.size()-1).getId());
+        }
+    }
 // toString method
     @Override
     public String toString() {
