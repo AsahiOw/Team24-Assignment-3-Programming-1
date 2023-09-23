@@ -103,11 +103,16 @@ public class Trip {
 
     public static ArrayList<Trip> searchTripByDate(Date searchDate) {
         ArrayList<Trip> matchedTrip = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = dateFormat.format(searchDate);
+
 
         for (Trip trip : trips) {
-            if (searchDate.equals(trip.getDepartureDateString()) || searchDate.equals(trip.getArrivalDateString())) {
+
+            if (formattedDate.equals(trip.getDepartureDateString()) || formattedDate.equals(trip.getArrivalDateString())) {
                 matchedTrip.add(trip);
             }
+
         }
 
         return matchedTrip;
@@ -116,7 +121,10 @@ public class Trip {
     public static ArrayList<Trip> searchTripByDateInPort(Date searchDate, Port port) {
         ArrayList<Trip> matchedTrip = new ArrayList<>();
 
+
         for (Trip trip : trips) {
+            System.out.println(searchDate + " " + trip.departureDate);
+
             if (searchDate.equals(trip.departureDate) || searchDate.equals(trip.arrivalDate))
                 if (trip.arrivalPort == port || trip.departurePort == port) {
                     matchedTrip.add(trip);

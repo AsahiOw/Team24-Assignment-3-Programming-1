@@ -161,6 +161,7 @@ public class Manager extends User {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter search date (dd/mm/yyyy): ");
         String dateString = scanner.next();
+
         try {
             Date searchDate = format.parse(dateString);
 
@@ -169,15 +170,15 @@ public class Manager extends User {
             if (!results.isEmpty()) {
                 // print header
                 System.out.println("╔════════════════╦════════════════╦═══════════════╦══════════════╦══════════════╦══════════════╦═══════════════╗");
-                System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
+                System.out.printf("║ %-12s   ║ %-12s   ║ %-13s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n", "ID","Vehicle", "Departure", "From", "Arrival", "To", "Status");
                 System.out.println("╠════════════════╬════════════════╬═══════════════╬══════════════╬══════════════╬══════════════╬═══════════════╣");
                 for (Trip trip : results) {
-                    System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
+                    System.out.printf("║ %-12s   ║ %-12s   ║ %-13s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
                             trip.getId(),
                             trip.getVehicle().getName(),
-                            format.format(trip.getDepartureDate()),
+                            trip.getDepartureDateString(),
                             trip.getDeparturePort().getName(),
-                            format.format(trip.getArrivalDate()),
+                            trip.getArrivalDateString(),
                             trip.getArrivalPort().getName(),
                             trip.getStatus());
                 }
@@ -214,9 +215,9 @@ public class Manager extends User {
                     System.out.printf("║ %-12s   ║ %-12s   ║ %-12s ║ %-12s ║ %-12s ║ %-12s ║ %-13s ║\n",
                             trip.getId(),
                             trip.getVehicle().getName(),
-                            format.format(trip.getDepartureDate()),
+                            trip.getDepartureDateString(),
                             trip.getDeparturePort().getName(),
-                            format.format(trip.getArrivalDate()),
+                            trip.getArrivalDateString(),
                             trip.getArrivalPort().getName(),
                             trip.getStatus());
                 }

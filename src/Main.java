@@ -61,7 +61,6 @@ public class Main {
             String name = parts[1];
             String pass = parts[2];
             Port managedPort = Port.matchPortID(Port.getIdByName(parts[3]));
-
             User u = new Manager(name, pass, managedPort);
         }
         Scanner fileScanner5 = new Scanner(file5);
