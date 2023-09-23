@@ -130,6 +130,10 @@ public class Admin extends User {
                         removeSelectedContainer();
                         continueToOption();
                         break;
+                    default:
+                        System.out.println("Unexpected value: " + option + ", please select again!");
+                        showMenuOptions();
+                        break;
                 }
                 break;
 
@@ -162,6 +166,10 @@ public class Admin extends User {
                         fuelUpVehicle();
                         continueToOption();
                         break;
+                    default:
+                        System.out.println("Unexpected value: " + option + ", please select again!");
+                        showMenuOptions();
+                        break;
                 }
                 break;
 
@@ -182,6 +190,10 @@ public class Admin extends User {
                     case 2: // Remove user
                         User.removeUser();
                         continueToOption();
+                        break;
+                    default:
+                        System.out.println("Unexpected value: " + option + ", please select again!");
+                        showMenuOptions();
                         break;
                 }
                 break;
@@ -219,6 +231,10 @@ public class Admin extends User {
                     case 5: // List all trips from day A to day B
                         printListOfTripFromDateToDate();
                         continueToOption();
+                        break;
+                    default:
+                        System.out.println("Unexpected value: " + option + ", please select again!");
+                        showMenuOptions();
                         break;
                 }
                 break;
@@ -655,7 +671,7 @@ public class Admin extends User {
             port_Id = scanner.next();
         }
 
-        Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)).moveToPort(Port.matchPortID(port_ID));
+        Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)).moveToPort(Port.matchPortID(port_Id));
         List<Trip> allTrips = new ArrayList<>();
 
         // Get trips from Trip class

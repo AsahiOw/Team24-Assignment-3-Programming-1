@@ -26,7 +26,7 @@ public class Manager extends User {
 
     @Override
     public void showMenuOptions() throws IOException {
-        int sub_option = 0;
+        int option = 0;
         System.out.println("Welcome Manager of Port " + this.managedPort.getName() + "! Select an option:");
         System.out.println("╔════════════List of Option════════════╗");
         System.out.println("║ 1. Listing Container in port         ║");
@@ -37,8 +37,8 @@ public class Manager extends User {
         System.out.println("╚══════════════════════════════════════╝");
 
         System.out.print("\nSelect Option: ");
-        sub_option = scanner.nextInt();
-        switch (sub_option) {
+        option = scanner.nextInt();
+        switch (option) {
             case 1:
                 managedPort.printOnPortContainers();
                 continueToOption();
@@ -82,6 +82,7 @@ public class Manager extends User {
                 continueToOption();
                 break;
             case 4:
+                int sub_option;
                 System.out.println("\n");
                 System.out.println("╔════Statistic Operation for Managed Port═══╗");
                 System.out.println("║ 1. Total fuel used today                  ║");
@@ -115,11 +116,19 @@ public class Manager extends User {
                         printListOfTripFromDateToDateInPort();
                         continueToOption();
                         break;
+                    default:
+                        System.out.println("Unexpected value: " + sub_option + ", please select again!");
+                        showMenuOptions();
+                        break;
                 }
                 continueToOption();
                 break;
             case 5:
                 System.out.println("Session end.");
+                break;
+            default:
+                System.out.println("Unexpected value: " + option + ", please select again!");
+                showMenuOptions();
                 break;
         }
     }
