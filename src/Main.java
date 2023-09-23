@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -136,6 +135,10 @@ public class Main {
                 String vehicle_name = String.valueOf(parts[4]);
                 Container container = new Container(weight, type, Objects.requireNonNull(Vehicle.matchVehicleId(Vehicle.getIdByName(vehicle_name))));
             }
+        }
+        List<Container> allContainers = new ArrayList<>();
+        for (Container c : Container.getListOfContainers()){
+            allContainers.add(c);
         }
 //              close scanner
         fileScanner1.close();
