@@ -16,12 +16,15 @@ public class Admin extends User {
     public boolean validateCredential(String username, String password) {
         return super.getPassword().equals(password);
     }
-//  Open txt file
-    // Get input choice and execute relevant method
     static Scanner scanner = new Scanner(System.in);
+
+    /*------Main Program: Options menu for Admin------*/
+
     @Override
     public void showMenuOptions() throws IOException {
         int sub_option = 0;
+
+        // Main menu
 
         System.out.println("Welcome Admin! Select an option: \n");
         System.out.println("╔════════════List of Option════════════╗");
@@ -36,10 +39,12 @@ public class Admin extends User {
 
         System.out.print("\nSelect Option: ");
         int option = scanner.nextInt();
-        switch (option) {
 
-            case 1: // Listing/Viewing options
-//              List of Options
+        switch (option) {
+            // Listing/Viewing options
+            case 1:
+
+//              List of Sub-Options for Listing/Viewing
                 System.out.println("\n");
                 System.out.println("╔════════Listing/Viewing options═══════╗");
                 System.out.println("║ 1. List all ports                    ║");
@@ -47,23 +52,24 @@ public class Admin extends User {
                 System.out.println("║ 3. List all containers               ║");
                 System.out.println("║ 4. List all managers                 ║");
                 System.out.println("╚══════════════════════════════════════╝");
-//              Select Option
+
                 System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
+
                 switch (sub_option) {
-                    case 1:
+                    case 1: // List all ports
                         Port.printListOfPorts();
                         continueToOption();
                         break;
-                    case 2:
+                    case 2: // List all vehicles
                         Vehicle.printListOfVehicles();
                         continueToOption();
                         break;
-                    case 3:
+                    case 3: // List all containers
                         Container.getContainers();
                         continueToOption();
                         break;
-                    case 4:
+                    case 4: // List all managers
                         User.listAllManagers();
                         continueToOption();
                         break;
@@ -74,9 +80,10 @@ public class Admin extends User {
                 }
                 break;
 
+            //Adding entities
+            case 2:
 
-            case 2: //Adding entities
-//              List of Options
+//              List of Sub-Options for Adding entities
                 System.out.println("\n");
                 System.out.println("╔════════════Adding entities═══════════╗");
                 System.out.println("║ 1. Add new port                      ║");
@@ -84,9 +91,9 @@ public class Admin extends User {
                 System.out.println("║ 3. Add new container                 ║");
                 System.out.println("╚══════════════════════════════════════╝");
 
-//              Select Option
                 System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
+
                 switch (sub_option) {
                     case 1: // Add new port
                         addNewPort();
@@ -107,8 +114,10 @@ public class Admin extends User {
                 }
                 break;
 
+            // Removing entities
+            case 3:
 
-            case 3: // Removing entities
+//              List of Sub-Options for Removing entities
                 System.out.println("\n");
                 System.out.println("╔═══════════Removing entities══════════╗");
                 System.out.println("║ 1. Remove port                       ║");
@@ -116,9 +125,9 @@ public class Admin extends User {
                 System.out.println("║ 3. Remove container                  ║");
                 System.out.println("╚══════════════════════════════════════╝");
 
-//              Select Option
                 System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
+
                 switch (sub_option) {
                     case 1: // Remove Port
                         removeSelectedPort();
@@ -141,6 +150,8 @@ public class Admin extends User {
 
 
             case 4:
+
+//              List of Sub-Options for Vehicle
                 System.out.println("\n");
                 System.out.println("╔════════════Vehicle Options═══════════╗");
                 System.out.println("║ 1. Vehicle load container            ║");
@@ -148,9 +159,10 @@ public class Admin extends User {
                 System.out.println("║ 3. Vehicle move to port              ║");
                 System.out.println("║ 4. Fuel up vehicle                   ║");
                 System.out.println("╚══════════════════════════════════════╝");
-//              Select Option
+
                 System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
+
                 switch (sub_option) {
                     case 1: // Vehicle load container
                         loadContainerOnVehicle();
@@ -176,12 +188,14 @@ public class Admin extends User {
                 break;
 
             case 5:
+
+//              List of Sub-Options for User Management
                 System.out.println("\n");
-                System.out.println("╔════════════Application.User Management═══════════╗");
+                System.out.println("╔════════════User Management═══════════╗");
                 System.out.println("║ 1. Add user                          ║");
                 System.out.println("║ 2. Remove user                       ║");
                 System.out.println("╚══════════════════════════════════════╝");
-//              Select Option
+
                 System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
                 switch (sub_option) {
@@ -201,6 +215,8 @@ public class Admin extends User {
                 break;
 
             case 6:
+
+//              List of Sub-Options for Statistic Operation
                 System.out.println("\n");
                 System.out.println("╔════════════Statistic Operation════════════╗");
                 System.out.println("║ 1. Total fuel used today                  ║");
@@ -209,7 +225,7 @@ public class Admin extends User {
                 System.out.println("║ 4. List all trips in a day                ║");
                 System.out.println("║ 5. List all trips from day A to day B     ║");
                 System.out.println("╚═══════════════════════════════════════════╝");
-//              Select Option
+
                 System.out.print("\nSelect Sub-Option: ");
                 sub_option = scanner.nextInt();
 
@@ -240,9 +256,13 @@ public class Admin extends User {
                         break;
                 }
                 break;
+
+            // Exit
             case 7:
                 User.endSession();
                 break;
+
+            // Invalid option
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
                 showMenuOptions();
@@ -250,33 +270,35 @@ public class Admin extends User {
         }
     }
 
+    /*------Methods for Admin operations------*/
+
+    // Case 2.1 : Add new Port
     public void addNewPort() throws IOException {
         System.out.println("\n══════════════════════════════════════");
+
+        // Get Port information based on user input and validation method
         System.out.println("\t Enter Port information: ");
         System.out.print("\t\t Enter port's name: ");
         String port_name = scanner.next();
-
         System.out.print("\t\t Enter port's latitude and longitude: ");
         double port_latitude = scanner.nextDouble();
         double port_longitude = scanner.nextDouble();
         scanner.nextLine();
-
         System.out.print("\t\t Enter port's capacity: ");
         double port_capacity = scanner.nextDouble();
-
         System.out.print("\t\t Enter port's landing ability (true/false): ");
         String port_landingAbility = scanner.next();
 
+        // Validate port_landingAbility to be "true" or "false" only
         while ((!port_landingAbility.equalsIgnoreCase("true")) && (!port_landingAbility.equalsIgnoreCase("false"))) {
             System.out.print("Enter a true or false for port's landing ability: ");
             port_landingAbility = scanner.next();
         }
 
-        boolean landingAbility;
-        landingAbility = "true".equalsIgnoreCase(port_landingAbility);
+        boolean landingAbility = "true".equalsIgnoreCase(port_landingAbility);
+        Port port = new Port(port_name, port_latitude, port_longitude, port_capacity, landingAbility); // Create new port based on input
 
-        Port port = new Port(port_name, port_latitude, port_longitude, port_capacity, landingAbility);
-//      add to data folder
+        // Add to data folder
         FileWriter writer = new FileWriter("src/Data/Port.txt", true);
         writer.write(port.getId() + ",");
         writer.write(port.getName() + ",");
@@ -285,55 +307,62 @@ public class Admin extends User {
         writer.write(port.getCapacity() + ",");
         writer.write(port.getLandingAbility() + "\n");
         writer.close();
+
         System.out.println("New port has been added: " + "\n" + port);
     }
 
+    // Case 2.2 : Add new Vehicle
     public void addNewVehicle() throws IOException {
         System.out.println("\n══════════════════════════════════════");
 
+        // Get Vehicle information based on user input and validation method
         System.out.println("\n\t Enter vehicle information: ");
         System.out.print("\t\t Enter vehicle's name: ");
-        String veh_name = scanner.next();
+        String vehicleName = scanner.next();
         System.out.print("\t\t Enter vehicle's fuel: ");
-        double veh_fuel = scanner.nextDouble();
+        double vehicleFuel = scanner.nextDouble();
         System.out.print("\t\t Enter vehicle's max fuel: ");
-        double veh_maxFuel = scanner.nextDouble();
+        double vehicleMaxFuel = scanner.nextDouble();
 
-        while (veh_maxFuel < veh_fuel) {
+        // Validate maxFuel needs to be larger than current fuel
+        while (vehicleMaxFuel < vehicleFuel) {
             System.out.println("Max fuel can't be lower than capacity. Enter max fuel again: ");
-            veh_maxFuel = scanner.nextDouble();
+            vehicleMaxFuel = scanner.nextDouble();
         }
 
         System.out.print("\t\t Enter vehicle's capacity: ");
-        double veh_capacity = scanner.nextDouble();
+        double vehicleCapacity = scanner.nextDouble();
         System.out.print("\t\t Enter vehicle's maxLoad: ");
-        double veh_maxLoad = scanner.nextDouble();
+        double vehicleMaxLoad = scanner.nextDouble();
 
-        while (veh_maxLoad < veh_capacity) {
+        // Validate maxLoad needs to be larger than capacity
+        while (vehicleMaxLoad < vehicleCapacity) {
             System.out.println("Max load can't be lower than capacity. Enter max load again: ");
-            veh_maxLoad = scanner.nextDouble();
+            vehicleMaxLoad = scanner.nextDouble();
         }
 
 
         System.out.print("\t\t Enter vehicle's port ID: ");
-        String port_id = scanner.next();
+        String portId = scanner.next();
         System.out.print("\t Which vehicle you want to add (Enter Truck/Ship): ");
-        String vehicle_type = scanner.next();
+        String vehicleType = scanner.next();
 
-        while (Port.matchPortID(port_id) == null) {
+        // Validate port need to be existing
+        while (Port.matchPortID(portId) == null) {
             System.out.print("\t\t Enter vehicle's port ID again: ");
-            port_id = scanner.next();
+            portId = scanner.next();
         }
 
-        if (vehicle_type.equalsIgnoreCase("Truck")) {
+        if (vehicleType.equalsIgnoreCase("Truck")) { // If it is truck, user need to enter Truck type
             System.out.print("\t\t Enter vehicle's type: ");
             String veh_type = scanner.next();
 
+            if (Objects.requireNonNull(Port.matchPortID(portId)).getLandingAbility()) {
 
-            if (Objects.requireNonNull(Port.matchPortID(port_id)).getLandingAbility()) {
-                //      add to data folder
-                Vehicle truck = new Truck(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id), Truck.matchTruckType(veh_type));
+                // Add to data folder
+                Vehicle truck = new Truck(vehicleName, vehicleFuel, vehicleMaxFuel, vehicleCapacity, vehicleMaxLoad, Port.matchPortID(portId), Truck.matchTruckType(vehicleType));
                 FileWriter writer = new FileWriter("src/Data/Truck.txt", true);
+
                 writer.write(truck.getId() + ",");
                 writer.write(truck.getName() + ",");
                 writer.write(truck.getFuel() + ",");
@@ -343,14 +372,17 @@ public class Admin extends User {
                 writer.write(truck.getCurrentPortName() + ",");
                 writer.write(Truck.matchTruckType(veh_type) + "\n");
                 writer.close();
+
                 System.out.println("New Truck has been added: " + "\n" + truck);
             } else {
                 System.out.println("This port does not allow trucks!");
             }
-        } else if (vehicle_type.equalsIgnoreCase("Ship")) {
-            Vehicle ship = new Ship(veh_name, veh_fuel, veh_maxFuel, veh_capacity, veh_maxLoad, Port.matchPortID(port_id));
-            //      add to data folder
+        } else if (vehicleType.equalsIgnoreCase("Ship")) {
+
+            // Add to data folder
+            Vehicle ship = new Ship(vehicleName, vehicleFuel, vehicleMaxFuel, vehicleCapacity, vehicleMaxLoad, Port.matchPortID(portId));
             FileWriter writer = new FileWriter("src/Data/Ship.txt", true);
+
             writer.write(ship.getId() + ",");
             writer.write(ship.getName() + ",");
             writer.write(ship.getFuel() + ",");
@@ -359,24 +391,209 @@ public class Admin extends User {
             writer.write(ship.getMaxLoad() + ",");
             writer.write(ship.getCurrentPortName() + "\n");
             writer.close();
+
             System.out.println("New Ship has been added: " + "\n" + ship);
         } else {
             System.out.println("Not existing vehicle type!");
         }
     }
 
+    // Case 2.3 : Add new Container
     public void addNewContainer() throws IOException {
         Container.addNewContainer();
         scanner.nextLine();
     }
 
+    // Case 3.1 : Remove port
+    public static void removeSelectedPort() throws IOException {
+        Port.printListOfPorts(); // Show user list of ports available
+
+        // Get user input
+        System.out.println("\n══════════════════════════════════════");
+        System.out.print("Enter ID of the port you want to remove: ");
+        String portIdToRemove = scanner.next();
+
+        // Validate port need to be existing
+        while (Port.matchPortID(portIdToRemove) == null) {
+            System.out.println("Please enter existing port ID: ");
+            portIdToRemove = scanner.next();
+        }
+
+        // Add to data folder
+        File inputFile;
+        inputFile = new File("src/Data/Port.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        List<String> lines = new ArrayList<>();
+        String lineFromFile;
+        while ((lineFromFile = reader.readLine()) != null) {
+            lines.add(lineFromFile);
+        }
+        reader.close();
+
+        // Remove matching line from array
+        for (int i=0; i<lines.size(); i++) {
+            if (lines.get(i).startsWith(portIdToRemove)) {
+                lines.remove(i);
+                break;
+            }
+        }
+
+        // Write array back to file
+        PrintWriter writer = new PrintWriter(inputFile);
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
+        Port.removePort(portIdToRemove);
+
+        // Get trips from Trip class
+        List<Trip> trips = Trip.getTrips();
+
+        // Add trips to list
+        List<Trip> allTrips = new ArrayList<>(trips);
+        try {
+            // Write trips to Trip.txt
+            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
+            for (Trip trip : allTrips) {
+                tripWriter.write(trip.getId() + ",");
+                tripWriter.write(trip.getVehicleName() + ",");
+                tripWriter.write(trip.getDepartureDateString() + ",");
+                tripWriter.write(trip.getdeparturePortName() + ",");
+                tripWriter.write(trip.getArrivalDateString() + ",");
+                tripWriter.write(trip.getarrivalPortName() + ",");
+                tripWriter.write(trip.getStatus() + "\n");
+            }
+            tripWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Case 3.2 : Remove vehicle
+    public static void removeSelectedVehicle() throws IOException {
+        Vehicle.printListOfVehicles(); // Show user list of vehicles available
+
+        // Get user input
+        System.out.println("\n══════════════════════════════════════");
+        System.out.print("Enter ID of the vehicle you want to remove: ");
+        String vehicleIdToRemove = scanner.next();
+
+        // Validate vehicle need to be existing
+        while (Vehicle.matchVehicleId(vehicleIdToRemove) == null) {
+            System.out.println("Please enter existing port ID: ");
+            vehicleIdToRemove = scanner.next();
+        }
+
+        // Add to data folder
+        File inputFile;
+        if (Vehicle.matchVehicleId(vehicleIdToRemove) instanceof Ship) {
+            inputFile = new File("src/Data/Ship.txt");
+        } else {
+            inputFile = new File("src/Data/Truck.txt");
+        }
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        List<String> lines = new ArrayList<>();
+        String lineFromFile;
+        while ((lineFromFile = reader.readLine()) != null) {
+            lines.add(lineFromFile);
+        }
+        reader.close();
+
+        // Remove matching line from array
+        for (int i=0; i<lines.size(); i++) {
+            if (lines.get(i).startsWith(vehicleIdToRemove)) {
+                lines.remove(i);
+                break;
+            }
+        }
+
+        // Write array back to file
+        PrintWriter writer = new PrintWriter(inputFile);
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
+        Vehicle.removeVehicle(vehicleIdToRemove);
+
+        // Get trips from Trip class
+        List<Trip> trips = Trip.getTrips();
+
+        // Add trips to list
+        List<Trip> allTrips = new ArrayList<>(trips);
+        try {
+            // Write trips to Trip.txt
+            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
+            for (Trip trip : allTrips) {
+                tripWriter.write(trip.getId() + ",");
+                tripWriter.write(trip.getVehicleName() + ",");
+                tripWriter.write(trip.getDepartureDateString() + ",");
+                tripWriter.write(trip.getdeparturePortName() + ",");
+                tripWriter.write(trip.getArrivalDateString() + ",");
+                tripWriter.write(trip.getarrivalPortName() + ",");
+                tripWriter.write(trip.getStatus() + "\n");
+            }
+            tripWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Case 3.3 : Remove container
+    public static void removeSelectedContainer() throws IOException {
+        Container.getContainers(); // Show user list of containers available
+
+        // Get user input
+        System.out.println("\n══════════════════════════════════════");
+        Container.getContainers();
+        System.out.print("Enter ID of the container you want to remove: ");
+        String containerIdToRemove = scanner.next();
+
+        // Validate container need to be existing
+        while (Container.matchContainerId(containerIdToRemove) == null) {
+            System.out.println("Please enter existing container ID: ");
+            containerIdToRemove = scanner.next();
+        }
+
+        // Add data to folder
+        File inputFile;
+        inputFile = new File("src/Data/Container.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        List<String> lines = new ArrayList<>();
+        String lineFromFile;
+        while ((lineFromFile = reader.readLine()) != null) {
+            lines.add(lineFromFile);
+        }
+        reader.close();
+
+        // Remove matching line from array
+        for (int i=0; i<lines.size(); i++) {
+            if (lines.get(i).startsWith(containerIdToRemove)) {
+                lines.remove(i);
+                break;
+            }
+        }
+
+        // Write array back to file
+        PrintWriter writer = new PrintWriter(inputFile);
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
+        Container.removeContainer(containerIdToRemove);
+        scanner.nextLine();
+    }
+
+    // Case 4.1: Vehicle load container
     public static void loadContainerOnVehicle() {
+
+        // Get user input
         System.out.println("\n══════════════════════════════════════");
         ArrayList<Container> listOfContainers = new ArrayList<>();
-        Vehicle.printListOfVehicles();
+        Vehicle.printListOfVehicles(); // Show vehicle list of containers available
         System.out.print("Select vehicles by ID: ");
         String vehicle_Id = scanner.next();
 
+        // Validate vehicle need to be existing
         while (Vehicle.matchVehicleId(vehicle_Id) == null) {
             Vehicle.printListOfVehicles();
             System.out.print("Enter vehicle ID again: ");
@@ -387,8 +604,9 @@ public class Admin extends User {
         System.out.print("Enter container(s) id (type 'stop' at the end): ");
         String con_Id = scanner.next();
 
+        // Validate container need to be existing
         while (Container.matchContainerId(con_Id) == null) {
-            System.out.print("Enter vehicle ID again: ");
+            System.out.print("Enter container ID again: ");
             con_Id = scanner.next();
         }
 
@@ -463,171 +681,7 @@ public class Admin extends User {
         }
     }
 
-    public static void removeSelectedPort() throws IOException {
-        Port.printListOfPorts();
-        System.out.println("\n══════════════════════════════════════");
-        System.out.print("Enter ID of the port you want to remove: ");
-        String portIdToRemove = scanner.next();
-        while (Port.matchPortID(portIdToRemove) == null) {
-            System.out.println("Please enter existing port ID: ");
-            portIdToRemove = scanner.next();
-        }
-
-        File inputFile;
-        inputFile = new File("src/Data/Port.txt");
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        List<String> lines = new ArrayList<>();
-        String lineFromFile;
-        while ((lineFromFile = reader.readLine()) != null) {
-            lines.add(lineFromFile);
-        }
-        reader.close();
-
-        // Remove matching line from array
-        for (int i=0; i<lines.size(); i++) {
-            if (lines.get(i).startsWith(portIdToRemove)) {
-                lines.remove(i);
-                break;
-            }
-        }
-        // Write array back to file
-        PrintWriter writer = new PrintWriter(inputFile);
-        for (String line : lines) {
-            writer.println(line);
-        }
-        writer.close();
-        Port.removePort(portIdToRemove);
-        List<Trip> allTrips = new ArrayList<>();
-
-        // Get trips from Trip class
-        List<Trip> trips = Trip.getTrips();
-
-        // Add trips to list
-        for (Trip trip : trips) {
-            allTrips.add(trip);
-        }
-        try {
-            // Write trips to Trip.txt
-            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
-            for (Trip trip : allTrips) {
-                tripWriter.write(trip.getId() + ",");
-                tripWriter.write(trip.getVehicleName() + ",");
-                tripWriter.write(trip.getDepartureDateString() + ",");
-                tripWriter.write(trip.getdeparturePortName() + ",");
-                tripWriter.write(trip.getArrivalDateString() + ",");
-                tripWriter.write(trip.getarrivalPortName() + ",");
-                tripWriter.write(trip.getStatus() + "\n");
-            }
-            tripWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static void removeSelectedVehicle() throws IOException {
-        Vehicle.printListOfVehicles();
-        System.out.println("\n══════════════════════════════════════");
-        System.out.print("Enter ID of the vehicle you want to remove: ");
-        String vehicleIdToRemove = scanner.next();
-
-        while (Vehicle.matchVehicleId(vehicleIdToRemove) == null) {
-            System.out.println("Please enter existing port ID: ");
-            vehicleIdToRemove = scanner.next();
-        }
-
-        File inputFile;
-        if (Vehicle.matchVehicleId(vehicleIdToRemove) instanceof Ship) {
-            inputFile = new File("src/Data/Ship.txt");
-        } else {
-            inputFile = new File("src/Data/Truck.txt");
-        }
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        List<String> lines = new ArrayList<>();
-        String lineFromFile;
-        while ((lineFromFile = reader.readLine()) != null) {
-            lines.add(lineFromFile);
-        }
-        reader.close();
-
-        // Remove matching line from array
-        for (int i=0; i<lines.size(); i++) {
-            if (lines.get(i).startsWith(vehicleIdToRemove)) {
-                lines.remove(i);
-                break;
-            }
-        }
-        // Write array back to file
-        PrintWriter writer = new PrintWriter(inputFile);
-        for (String line : lines) {
-            writer.println(line);
-        }
-        writer.close();
-        Vehicle.removeVehicle(vehicleIdToRemove);
-        List<Trip> allTrips = new ArrayList<>();
-
-        // Get trips from Trip class
-        List<Trip> trips = Trip.getTrips();
-
-        // Add trips to list
-        for (Trip trip : trips) {
-            allTrips.add(trip);
-        }
-        try {
-            // Write trips to Trip.txt
-            BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
-            for (Trip trip : allTrips) {
-                tripWriter.write(trip.getId() + ",");
-                tripWriter.write(trip.getVehicleName() + ",");
-                tripWriter.write(trip.getDepartureDateString() + ",");
-                tripWriter.write(trip.getdeparturePortName() + ",");
-                tripWriter.write(trip.getArrivalDateString() + ",");
-                tripWriter.write(trip.getarrivalPortName() + ",");
-                tripWriter.write(trip.getStatus() + "\n");
-            }
-            tripWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void removeSelectedContainer() throws IOException {
-        Container.getContainers();
-        System.out.println("\n══════════════════════════════════════");
-        Container.getContainers();
-        System.out.print("Enter ID of the container you want to remove: ");
-        String containerIdToRemove = scanner.next();
-
-        while (Container.matchContainerId(containerIdToRemove) == null) {
-            System.out.println("Please enter existing container ID: ");
-            containerIdToRemove = scanner.next();
-        }
-
-        File inputFile;
-        inputFile = new File("src/Data/Container.txt");
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        List<String> lines = new ArrayList<>();
-        String lineFromFile;
-        while ((lineFromFile = reader.readLine()) != null) {
-            lines.add(lineFromFile);
-        }
-        reader.close();
-
-        // Remove matching line from array
-        for (int i=0; i<lines.size(); i++) {
-            if (lines.get(i).startsWith(containerIdToRemove)) {
-                lines.remove(i);
-                break;
-            }
-        }
-        // Write array back to file
-        PrintWriter writer = new PrintWriter(inputFile);
-        for (String line : lines) {
-            writer.println(line);
-        }
-        writer.close();
-        Container.removeContainer(containerIdToRemove);
-        scanner.nextLine();
-    }
-
+    // Case 4.2: Vehicle unload container
     public static void unloadContainerOnVehicle(){
         System.out.println("\n══════════════════════════════════════");
         ArrayList<Container> listOfContainers = new ArrayList<>();
@@ -703,6 +757,7 @@ public class Admin extends User {
         }
     }
 
+    // Case 4.3: Vehicle move to port
     public void moveVehicleToPort() {
         System.out.println("\n══════════════════════════════════════");
         Vehicle.printListOfVehicles();
@@ -724,15 +779,12 @@ public class Admin extends User {
         }
 
         Objects.requireNonNull(Vehicle.matchVehicleId(vehicle_Id)).moveToPort(Port.matchPortID(port_Id));
-        List<Trip> allTrips = new ArrayList<>();
 
         // Get trips from Trip class
         List<Trip> trips = Trip.getTrips();
 
         // Add trips to list
-        for (Trip trip : trips) {
-            allTrips.add(trip);
-        }
+        List<Trip> allTrips = new ArrayList<>(trips);
         try {
             // Write trips to Trip.txt
             BufferedWriter tripWriter = new BufferedWriter(new FileWriter("src/Data/Trip.txt", false));
@@ -751,6 +803,7 @@ public class Admin extends User {
         }
     }
 
+    // Case 4.4: Fuel up vehicle
     public void fuelUpVehicle() {
         System.out.println("\n══════════════════════════════════════");
         System.out.print("Select vehicle by ID: ");
@@ -777,6 +830,7 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
+    // Case 6.1: Total fuel used today
     public void printTotalWeightByContainerType() {
 
         System.out.printf("╔%-30s╗%n", "═".repeat(30));
@@ -794,6 +848,7 @@ public class Admin extends User {
         System.out.printf("╚%-30s╝%n", "═".repeat(30));
     }
 
+    // Case 6.3: List all ships in a port
     public void printListOfShipInPort() {
         System.out.println("\n══════════════════════════════════════");
         System.out.print("Enter ID of the port you want to view ships list: ");
@@ -825,6 +880,7 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
+    // Case 6.4: List all ships in a day
     public void printListOfTripByDate() {
         System.out.println("\n══════════════════════════════════════");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -862,6 +918,7 @@ public class Admin extends User {
         scanner.nextLine();
     }
 
+    // Case 6.5: List all trips from day A to day B
     public void printListOfTripFromDateToDate() {
         System.out.println("\n══════════════════════════════════════");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -902,12 +959,13 @@ public class Admin extends User {
     }
 
 
-
+    /*------After making operation, ask user if they want to continue------*/
     public void continueToOption() throws IOException {
         System.out.println("\n══════════════════════════════════════");
         System.out.print("Continue? (y/n) ");
         String continueToOption = scanner.next();
 
+        // Validate "y" or "n" answer only
         while ((!continueToOption.equalsIgnoreCase("Y")) && (!continueToOption.equalsIgnoreCase("N"))) {
             System.out.println("Please enter a valid option y/n: ");
             continueToOption = scanner.next();

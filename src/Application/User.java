@@ -158,6 +158,7 @@ public abstract class User implements Serializable {
         }
         writer.close();
         users.remove(user);
+        user = null;
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║       User deleted successfully!       ║");
         System.out.println("╚════════════════════════════════════════╝");
