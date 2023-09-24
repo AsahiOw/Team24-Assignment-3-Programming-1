@@ -1,9 +1,6 @@
+package Application;
+
 import java.io.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import Class.*;
 import Enum.*;
@@ -136,10 +133,6 @@ public class Main {
                 Container container = new Container(weight, type, Objects.requireNonNull(Vehicle.matchVehicleId(Vehicle.getIdByName(vehicle_name))));
             }
         }
-        List<Container> allContainers = new ArrayList<>();
-        for (Container c : Container.getListOfContainers()){
-            allContainers.add(c);
-        }
 //              close scanner
         fileScanner1.close();
         fileScanner2.close();
@@ -149,7 +142,25 @@ public class Main {
         fileScanner6.close();
         fileScanner7.close();
 
-//        Main program
+        try {
+            FileWriter deleteWriter = new FileWriter("src/Data/Container.txt", false);
+            FileWriter writer = new FileWriter("src/Data/Container.txt", true);
+
+            for (Container container : Container.getListOfContainers()) {
+                if (container.getCurrentState() == ContainerState.ON_VEHICLE) {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "," + container.getCurrentVehicle().getName() + "\n");
+                } else if (container.getCurrentState() == ContainerState.ON_PORT) {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "," + container.getCurrentPort().getName() + "\n");
+                } else {
+                    writer.write(container.getId() + "," + container.getWeight() + "," + container.getType() + "," + container.getCurrentState() + "\n");
+                }
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+//      Main program
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter username: ");

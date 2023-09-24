@@ -1,3 +1,5 @@
+package Application;
+
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +29,7 @@ public class Manager extends User {
     @Override
     public void showMenuOptions() throws IOException {
         int option = 0;
-        System.out.println("Welcome Manager of Port " + this.managedPort.getName() + "! Select an option:");
+        System.out.println("Welcome Application.Manager of Port " + this.managedPort.getName() + "! Select an option:");
         System.out.println("╔════════════List of Option════════════╗");
         System.out.println("║ 1. Listing Container in port         ║");
         System.out.println("║ 2. Add Container in port             ║");
@@ -124,7 +126,7 @@ public class Manager extends User {
                 continueToOption();
                 break;
             case 5:
-                System.out.println("Session end.");
+                User.endSession();
                 break;
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
@@ -256,7 +258,7 @@ public class Manager extends User {
         if (continueToOption.equalsIgnoreCase("Y")) {
             this.showMenuOptions();
         } else if (continueToOption.equalsIgnoreCase("N")) {
-            System.out.println("Session end.");
+            User.endSession();
         }
     }
 }

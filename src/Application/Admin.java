@@ -1,3 +1,5 @@
+package Application;
+
 import Class.*;
 import Enum.*;
 
@@ -175,7 +177,7 @@ public class Admin extends User {
 
             case 5:
                 System.out.println("\n");
-                System.out.println("╔════════════User Management═══════════╗");
+                System.out.println("╔════════════Application.User Management═══════════╗");
                 System.out.println("║ 1. Add user                          ║");
                 System.out.println("║ 2. Remove user                       ║");
                 System.out.println("╚══════════════════════════════════════╝");
@@ -188,7 +190,7 @@ public class Admin extends User {
                         continueToOption();
                         break;
                     case 2: // Remove user
-                        User.removeUser();
+                        User.promptRemoveUser();
                         continueToOption();
                         break;
                     default:
@@ -239,7 +241,7 @@ public class Admin extends User {
                 }
                 break;
             case 7:
-                System.out.println("Session end");
+                User.endSession();
                 break;
             default:
                 System.out.println("Unexpected value: " + option + ", please select again!");
@@ -914,7 +916,7 @@ public class Admin extends User {
         if(continueToOption.equalsIgnoreCase("Y")) {
             this.showMenuOptions();
         } else if(continueToOption.equalsIgnoreCase("N")) {
-            System.out.println("Session end.");
+            User.endSession();
         }
     }
 }

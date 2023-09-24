@@ -1,6 +1,9 @@
+package Application;
+
 import java.io.*;
 import java.util.*;
 import Class.*;
+import Enum.*;
 
 public abstract class User implements Serializable {
     private final String username;
@@ -48,12 +51,12 @@ public abstract class User implements Serializable {
     }
 
     public static void addUser() throws IOException {
-        System.out.println("Enter User information ");
+        System.out.println("Enter Application.User information ");
         System.out.print("\t Username: ");
         String username = scanner.next();
         while (matchUsername.get(username) != null) {
             username = new String();
-            System.out.println("User already exists!");
+            System.out.println("Application.User already exists!");
             System.out.print("\t Enter new username: ");
             username = scanner.next();
         }
@@ -84,13 +87,13 @@ public abstract class User implements Serializable {
 
         if (isAdmin) {
             User newUser = new Admin(username, password);
-            FileWriter writer = new FileWriter("src/Data/Admin.txt", true);
+            FileWriter writer = new FileWriter("src/Data/Application.Admin.txt", true);
             writer.write(newUser.getId() + ",");
             writer.write(newUser.getUsername() + ",");
             writer.write(newUser.getPassword() + "\n");
             writer.close();
             System.out.println("╔════════════════════════════════════════╗");
-            System.out.println("║     New Admin created successfully!    ║");
+            System.out.println("║     New Application.Admin created successfully!    ║");
             System.out.println("╚════════════════════════════════════════╝");
         } else {
             Port.printListOfPorts();
@@ -104,13 +107,13 @@ public abstract class User implements Serializable {
             writer.write(((Manager) newUser).getManagedPortName() + "\n");
             writer.close();
             System.out.println("╔════════════════════════════════════════╗");
-            System.out.println("║    New Manager created successfully!   ║");
+            System.out.println("║    New Application.Manager created successfully!   ║");
             System.out.println("╚════════════════════════════════════════╝");
         }
         scanner.nextLine();
     }
 
-    public static void removeUser() throws IOException {
+    public static void promptRemoveUser() throws IOException {
         System.out.println("Enter User information ");
         System.out.print("\t Username: ");
         String username = scanner.next();
@@ -125,36 +128,39 @@ public abstract class User implements Serializable {
         boolean isConfirmed = scanner.next().equalsIgnoreCase("y");
 
         if (isConfirmed) {
-            User user = matchUser(username);
-            File inputFile;
-            inputFile = new File("src/Data/Port manager.txt");
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            List<String> lines = new ArrayList<>();
-            String lineFromFile;
-            while ((lineFromFile = reader.readLine()) != null) {
-                lines.add(lineFromFile);
-            }
-            reader.close();
-
-            // Remove matching line from array
-            for (int i=0; i<lines.size(); i++) {
-                if (lines.get(i).startsWith(username)) {
-                    lines.remove(i);
-                    break;
-                }
-            }
-            // Write array back to file
-            PrintWriter writer = new PrintWriter(inputFile);
-            for (String line : lines) {
-                writer.println(line);
-            }
-            writer.close();
-            users.remove(user);
-            System.out.println("╔════════════════════════════════════════╗");
-            System.out.println("║       User deleted successfully!       ║");
-            System.out.println("╚════════════════════════════════════════╝");
+            removeUser(matchUser(username));
         }
         scanner.nextLine();
+    }
+
+    public static void removeUser(User user) throws IOException {
+        File inputFile;
+        inputFile = new File("src/Data/Port manager.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        List<String> lines = new ArrayList<>();
+        String lineFromFile;
+        while ((lineFromFile = reader.readLine()) != null) {
+            lines.add(lineFromFile);
+        }
+        reader.close();
+
+        // Remove matching line from array
+        for (int i=0; i<lines.size(); i++) {
+            if (lines.get(i).startsWith(user.getUsername())) {
+                lines.remove(i);
+                break;
+            }
+        }
+        // Write array back to file
+        PrintWriter writer = new PrintWriter(inputFile);
+        for (String line : lines) {
+            writer.println(line);
+        }
+        writer.close();
+        users.remove(user);
+        System.out.println("╔════════════════════════════════════════╗");
+        System.out.println("║       User deleted successfully!       ║");
+        System.out.println("╚════════════════════════════════════════╝");
     }
 
     public static void listAllManagers() {
@@ -168,6 +174,20 @@ public abstract class User implements Serializable {
             }
         }
         System.out.println("╚══════════════╩══════════════╝");
+    }
+
+    public static User matchPortManager(Port port) {
+        for (User user: users) {
+            if ((user instanceof Manager) && ((Manager) user).getManagedPortName() == port.getName()) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public static void endSession() {
+        System.out.println("You have been logged out!");
+        System.out.println("Session ended.");
     }
 
 

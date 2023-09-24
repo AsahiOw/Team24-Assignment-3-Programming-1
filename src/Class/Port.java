@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import Enum.*;
+import Application.*;
 
 public class Port {
     private final String id;
@@ -272,9 +273,10 @@ public class Port {
             }
         }
 
+        User.removeUser(User.matchPortManager(port));
+
         if (!Objects.requireNonNull(port).onPortVehicles.isEmpty()) port.removeAllVehicle();
         // Update to remove container in file
-
 
         port.removeAllContainer();
         System.out.println("Port " + idToRemove + " removed successfully!");
