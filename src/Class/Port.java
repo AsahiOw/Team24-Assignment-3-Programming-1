@@ -193,6 +193,7 @@ public class Port {
                 writer.println(line);
             }
             writer.close();
+
             Container.removeContainer(onPortContainers.get(onPortContainers.size()-1).getId());
         }
     }
@@ -283,6 +284,7 @@ public class Port {
         ports.remove(port);
         port = null;
     }
+
 // toString method
     @Override
     public String toString() {
