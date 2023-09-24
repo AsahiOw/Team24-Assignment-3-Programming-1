@@ -48,6 +48,6 @@ public class TripManager {
 
         }
         System.out.println("To keep the data for validation, the trip data will not be Deleted in Data folder.");
-        System.out.println("If You want to remove this function, Add comment line 118 to 120 in Application.Main.java and rerun the code.");
+        System.out.println("If You want to remove this function, Add comment line 141 to 143 in Application.Main.java and rerun the code.");
     }
 }

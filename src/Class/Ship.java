@@ -11,8 +11,6 @@ public class Ship extends Vehicle {
     private final Map<ContainerType, Double> fuelConsumptionRates;
 
 //    constructor, getter, setter
-
-
     public Ship(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort) {
         super(name, fuel,maxFuel, capacity,maxLoad, currentPort);
         fuelConsumptionRates = new HashMap<>();

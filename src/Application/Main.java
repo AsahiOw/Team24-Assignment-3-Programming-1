@@ -7,7 +7,8 @@ import Enum.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
+        //group name
+        System.out.println("COSC2081 GROUP ASSIGNMENT\nCONTAINER PORT MANAGEMENT SYSTEM\nInstructor: Mr. Minh Vu & Dr. Phong Ngo\nGroup: Team 24\ns3938177, Le Ha My\ns3978275, Nguyen Hai Nguyen\ns3978072, Nguyen Ha Tuan Nguyen\ns3978673, Tran Duc Long\n");
         /*------Open txt file------*/
 
         File file1 = new File("src/Data/Port.txt");
@@ -136,6 +137,7 @@ public class Main {
             Trip trip = new Trip(vehicle, departureDate, departurePort, arrivalDate, arrivalPort, status);
             trips.add(trip);
         }
+        // Check for trip that over 7 days.
         TripManager manager = new TripManager();
         manager.setTrips(trips);
         manager.deleteDataAfter7Days();

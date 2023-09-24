@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Trip {
     private final String id;
@@ -82,8 +81,6 @@ public class Trip {
         trips.remove(trip);
         trip = null;
     }
-
-
 
     public Port getArrivalPort() {
         return arrivalPort;

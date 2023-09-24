@@ -5,8 +5,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
-
 
 public abstract class Vehicle {
     private String id;
@@ -19,7 +17,6 @@ public abstract class Vehicle {
     private ArrayList<Container> onVehicleContainers;
     private Port currentPort;
     private static ArrayList<Vehicle> vehicles = new ArrayList<>();
-    static Scanner scanner;
 
     public Vehicle(String name, double fuel, double maxFuel, double capacity, double maxLoad, Port currentPort) {
         this.id = "vehicle" + nextId++;
@@ -38,13 +35,6 @@ public abstract class Vehicle {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public static int getNextId() {
-        return nextId;
-    }
 
     public static void setNextId(int nextId) {
         Vehicle.nextId = nextId;
