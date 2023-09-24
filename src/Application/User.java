@@ -87,7 +87,7 @@ public abstract class User implements Serializable {
 
         if (isAdmin) {
             User newUser = new Admin(username, password);
-            FileWriter writer = new FileWriter("src/Data/Application.Admin.txt", true);
+            FileWriter writer = new FileWriter("src/Data/Admin.txt", true);
             writer.write(newUser.getId() + ",");
             writer.write(newUser.getUsername() + ",");
             writer.write(newUser.getPassword() + "\n");
@@ -134,34 +134,51 @@ public abstract class User implements Serializable {
     }
 
     public static void removeUser(User user) throws IOException {
-        File inputFile;
-        inputFile = new File("src/Data/Port manager.txt");
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        List<String> lines = new ArrayList<>();
-        String lineFromFile;
-        while ((lineFromFile = reader.readLine()) != null) {
-            lines.add(lineFromFile);
-        }
-        reader.close();
-
-        // Remove matching line from array
-        for (int i=0; i<lines.size(); i++) {
-            if (lines.get(i).startsWith(user.getUsername())) {
-                lines.remove(i);
-                break;
-            }
-        }
-        // Write array back to file
-        PrintWriter writer = new PrintWriter(inputFile);
-        for (String line : lines) {
-            writer.println(line);
-        }
-        writer.close();
         users.remove(user);
         user = null;
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║       User deleted successfully!       ║");
         System.out.println("╚════════════════════════════════════════╝");
+
+        List<User> allU = users;
+        List<Admin> admins = new ArrayList<>();
+        List<Manager> managers = new ArrayList<>();
+        System.out.println(users);
+        System.out.println(allU);
+        for (User Us: allU) {
+            if (Us instanceof Admin) {
+                admins.add((Admin) Us);
+            } else if (Us instanceof Manager) {
+                managers.add((Manager) Us);
+            }
+        }
+        try{
+            FileWriter fileWriter = new FileWriter("src/Data/Admin.txt");
+
+            for (Admin admin : admins){
+                fileWriter.write(admin.getId() + ",");
+                fileWriter.write(admin.getUsername() + ",");
+                fileWriter.write(admin.getPassword() + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error writing to admin.txt");
+            e.printStackTrace();
+        }
+        try{
+            FileWriter fileWriter = new FileWriter("src/Data/Port manager.txt");
+
+            for (Manager manager : managers){
+                fileWriter.write(manager.getId() + ",");
+                fileWriter.write(manager.getUsername() + ",");
+                fileWriter.write(manager.getPassword() + ",");
+                fileWriter.write(manager.getManagedPortName() + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error writing to admin.txt");
+            e.printStackTrace();
+        }
     }
 
     public static void listAllManagers() {
